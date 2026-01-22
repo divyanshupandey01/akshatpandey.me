@@ -43,27 +43,46 @@ h1{font-size:clamp(2.5rem,8vw,4rem)}
 }
 
 textarea{
-  width:100%;min-height:90px;background:#000;
+  width:100%;
+  min-height:90px;
+  background:#000;
   border:1px solid rgba(0,255,204,.4);
-  border-radius:12px;padding:12px;color:#fff;
+  border-radius:12px;
+  padding:12px;
+  color:#fff;
 }
 
 .comment-btn{
-  margin-top:10px;padding:10px 18px;
-  background:#00ffcc;color:#000;border:none;
-  border-radius:999px;font-weight:600;cursor:pointer;
+  margin-top:10px;
+  padding:10px 18px;
+  background:#00ffcc;
+  color:#000;
+  border:none;
+  border-radius:999px;
+  font-weight:600;
+  cursor:pointer;
 }
 
 .comment{
-  margin-top:12px;padding:12px;border-radius:12px;
-  background:rgba(255,255,255,.08);font-size:.95rem;
+  margin-top:22px; /* ⬅️ MORE SPACE */
+  padding:12px;
+  border-radius:12px;
+  background:rgba(255,255,255,.08);
+  font-size:.95rem;
 }
 
 .del{
-  float:right;color:#ff6b6b;cursor:pointer;
+  float:right;
+  color:#ff6b6b;
+  cursor:pointer;
 }
 
-footer{margin-top:30px;font-size:.9rem;opacity:.6;text-align:center}
+footer{
+  margin-top:30px;
+  font-size:.9rem;
+  opacity:.6;
+  text-align:center;
+}
 small{opacity:.7}
 </style>
 </head>
@@ -94,7 +113,7 @@ small{opacity:.7}
 
 <div class="card">
   <h2>Drop a comment</h2>
-  <textarea id="commentInput" placeholder="Say something..."></textarea>
+  <textarea id="commentInput" placeholder="Please comment anonymously"></textarea>
   <button class="comment-btn" onclick="addComment()">Post</button>
   <div id="comments"></div>
 </div>
@@ -110,7 +129,7 @@ import {
   serverTimestamp, deleteDoc, doc
 } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
 
-const ADMIN_KEY = "AKSHAT_ADMIN_2026";
+const ADMIN_KEY = "@Akshat130807"; // 🔐 UPDATED ADMIN KEY
 
 const firebaseConfig = {
   apiKey: "AIzaSyCY88mD-sHqxZiOGkQZbliTXG1QmySPesI",
