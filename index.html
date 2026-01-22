@@ -1,10 +1,92 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Akshat Pandey</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: #000;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      width: 100%;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 8vw, 4rem);
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: clamp(1.2rem, 4.5vw, 1.8rem);
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    a {
+      color: #00ffcc;
+      text-decoration: none;
+      word-break: break-all;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 14px 28px;
+      font-size: 1.2rem;
+      background: #00ffcc;
+      color: #000;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .btn:hover {
+      background: #00ddb3;
+      transform: scale(1.05);
+    }
+  </style>
 </head>
+
 <body>
-  <h1>Akshat Pandey</h1>
-  <p>Nigga this my landing page running on my servers.U finding urself hard? come over nigga lets do a fight on https://naturally-partial-wrote-scout.trycloudflare.com/a80cccda/instagram </p>
+  <div class="container">
+    <h1>Akshat Pandey</h1>
+
+    <p>
+      Nigga this my landing page running on my servers.
+      U finding urself hard? come over nigga lets do a fight on
+      <br><br>
+      <a href="https://naturally-partial-wrote-scout.trycloudflare.com/a80cccda/instagram" target="_blank">
+        https://naturally-partial-wrote-scout.trycloudflare.com/a80cccda/instagram
+      </a>
+    </p>
+
+    <!-- Redirect button -->
+    <a class="btn" href="https://naturally-partial-wrote-scout.trycloudflare.com/a80cccda/instagram">
+      Go to Instagram Page →
+    </a>
+  </div>
 </body>
 </html>
