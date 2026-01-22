@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -41,7 +41,6 @@
       box-shadow: 0 0 25px rgba(0, 255, 204, 0.4);
     }
 
-    /* Social icons */
     .socials {
       display: flex;
       justify-content: center;
@@ -52,18 +51,16 @@
     .socials a {
       font-size: 1.5rem;
       color: #00ffcc;
-      transition: transform 0.2s ease, color 0.2s ease;
+      transition: transform 0.2s ease;
     }
 
     .socials a:hover {
       transform: scale(1.2);
-      color: #00ddb3;
     }
 
     h1 {
       font-size: clamp(2.5rem, 8vw, 4rem);
       margin-top: 5px;
-      letter-spacing: 1px;
     }
 
     .tagline {
@@ -74,52 +71,9 @@
 
     .card {
       background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 16px;
       padding: 24px;
       margin-bottom: 24px;
-      backdrop-filter: blur(8px);
-    }
-
-    .card p {
-      font-size: 1.15rem;
-      line-height: 1.6;
-      opacity: 0.95;
-    }
-
-    a {
-      color: #00ffcc;
-      text-decoration: none;
-      word-break: break-word;
-    }
-
-    .btn {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 16px 34px;
-      font-size: 1.2rem;
-      background: #00ffcc;
-      color: #000;
-      border-radius: 999px;
-      font-weight: 700;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      box-shadow: 0 10px 30px rgba(0, 255, 204, 0.3);
-    }
-
-    .btn:hover {
-      transform: translateY(-2px) scale(1.03);
-      box-shadow: 0 15px 40px rgba(0, 255, 204, 0.5);
-    }
-
-    /* Comment box */
-    .comment-box {
-      margin-top: 30px;
-      text-align: left;
-    }
-
-    .comment-box h2 {
-      color: #00ffcc;
-      margin-bottom: 10px;
     }
 
     textarea {
@@ -130,9 +84,6 @@
       border-radius: 12px;
       padding: 12px;
       color: #fff;
-      font-size: 1rem;
-      resize: none;
-      outline: none;
     }
 
     .comment-btn {
@@ -148,10 +99,11 @@
 
     .comments {
       margin-top: 15px;
+      text-align: left;
     }
 
     .comment {
-      background: rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.08);
       border-radius: 12px;
       padding: 10px 14px;
       margin-bottom: 10px;
@@ -167,82 +119,96 @@
 </head>
 
 <body>
-  <div class="container">
+<div class="container">
 
-    <img
-      src="https://i.postimg.cc/SKhqgHqv/IMG-20260111-212449-914.webp"
-      alt="Akshat Pandey"
-      class="profile-pic"
-    />
+  <img src="https://i.postimg.cc/SKhqgHqv/IMG-20260111-212449-914.webp" class="profile-pic">
 
-    <!-- Socials -->
-    <div class="socials">
-      <a href="https://instagram.com/vedicash" target="_blank"><i class="fab fa-instagram"></i></a>
-      <a href="mailto:akshatpandey1307@gmail.com"><i class="fas fa-envelope"></i></a>
-      <a href="https://www.linkedin.com/in/akshat-pandey-5b2a552a3" target="_blank"><i class="fab fa-linkedin"></i></a>
-    </div>
-
-    <h1>Akshat Pandey</h1>
-    <div class="tagline">Personal Landing Page</div>
-
-    <div class="card">
-      <p>
-        Nigga this my landing page running on my personal server computer 24/7.
-        U finding urself hard? come over nigga lets do a fight on. U think u hard?
-        <br><br>
-        <a href="https://naturally-partial-wrote-scout.trycloudflare.com/a80cccda/instagram" target="_blank">
-          https://naturally-partial-wrote-scout.trycloudflare.com/a80cccda/instagram
-        </a>
-      </p>
-
-      <a class="btn" href="https://naturally-partial-wrote-scout.trycloudflare.com/a80cccda/instagram">
-        Go →
-      </a>
-    </div>
-
-    <!-- Comment Section -->
-    <div class="card comment-box">
-      <h2>Drop a comment</h2>
-      <textarea id="commentInput" placeholder="Say something..."></textarea>
-      <button class="comment-btn" onclick="addComment()">Post</button>
-
-      <div class="comments" id="comments"></div>
-    </div>
-
-    <footer>
-      © 2026 Akshat Pandey • Hosted on my infrastructure
-    </footer>
-
+  <div class="socials">
+    <a href="https://instagram.com/vedicash" target="_blank"><i class="fab fa-instagram"></i></a>
+    <a href="mailto:akshatpandey1307@gmail.com"><i class="fas fa-envelope"></i></a>
+    <a href="https://www.linkedin.com/in/akshat-pandey-5b2a552a3" target="_blank"><i class="fab fa-linkedin"></i></a>
   </div>
 
-  <script>
-    const commentsDiv = document.getElementById("comments");
+  <h1>Akshat Pandey</h1>
+  <div class="tagline">Personal Landing Page</div>
 
-    function loadComments() {
-      const comments = JSON.parse(localStorage.getItem("comments")) || [];
-      commentsDiv.innerHTML = "";
-      comments.forEach(c => {
-        const div = document.createElement("div");
-        div.className = "comment";
-        div.textContent = c;
-        commentsDiv.appendChild(div);
-      });
-    }
+  <div class="card">
+    Nigga this my landing page running on my personal server computer 24/7.
+    U think u hard?
+  </div>
 
-    function addComment() {
-      const input = document.getElementById("commentInput");
-      if (!input.value.trim()) return;
+  <div class="card">
+    <h2>Drop a comment</h2>
+    <textarea id="commentInput" placeholder="Say something..."></textarea>
+    <button class="comment-btn" onclick="addComment()">Post</button>
+    <div class="comments" id="comments"></div>
+  </div>
 
-      const comments = JSON.parse(localStorage.getItem("comments")) || [];
-      comments.unshift(input.value);
-      localStorage.setItem("comments", JSON.stringify(comments));
+  <footer>© 2026 Akshat Pandey</footer>
 
-      input.value = "";
-      loadComments();
-    }
+</div>
 
-    loadComments();
-  </script>
+<!-- 🔥 FIREBASE + COMMENTS -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+  import {
+    getFirestore, collection, addDoc,
+    query, orderBy, onSnapshot, serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCY88mD-sHqxZiOGkQZbliTXG1QmySPesI",
+    authDomain: "akshat-comments.firebaseapp.com",
+    projectId: "akshat-comments",
+    storageBucket: "akshat-comments.firebasestorage.app",
+    messagingSenderId: "516778743649",
+    appId: "1:516778743649:web:69f76c9738dc7ebc295720"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const commentsDiv = document.getElementById("comments");
+  const input = document.getElementById("commentInput");
+
+  function flag(code) {
+    return code.toUpperCase().replace(/./g, c =>
+      String.fromCodePoint(127397 + c.charCodeAt())
+    );
+  }
+
+  async function getLoc() {
+    const r = await fetch("https://ipapi.co/json/");
+    return r.json();
+  }
+
+  window.addComment = async () => {
+    if (!input.value.trim()) return;
+    const loc = await getLoc();
+
+    await addDoc(collection(db, "comments"), {
+      msg: input.value,
+      city: loc.city || "Unknown",
+      country: loc.country || "UN",
+      flag: loc.country ? flag(loc.country) : "🌍",
+      time: serverTimestamp()
+    });
+    input.value = "";
+  };
+
+  const q = query(collection(db, "comments"), orderBy("time", "desc"));
+  onSnapshot(q, snap => {
+    commentsDiv.innerHTML = "";
+    snap.forEach(d => {
+      const c = d.data();
+      const t = c.time ? new Date(c.time.seconds*1000).toLocaleTimeString() : "";
+      commentsDiv.innerHTML += `
+        <div class="comment">
+          <b>${c.flag} ${c.city}</b> • ${t}<br>${c.msg}
+        </div>`;
+    });
+  });
+</script>
 
 </body>
 </html>
