@@ -78,42 +78,80 @@ textarea::placeholder{color:#fff;font-weight:600}
 
 .comment{
   background:rgba(255,255,255,.08);
-  border-radius:14px;padding:14px;margin-bottom:14px;
-  font-size:.95rem;position:relative;
+  border-radius:14px;
+  padding:14px 14px 18px;
+  margin-bottom:14px;
+  font-size:.95rem;
+  position:relative;
 }
 
 .comment small{
-  opacity:.7;display:block;margin-bottom:6px;
+  opacity:.7;
+  display:block;
+  margin-bottom:4px;
   font-family:monospace;
 }
 
+/* 🔥 FIXED DELETE BUTTON */
 .del{
-  position:absolute;top:10px;right:10px;
-  width:36px;height:36px;border-radius:50%;
-  background:rgba(255,255,255,.15);
-  display:flex;align-items:center;justify-content:center;
+  position:absolute;
+  top:8px;
+  right:8px;
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  background:rgba(255,255,255,.18);
+  display:flex;
+  align-items:center;
+  justify-content:center;
   cursor:pointer;
+  z-index:10;
+  touch-action:manipulation;
 }
 
-.del img{width:18px;height:18px}
+.del:active{
+  transform:scale(0.92);
+  background:rgba(255,107,107,.4);
+}
+
+.del img{
+  width:20px;
+  height:20px;
+  pointer-events:none;
+}
 
 footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
 
 /* admin modal */
 #adminModal{
-  position:fixed;inset:0;background:rgba(0,0,0,.7);
-  display:none;align-items:center;justify-content:center;z-index:999;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.75);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:999;
 }
 #adminBox{
-  background:#111;width:90%;max-width:360px;
-  padding:22px;border-radius:16px;text-align:center;
+  background:#111;
+  width:90%;
+  max-width:360px;
+  padding:22px;
+  border-radius:16px;
+  text-align:center;
 }
 #adminBox input{
-  width:100%;padding:10px;border-radius:10px;border:none;
+  width:100%;
+  padding:10px;
+  border-radius:10px;
+  border:none;
   margin-bottom:14px;
 }
 #adminBox button{
-  flex:1;padding:10px;border-radius:999px;border:none;
+  flex:1;
+  padding:10px;
+  border-radius:999px;
+  border:none;
 }
 </style>
 </head>
@@ -176,7 +214,6 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
   </div>
 </div>
 
-<!-- 🔥 FIREBASE -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
 import {
@@ -196,7 +233,7 @@ const firebaseConfig={
 const app=initializeApp(firebaseConfig);
 const db=getFirestore(app);
 
-/* ---------- GLOBAL VIEWS ---------- */
+/* 👁️ GLOBAL VIEWS */
 const viewRef=doc(db,"views","counter");
 async function updateViews(){
   const snap=await getDoc(viewRef);
@@ -211,7 +248,7 @@ async function updateViews(){
 }
 updateViews();
 
-/* ---------- COMMENTS ---------- */
+/* 💬 COMMENTS */
 const commentsDiv=document.getElementById("comments");
 const input=document.getElementById("commentInput");
 const commentsRef=collection(db,"comments");
@@ -249,13 +286,18 @@ onSnapshot(q,snap=>{
   commentsDiv.innerHTML="";
   snap.forEach(d=>{
     const c=d.data();
+    const t=c.time
+      ? new Date(c.time.seconds*1000).toLocaleString()
+      : "Just now";
+
     const div=document.createElement("div");
     div.className="comment";
     div.innerHTML=`
-      <span class="del" onclick="openAdmin('${d.id}')">
+      <div class="del" onclick="openAdmin('${d.id}')">
         <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png">
-      </span>
+      </div>
       <small>${c.flag} ${c.city}, ${c.region}, ${c.country} • IP: ${c.ip}</small>
+      <small>🕒 ${t}</small>
       ${c.text}
     `;
     commentsDiv.appendChild(div);
