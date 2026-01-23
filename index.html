@@ -8,12 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Inter',system-ui,sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',system-ui,sans-serif}
 
 body{
   min-height:100vh;
@@ -24,138 +19,79 @@ body{
   padding:20px;
 }
 
-.container{
-  max-width:900px;
-  width:100%;
-  text-align:center;
-}
+.container{max-width:900px;width:100%;text-align:center}
 
 .profile-pic{
-  width:160px;
-  height:160px;
-  border-radius:50%;
-  object-fit:cover;
-  border:4px solid #00ffcc;
+  width:160px;height:160px;border-radius:50%;
+  object-fit:cover;border:4px solid #00ffcc;
   margin:20px auto 10px;
 }
 
 /* socials */
 .socials{
-  display:flex;
-  justify-content:center;
-  gap:20px;
-  margin-bottom:20px;
+  display:flex;justify-content:center;gap:20px;margin-bottom:20px;
 }
-.socials img{
-  width:32px;
-  height:32px;
-  cursor:pointer;
-}
+.socials img{width:32px;height:32px;cursor:pointer}
 
-/* name + views */
+/* heading */
 h1{
   font-family:'Space Grotesk',sans-serif;
   font-size:clamp(2.5rem,8vw,4rem);
 }
 
 .views{
-  display:flex;
-  justify-content:center;
-  gap:8px;
-  align-items:center;
-  font-size:.95rem;
-  opacity:.75;
-  margin-top:6px;
+  display:flex;justify-content:center;gap:8px;
+  align-items:center;font-size:.95rem;opacity:.75;margin-top:6px;
 }
 
-.tagline{
-  opacity:.85;
-  margin:12px 0 30px;
-}
+.tagline{opacity:.85;margin:12px 0 30px}
 
 .card{
   background:rgba(255,255,255,.06);
-  border-radius:18px;
-  padding:26px;
-  margin-bottom:26px;
-  text-align:left;
+  border-radius:18px;padding:26px;margin-bottom:26px;text-align:left;
 }
 
 .btn{
-  display:inline-block;
-  margin-top:14px;
-  padding:10px 20px;
-  background:#00ffcc;
-  color:#000;
-  border-radius:999px;
-  font-weight:700;
-  text-decoration:none;
+  display:inline-block;margin-top:14px;padding:10px 20px;
+  background:#00ffcc;color:#000;border-radius:999px;
+  font-weight:700;text-decoration:none;
 }
 
-.comment-box h2{
-  margin-bottom:18px;
-}
+.comment-box h2{margin-bottom:18px}
 
 textarea{
-  width:100%;
-  min-height:100px;
-  background:#000;
+  width:100%;min-height:100px;background:#000;
   border:1px solid rgba(0,255,204,.45);
-  border-radius:14px;
-  padding:14px;
-  color:#fff;
+  border-radius:14px;padding:14px;color:#fff;
 }
 
-textarea::placeholder{
-  color:#fff;
-  font-weight:600;
-}
+textarea::placeholder{color:#fff;font-weight:600}
 
 .comment-btn{
-  margin-top:14px;
-  padding:10px 20px;
-  background:#00ffcc;
-  color:#000;
-  border:none;
-  border-radius:999px;
-  font-weight:700;
-  cursor:pointer;
+  margin-top:14px;padding:10px 20px;
+  background:#00ffcc;color:#000;border:none;
+  border-radius:999px;font-weight:700;cursor:pointer;
 }
 
-.comments{
-  margin-top:26px;
-}
+.comments{margin-top:26px}
 
 .comment{
   background:rgba(255,255,255,.08);
-  border-radius:14px;
-  padding:14px;
-  margin-bottom:14px;
-  font-size:.95rem;
-  position:relative;
+  border-radius:14px;padding:14px;margin-bottom:14px;
+  font-size:.95rem;position:relative;
 }
 
 .comment small{
-  opacity:.7;
-  display:block;
-  margin-bottom:6px;
+  opacity:.7;display:block;margin-bottom:6px;
   font-family:monospace;
 }
 
 .del{
-  position:absolute;
-  top:10px;
-  right:12px;
-  cursor:pointer;
-  color:#ff6b6b;
+  position:absolute;top:10px;right:12px;
+  cursor:pointer;color:#ff6b6b;
 }
 
-footer{
-  margin-top:30px;
-  font-size:.9rem;
-  opacity:.65;
-  text-align:center;
-}
+footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
 </style>
 </head>
 
@@ -177,7 +113,7 @@ footer{
 </div>
 
 <h1>Akshat Pandey</h1>
-<div class="views">👁️ <span id="viewCount">0</span> views</div>
+<div class="views">👁️ <span id="viewCount">loading...</span> views</div>
 
 <div class="tagline">Personal Landing Page</div>
 
@@ -200,45 +136,76 @@ footer{
 <footer>© 2026 Akshat Pandey • Hosted On My Infrastructure</footer>
 </div>
 
-<script>
-/* 👁️ views */
-let views = Number(localStorage.getItem("views") || 0);
-views++;
-localStorage.setItem("views", views);
-document.getElementById("viewCount").textContent = views;
+<!-- 🔥 FIREBASE GLOBAL VIEWS -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+import { getFirestore, doc, getDoc, updateDoc, setDoc, increment } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
 
-/* 🌍 ip info */
+const firebaseConfig = {
+  apiKey: "AIzaSyCY88mD-sHqxZiOGkQZbliTXG1QmySPesI",
+  authDomain: "akshat-comments.firebaseapp.com",
+  projectId: "akshat-comments"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const viewRef = doc(db,"views","counter");
+
+async function updateViews(){
+  const snap = await getDoc(viewRef);
+  if(!snap.exists()){
+    await setDoc(viewRef,{count:1});
+    document.getElementById("viewCount").textContent=1;
+  }else{
+    await updateDoc(viewRef,{count:increment(1)});
+    const updated = await getDoc(viewRef);
+    document.getElementById("viewCount").textContent=updated.data().count;
+  }
+}
+updateViews();
+</script>
+
+<script>
+/* -------- COMMENTS (FIXED) -------- */
+
+const ADMIN_KEY="@Akshat130807";
+const commentsDiv=document.getElementById("comments");
+
+function safe(v,fallback){ return v && v!=="undefined" ? v : fallback }
+
+function countryFlag(code){
+  if(!code) return "🏳️";
+  return code.toUpperCase().replace(/./g,c=>String.fromCodePoint(127397+c.charCodeAt()));
+}
+
 async function getIP(){
   try{
-    const r = await fetch("https://ipapi.co/json/");
+    const r=await fetch("https://ipapi.co/json/");
     return await r.json();
   }catch{
     return {};
   }
 }
 
-/* comments */
-const ADMIN_KEY = "@Akshat130807";
-const commentsDiv = document.getElementById("comments");
-
 function loadComments(){
-  const data = JSON.parse(localStorage.getItem("comments")) || [];
+  const data=JSON.parse(localStorage.getItem("comments"))||[];
   commentsDiv.innerHTML="";
   data.forEach((c,i)=>{
     const div=document.createElement("div");
     div.className="comment";
     div.innerHTML=`
       <span class="del" onclick="delComment(${i})">✖</span>
-      <small>${c.flag} ${c.city}, ${c.region}, ${c.country} • IP: ${c.ip}</small>
-      ${c.text}
+      <small>
+        ${safe(c.flag,"🏳️")}
+        ${safe(c.city,"Unknown")},
+        ${safe(c.region,"Unknown")},
+        ${safe(c.country,"Unknown")}
+        • IP: ${safe(c.ip,"N/A")}
+      </small>
+      ${safe(c.text,"")}
     `;
     commentsDiv.appendChild(div);
   });
-}
-
-function countryFlag(code){
-  if(!code) return "🏳️";
-  return code.toUpperCase().replace(/./g,c=>String.fromCodePoint(127397+c.charCodeAt()));
 }
 
 async function addComment(){
@@ -250,10 +217,10 @@ async function addComment(){
 
   comments.unshift({
     text:input.value,
-    ip:ip.ip || "N/A",
-    city:ip.city || "Unknown",
-    region:ip.region || "Unknown",
-    country:ip.country_name || "Unknown",
+    ip:ip.ip,
+    city:ip.city,
+    region:ip.region,
+    country:ip.country_name,
     flag:countryFlag(ip.country)
   });
 
