@@ -20,7 +20,7 @@
   --text:#000;
 }
 
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',system-ui}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',system-ui,sans-serif}
 
 body{
   min-height:100vh;
@@ -33,18 +33,41 @@ body{
 
 .container{max-width:900px;width:100%;text-align:center}
 
-/* theme toggle */
+/* 🌗 theme toggle */
 #themeToggle{
   position:fixed;
   top:16px;
   right:16px;
   background:var(--card);
-  border-radius:999px;
   padding:8px 14px;
+  border-radius:999px;
   cursor:pointer;
   font-weight:600;
   z-index:999;
 }
+
+.profile-pic{
+  width:160px;height:160px;border-radius:50%;
+  object-fit:cover;border:4px solid var(--accent);
+  margin:20px auto 10px;
+  cursor:pointer;
+}
+
+/* socials */
+.socials{display:flex;justify-content:center;gap:20px;margin-bottom:20px}
+.socials img{width:32px;height:32px;cursor:pointer}
+
+h1{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(2.5rem,8vw,4rem);
+}
+
+.views{
+  display:flex;justify-content:center;gap:8px;
+  align-items:center;font-size:.95rem;opacity:.75;margin-top:6px;
+}
+
+.tagline{opacity:.85;margin:12px 0 30px}
 
 .card{
   background:var(--card);
@@ -54,14 +77,53 @@ body{
   text-align:left;
 }
 
-/* reactions */
-.react{
-  display:flex;
-  gap:14px;
-  margin-top:10px;
-  font-size:1.1rem;
-  cursor:pointer;
+.btn{
+  display:inline-block;margin-top:14px;padding:10px 20px;
+  background:var(--accent);color:#000;border-radius:999px;
+  font-weight:700;text-decoration:none;
 }
+
+/* comments */
+textarea{
+  width:100%;min-height:100px;background:#000;
+  border:1px solid rgba(0,255,204,.45);
+  border-radius:14px;padding:14px;color:#fff;
+}
+textarea::placeholder{color:#fff;font-weight:600}
+
+.comment-btn{
+  margin-top:14px;padding:10px 20px;
+  background:var(--accent);color:#000;border:none;
+  border-radius:999px;font-weight:700;cursor:pointer;
+}
+
+.comments{margin-top:26px}
+
+.comment{
+  background:rgba(255,255,255,.08);
+  border-radius:14px;
+  padding:14px 14px 18px;
+  margin-bottom:14px;
+  font-size:.95rem;
+  position:relative;
+}
+
+.comment small{
+  opacity:.7;
+  display:block;
+  margin-bottom:4px;
+  font-family:monospace;
+}
+
+/* delete */
+.del{
+  position:absolute;top:8px;right:8px;
+  width:44px;height:44px;border-radius:50%;
+  background:rgba(255,255,255,.18);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;z-index:10;
+}
+.del img{width:20px;height:20px}
 
 footer{
   margin-top:30px;
@@ -71,10 +133,9 @@ footer{
   cursor:pointer;
 }
 
-/* admin visit panel */
+/* 🔐 admin visit panel */
 #visitPanel{
-  position:fixed;
-  inset:0;
+  position:fixed;inset:0;
   background:rgba(0,0,0,.8);
   display:none;
   justify-content:center;
@@ -83,50 +144,66 @@ footer{
 }
 #visitBox{
   background:#111;
-  max-width:600px;
   width:90%;
+  max-width:600px;
   max-height:80vh;
   overflow:auto;
   padding:20px;
   border-radius:16px;
 }
 
-/* easter egg */
+/* 🥚 easter egg */
 #terminal{
-  position:fixed;
-  inset:0;
-  background:#000;
-  color:#0f0;
+  position:fixed;inset:0;
+  background:#000;color:#0f0;
   display:none;
   padding:20px;
   font-family:monospace;
+  z-index:2000;
 }
 </style>
 </head>
 
 <body>
+
 <div id="themeToggle">🌗 Theme</div>
 
 <div class="container">
 
-<h1 style="font-family:'Space Grotesk'">Akshat Pandey</h1>
+<img id="pfp" src="https://i.postimg.cc/SKhqgHqv/IMG-20260111-212449-914.webp" class="profile-pic">
+
+<div class="socials">
+  <a href="https://instagram.com/vedicash" target="_blank">
+    <img src="https://i.postimg.cc/GmNvBpX1/instagram.png">
+  </a>
+  <a href="mailto:akshatpandey1307@gmail.com">
+    <img src="https://i.postimg.cc/bNwn3nMZ/gmail.png">
+  </a>
+  <a href="https://www.linkedin.com/in/akshat-pandey-5b2a552a3" target="_blank">
+    <img src="https://i.postimg.cc/764G7J79/linkedin.png">
+  </a>
+</div>
+
+<h1>Akshat Pandey</h1>
+<div class="views">👁️ <span id="viewCount">loading...</span> views</div>
+
+<div class="tagline">Personal Landing Page</div>
 
 <div class="card">
-  Built on:
-  <b>Firebase · Cloudflare · Vanilla JS · Zero Frameworks</b>
+  Nigga this my landing page running on my personal server computer 24/7.
 </div>
 
 <div class="card">
-  Drop a comment
+  <h2>Drop a Comment</h2>
   <textarea id="commentInput" placeholder="Please comment anonymously"></textarea>
-  <button onclick="addComment()">Post</button>
-  <div id="comments"></div>
+  <button class="comment-btn" onclick="addComment()">Post</button>
+  <div class="comments" id="comments"></div>
 </div>
 
 <footer id="footer">© 2026 Akshat Pandey • Hosted On My Infrastructure</footer>
 </div>
 
-<!-- VISIT PANEL -->
+<!-- VISITS -->
 <div id="visitPanel">
   <div id="visitBox">
     <h3>Who Visited</h3>
@@ -146,8 +223,7 @@ Building quietly.
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
 import {
   getFirestore, collection, addDoc,
-  query, onSnapshot, increment,
-  doc, setDoc, updateDoc, serverTimestamp
+  onSnapshot, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
 
 const app=initializeApp({
@@ -158,60 +234,29 @@ const app=initializeApp({
 const db=getFirestore(app);
 
 /* 🌗 theme */
-const toggle=document.getElementById("themeToggle");
-toggle.onclick=()=>{
+const t=document.getElementById("themeToggle");
+if(localStorage.theme==="light")document.body.classList.add("light");
+t.onclick=()=>{
   document.body.classList.toggle("light");
   localStorage.theme=document.body.classList.contains("light")?"light":"dark";
 };
-if(localStorage.theme==="light")document.body.classList.add("light");
 
 /* 👣 visits */
 await addDoc(collection(db,"visits"),{time:serverTimestamp()});
 onSnapshot(collection(db,"visits"),s=>{
   visits.innerHTML="";
-  s.forEach(v=>visits.innerHTML+=`<div>Visited</div>`);
+  s.forEach(()=>visits.innerHTML+=`<div>Visitor</div>`);
 });
 
-/* footer 5 click admin */
-let clicks=0;
-footer.onclick=()=>{
-  clicks++;
-  if(clicks===5) visitPanel.style.display="flex";
-};
-
-/* 💬 comments */
-onSnapshot(collection(db,"comments"),s=>{
-  comments.innerHTML="";
-  s.forEach(d=>{
-    comments.innerHTML+=`
-      <div class="card">
-        ${d.data().text}
-        <div class="react">
-          👍 ${d.data().like||0}
-          🔥 ${d.data().fire||0}
-        </div>
-      </div>`;
-  });
-});
-
-window.addComment=async()=>{
-  if(!commentInput.value.trim())return;
-  await addDoc(collection(db,"comments"),{
-    text:commentInput.value,
-    like:0,
-    fire:0,
-    time:serverTimestamp()
-  });
-  commentInput.value="";
-};
+/* footer 5 click */
+let f=0;
+footer.onclick=()=>{if(++f===5)visitPanel.style.display="flex";};
 
 /* 🥚 easter egg */
-let keys=[];
-window.onkeydown=e=>{
-  keys.push(e.key);
-  if(keys.join("").includes("ArrowUpArrowUpArrowDownArrowDownArrowLeftArrowRightArrowLeftArrowRightba")){
-    terminal.style.display="block";
-  }
+let c=0;
+pfp.onclick=()=>{
+  c++;
+  if(c===7)terminal.style.display="block";
 };
 </script>
 
