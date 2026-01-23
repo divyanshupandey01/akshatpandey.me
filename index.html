@@ -5,10 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Akshat Pandey</title>
 
+<!-- Icons -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
 
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Inter', system-ui, sans-serif;
+}
+
 body{
   min-height:100vh;
   background:radial-gradient(circle at top,#111,#000);
@@ -17,83 +27,147 @@ body{
   justify-content:center;
   padding:20px;
 }
-.container{max-width:900px;width:100%;text-align:center}
-.profile-pic{
-  width:160px;height:160px;border-radius:50%;
-  border:4px solid #00ffcc;margin:20px auto 10px;
-}
-.socials{display:flex;justify-content:center;gap:18px;margin-bottom:25px}
-.socials a{font-size:1.5rem;color:#00ffcc}
 
-h1{font-size:clamp(2.5rem,8vw,4rem)}
-.tagline{opacity:.85;margin:10px 0 30px}
+.container{
+  max-width:900px;
+  width:100%;
+  text-align:center;
+}
+
+.profile-pic{
+  width:160px;
+  height:160px;
+  border-radius:50%;
+  object-fit:cover;
+  border:4px solid #00ffcc;
+  margin:20px auto 10px;
+  box-shadow:0 0 25px rgba(0,255,204,.35);
+}
+
+/* Socials */
+.socials{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  margin-bottom:25px;
+}
+
+.socials a{
+  font-size:1.6rem;
+  transition:.2s ease;
+}
+
+.socials a:hover{transform:scale(1.2)}
+
+.socials .insta{color:#00ffcc}
+.socials .gmail{color:#ff4d4d} /* Gmail style */
+.socials .linkedin{color:#0a66c2}
+
+h1{
+  font-family:'Space Grotesk', sans-serif;
+  font-size:clamp(2.5rem,8vw,4rem);
+  margin-top:5px;
+}
+
+.tagline{
+  font-size:1.2rem;
+  opacity:.85;
+  margin:10px 0 30px;
+}
 
 .card{
   background:rgba(255,255,255,.06);
-  border-radius:16px;
-  padding:24px;
-  margin-bottom:24px;
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:18px;
+  padding:26px;
+  margin-bottom:26px;
   text-align:left;
+  backdrop-filter:blur(8px);
 }
 
+.card p{
+  font-size:1.1rem;
+  line-height:1.6;
+}
+
+/* GO button (smaller + responsive) */
 .btn{
-  display:inline-block;margin-top:20px;
-  padding:16px 34px;background:#00ffcc;color:#000;
-  border-radius:999px;font-weight:700;text-decoration:none;
+  display:inline-block;
+  margin-top:18px;
+  padding:10px 22px;
+  font-size:1rem;
+  background:#00ffcc;
+  color:#000;
+  border-radius:999px;
+  font-weight:700;
+  text-decoration:none;
+  transition:.2s ease;
+}
+
+.btn:hover{
+  transform:scale(1.05);
+  box-shadow:0 10px 25px rgba(0,255,204,.35);
+}
+
+/* Comment section */
+.comment-box h2{
+  font-family:'Space Grotesk', sans-serif;
+  margin-bottom:18px; /* GAP FIXED */
 }
 
 textarea{
-  width:100%;min-height:90px;background:#000;
-  border:1px solid rgba(0,255,204,.4);
-  border-radius:12px;padding:12px;color:#fff;
+  width:100%;
+  min-height:100px;
+  background:#000;
+  border:1px solid rgba(0,255,204,.45);
+  border-radius:14px;
+  padding:14px;
+  color:#fff;
+  font-size:1rem;
+  resize:none;
+  outline:none;
+}
+
+textarea::placeholder{
+  color:#fff;              /* MORE VISIBLE */
+  font-weight:600;
+  opacity:.9;
 }
 
 .comment-btn{
-  margin-top:10px;padding:10px 18px;
-  background:#00ffcc;color:#000;border:none;
-  border-radius:999px;font-weight:600;cursor:pointer;
+  margin-top:14px;
+  padding:10px 20px;
+  background:#00ffcc;
+  color:#000;
+  border:none;
+  border-radius:999px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.comments{
+  margin-top:26px; /* GAP between box & comments */
 }
 
 .comment{
-  margin-top:22px;padding:12px;border-radius:12px;
-  background:rgba(255,255,255,.08);font-size:.95rem;
+  background:rgba(255,255,255,.08);
+  border-radius:14px;
+  padding:14px;
+  margin-bottom:14px;
+  font-size:.95rem;
 }
 
-.del{float:right;color:#ff6b6b;cursor:pointer}
-footer{margin-top:30px;font-size:.9rem;opacity:.6;text-align:center}
-small{opacity:.7}
+.comment small{
+  opacity:.7;
+  display:block;
+  margin-bottom:6px;
+}
 
-/* ADMIN PANEL */
-#adminPanel{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.85);
-  display:none;
-  justify-content:center;
-  align-items:center;
-  z-index:999;
-}
-#adminBox{
-  background:#111;
-  width:95%;
-  max-width:800px;
-  max-height:85vh;
-  overflow-y:auto;
-  border-radius:16px;
-  padding:20px;
-}
-iframe{
-  width:100%;
-  height:240px;
-  border-radius:12px;
-  border:none;
-  margin-top:10px;
-}
-#secretBtn{
-  font-size:10px;
-  opacity:.2;
-  cursor:pointer;
-  margin-top:8px;
+footer{
+  margin-top:30px;
+  font-size:.9rem;
+  opacity:.65;
+  text-align:center;
 }
 </style>
 </head>
@@ -104,144 +178,80 @@ iframe{
 <img src="https://i.postimg.cc/SKhqgHqv/IMG-20260111-212449-914.webp" class="profile-pic">
 
 <div class="socials">
-  <a href="https://instagram.com/vedicash" target="_blank"><i class="fab fa-instagram"></i></a>
-  <a href="mailto:akshatpandey1307@gmail.com"><i class="fas fa-envelope"></i></a>
-  <a href="https://www.linkedin.com/in/akshat-pandey-5b2a552a3" target="_blank"><i class="fab fa-linkedin"></i></a>
+  <a class="insta" href="https://instagram.com/vedicash" target="_blank"><i class="fab fa-instagram"></i></a>
+  <a class="gmail" href="mailto:akshatpandey1307@gmail.com"><i class="fas fa-envelope"></i></a>
+  <a class="linkedin" href="https://www.linkedin.com/in/akshat-pandey-5b2a552a3" target="_blank"><i class="fab fa-linkedin"></i></a>
 </div>
 
 <h1>Akshat Pandey</h1>
 <div class="tagline">Personal Landing Page</div>
 
 <div class="card">
-  Nigga this my landing page running on my personal server computer 24/7.
-  <br><br>
+  <p>
+    Nigga this my landing page running on my personal server computer 24/7.
+    U finding urself hard? come over nigga lets do a fight on.
+  </p>
+  <br>
   <a href="https://naturally-partial-wrote-scout.trycloudflare.com/a80cccda/instagram" target="_blank">
     https://naturally-partial-wrote-scout.trycloudflare.com/a80cccda/instagram
   </a><br>
   <a class="btn" href="https://naturally-partial-wrote-scout.trycloudflare.com/a80cccda/instagram">Go →</a>
 </div>
 
-<div class="card">
-  <h2>Drop a comment</h2>
+<div class="card comment-box">
+  <h2>Drop a Comment</h2>
   <textarea id="commentInput" placeholder="Please comment anonymously"></textarea>
   <button class="comment-btn" onclick="addComment()">Post</button>
-  <div id="comments"></div>
-  <div id="secretBtn" onclick="openAdmin()">•</div>
+  <div class="comments" id="comments"></div>
 </div>
 
-<footer>© 2026 Akshat Pandey • Hosted on my infrastructure</footer>
+<footer>© 2026 Akshat Pandey • Hosted On My Infrastructure</footer>
+
 </div>
 
-<!-- ADMIN PANEL -->
-<div id="adminPanel">
-  <div id="adminBox">
-    <h3>📍 Admin Location Panel</h3>
-    <div id="adminContent"></div>
-    <button class="comment-btn" onclick="closeAdmin()">Close</button>
-  </div>
-</div>
+<script>
+const commentsDiv = document.getElementById("comments");
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
-import {
-  getFirestore, collection, addDoc,
-  query, orderBy, onSnapshot,
-  serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
-
-const ADMIN_KEY = "@Akshat130807";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCY88mD-sHqxZiOGkQZbliTXG1QmySPesI",
-  authDomain: "akshat-comments.firebaseapp.com",
-  projectId: "akshat-comments"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-let gps = null;
-
-// AUTO GPS REQUEST
-if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition(
-    pos => gps = {
-      lat: pos.coords.latitude,
-      lon: pos.coords.longitude,
-      acc: pos.coords.accuracy
-    },
-    () => gps = null,
-    { enableHighAccuracy: true }
-  );
+async function getIPInfo(){
+  const res = await fetch("https://ipapi.co/json/");
+  return res.json();
 }
 
-async function getIP(){
-  const r = await fetch("https://ipapi.co/json/");
-  return r.json();
-}
-
-window.addComment = async () => {
-  const text = commentInput.value.trim();
-  if(!text) return;
-
-  const ip = await getIP();
-
-  await addDoc(collection(db,"comments"),{
-    msg:text,
-    ip:ip.ip,
-    city:ip.city,
-    region:ip.region,
-    country:ip.country,
-    timezone:ip.timezone,
-    org:ip.org,
-    gps:gps,
-    time:serverTimestamp()
-  });
-
-  commentInput.value="";
-};
-
-const q = query(collection(db,"comments"), orderBy("time","desc"));
-
-onSnapshot(q, snap => {
-  comments.innerHTML="";
-  adminContent.innerHTML="";
-
-  snap.forEach(d => {
-    const c=d.data();
-    const t=c.time?new Date(c.time.seconds*1000).toLocaleString():"";
-
-    comments.innerHTML+=`
-      <div class="comment">
-        <b>${c.city || "Unknown"}</b><br>
-        <small>${t}</small><br>
-        ${c.msg}
-      </div>
+function loadComments(){
+  const data = JSON.parse(localStorage.getItem("comments")) || [];
+  commentsDiv.innerHTML = "";
+  data.forEach(c=>{
+    const div = document.createElement("div");
+    div.className = "comment";
+    div.innerHTML = `
+      <small>${c.city}, ${c.region}, ${c.country} • IP: ${c.ip}</small>
+      ${c.text}
     `;
-
-    if(c.gps){
-      adminContent.innerHTML+=`
-        <div class="comment">
-          <b>${c.city || "Unknown"} (${c.country})</b><br>
-          GPS: ${c.gps.lat}, ${c.gps.lon} (±${Math.round(c.gps.acc)}m)
-          <iframe
-            src="https://www.openstreetmap.org/export/embed.html?bbox=${c.gps.lon-0.01},${c.gps.lat-0.01},${c.gps.lon+0.01},${c.gps.lat+0.01}&marker=${c.gps.lat},${c.gps.lon}">
-          </iframe>
-        </div>
-      `;
-    }
+    commentsDiv.appendChild(div);
   });
-});
+}
 
-window.openAdmin = () => {
-  const k = prompt("Admin key:");
-  if(k !== ADMIN_KEY) return;
-  adminPanel.style.display="flex";
-};
+async function addComment(){
+  const input = document.getElementById("commentInput");
+  if(!input.value.trim()) return;
 
-window.closeAdmin = () => {
-  adminPanel.style.display="none";
-};
+  const ip = await getIPInfo();
+  const comments = JSON.parse(localStorage.getItem("comments")) || [];
+
+  comments.unshift({
+    text: input.value,
+    ip: ip.ip,
+    city: ip.city,
+    region: ip.region,
+    country: ip.country_name
+  });
+
+  localStorage.setItem("comments", JSON.stringify(comments));
+  input.value="";
+  loadComments();
+}
+
+loadComments();
 </script>
 
 </body>
