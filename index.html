@@ -248,18 +248,39 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
   </div>
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+<div id="adminPassModal" class="auth-modal">
+  <div class="auth-card">
+    <h3>Admin Verification</h3>
+    <p style="opacity:.75;font-size:.9rem;margin-bottom:14px;text-align:center;">
+      Please enter the Admin Passcode<br>
+      Contact <a href="https://instagram.com/vedicash" target="_blank" style="color:#00ffcc">@vedicash</a> if needed.
+    </p>
+    <div class="form-group">
+      <input id="adminPassInput" type="password" placeholder="Passcode">
+    </div>
+    <button class="auth-btn" onclick="verifyAndExecuteDelete()">Confirm Delete</button>
+    <button style="background:transparent;border:none;color:#aaa;margin-top:10px;cursor:pointer;width:100%" onclick="closeModals()">Cancel</button>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
 <script>
-/* --- CONFIG & INIT --- */
+/* --- CONFIG & INIT (LEGACY SYNTAX) --- */
 const firebaseConfig = {
   apiKey: "AIzaSyCY88mD-sHqxZiOGkQZbliTXG1QmySPesI",
   authDomain: "akshat-comments.firebaseapp.com",
   projectId: "akshat-comments"
 };
 
-const app = firebase.initializeApp(firebaseConfig);
+// Check if Firebase loaded
+if (typeof firebase === 'undefined') {
+  document.body.innerHTML = "<h1 style='color:red;padding:20px'>FIREBASE ERROR: Scripts blocked. Use a Local Server or GitHub Pages.</h1>";
+} else {
+  firebase.initializeApp(firebaseConfig);
+}
+
 const db = firebase.firestore();
 
 // 🛡️ ADMIN CONFIGURATION
@@ -287,7 +308,7 @@ function updateViews(){
     }
   }).catch((error) => {
     console.log("View Error:", error);
-    viewCount.textContent = "Offline Mode"; 
+    viewCount.textContent = "Offline"; 
   });
 }
 updateViews();
@@ -295,8 +316,6 @@ updateViews();
 /* --- USER STATE --- */
 let currentUser = null;
 let currentProfileBase64 = "https://cdn-icons-png.flaticon.com/512/847/847969.png"; 
-// Cache the comments so we can re-render instantly on login
-let cachedCommentsSnapshot = null; 
 
 // Auto Login
 function autoLogin() {
@@ -331,8 +350,6 @@ function updateUIState() {
     loginBtn.style.display = "block";
     loginBtn.innerText = "🔑 Login";
   }
-  // FORCE RE-RENDER OF COMMENTS (Updates delete buttons)
-  if(cachedCommentsSnapshot) renderComments(cachedCommentsSnapshot);
 }
 
 /* --- IMAGE COMPRESS --- */
@@ -378,6 +395,7 @@ function handleFileSelect(e) {
 
 function closeModals() {
   document.querySelectorAll('.auth-modal').forEach(m => m.classList.remove('open'));
+  document.getElementById("adminPassInput").value = "";
 }
 
 function openLogin() {
@@ -415,14 +433,12 @@ function submitLogin() {
     return;
   }
 
-  // 2. CHECK USER (By Username OR Email)
-  // Check Username first
+  // 2. CHECK USER
   db.collection("users").where("username", "==", input).where("password", "==", p).get()
   .then(snap => {
     if(!snap.empty) {
         completeLogin(snap);
     } else {
-        // Check Email
         db.collection("users").where("email", "==", input).where("password", "==", p).get()
         .then(snap2 => {
             if(!snap2.empty) {
@@ -455,19 +471,16 @@ function submitSignup() {
 
   if(!name || !username || !email || !pass || !dob) return alert("Fill required fields!");
 
-  // BLOCK ADMIN USERNAME
   if(username.toLowerCase() === ADMIN_USERNAME.toLowerCase()) {
     return alert("This username is reserved.");
   }
 
-  // CHECK UNIQUE
   db.collection("users").where("username", "==", username).get().then(snap => {
     if(!snap.empty) return alert("Username already exists!");
     
     db.collection("users").where("email", "==", email).get().then(snapEmail => {
         if(!snapEmail.empty) return alert("Email already registered!");
         
-        // Create User
         const newUser = {
           name, username, email, password: pass, birthday: dob,
           photo: currentProfileBase64,
@@ -513,25 +526,4 @@ function handleMainComment() {
       text: input.value,
       ip: ip.ip||"N/A", city: ip.city||"Unknown", region: ip.region||"Unknown",
       country: ip.country_name||"Unknown", flag: flag(ip.country),
-      time: firebase.firestore.FieldValue.serverTimestamp(),
-      userId: currentUser.uid,
-      userName: currentUser.name,
-      userHandle: currentUser.username,
-      userPhoto: currentUser.photo,
-      role: currentUser.role || "user"
-    });
-    input.value = "";
-  });
-}
-
-function toggleReplyBox(id) {
-  const box = document.getElementById(`reply-input-${id}`);
-  box.style.display = box.style.display === "block" ? "none" : "block";
-}
-
-function submitReply(parentId) {
-  const txt = document.getElementById(`reply-text-${parentId}`);
-  if(!txt.value.trim()) return;
-  if(!currentUser) return openLogin();
-
-  db.collection("comments").doc(parentId).collection("re
+      time: firebase.firestore.FieldValue.serverTime
