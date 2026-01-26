@@ -176,7 +176,7 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
 .notify-trigger { background: rgba(0,255,204,0.1); border: 1px solid #00ffcc; color: #00ffcc; padding: 12px 20px; border-radius: 12px; margin-bottom: 20px; cursor: pointer; width: 100%; font-weight: 600; }
 .notify-trigger:hover { background: #00ffcc; color: #000; }
 
-/* 🖼️ NEW UPLOAD CSS (Added) */
+/* 🖼️ NEW UPLOAD CSS */
 .upload-wrapper {
   display: flex; justify-content: center; margin-bottom: 20px;
 }
@@ -265,7 +265,7 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
         <span id="uploadIcon">📷</span>
         <img id="previewImg" src="">
       </div>
-      <input type="file" id="hiddenFileInput" hidden accept="image/*">
+      <input type="file" id="hiddenFileInput" hidden accept="image/*" onchange="handleFileSelect(event)">
     </div>
     <div class="upload-label">Tap circle to upload photo</div>
 
@@ -337,7 +337,7 @@ async function updateViews(){
     }
   } catch(e) {
     console.error("View count error:", e);
-    viewCount.textContent = "Error";
+    // If error, likely network or config, but script keeps running
   }
 }
 updateViews();
@@ -346,7 +346,7 @@ updateViews();
 let currentUser = null;
 let pendingAction = null;
 let adminMode = false;
-let currentProfileBase64 = "https://cdn-icons-png.flaticon.com/512/847/847969.png"; // Default image
+let currentProfileBase64 = "https://cdn-icons-png.flaticon.com/512/847/847969.png"; 
 
 // Auto Login
 async function autoLogin() {
@@ -372,7 +372,7 @@ function updateWelcomeMsg() {
   }
 }
 
-/* --- 🖼️ IMAGE COMPRESSION LOGIC (Crucial for DB Storage) --- */
+/* --- 🖼️ IMAGE COMPRESSION LOGIC --- */
 function compressImage(file) {
   return new Promise((resolve) => {
     const reader = new FileReader();
@@ -383,7 +383,6 @@ function compressImage(file) {
       img.onload = () => {
         const canvas = document.createElement("canvas");
         const ctx = canvas.getContext("2d");
-        // Resize to max 150px to save DB space
         const MAX_SIZE = 150;
         let width = img.width;
         let height = img.height;
@@ -395,24 +394,19 @@ function compressImage(file) {
         canvas.width = width;
         canvas.height = height;
         ctx.drawImage(img, 0, 0, width, height);
-        // Returns Base64 string
         resolve(canvas.toDataURL("image/jpeg", 0.7)); 
       };
     };
   });
 }
 
-// Handle File Select
-const fileInput = document.getElementById('hiddenFileInput');
-fileInput.addEventListener('change', async (e) => {
+// Global Function to Handle Selection (Fixes the crash)
+window.handleFileSelect = async (e) => {
   if (e.target.files && e.target.files[0]) {
     const file = e.target.files[0];
     try {
-      // Compress and get Base64
       const base64 = await compressImage(file);
       currentProfileBase64 = base64;
-      
-      // Update Preview
       document.getElementById('previewImg').src = base64;
       document.getElementById('previewImg').style.display = 'block';
       document.getElementById('uploadIcon').style.display = 'none';
@@ -421,7 +415,7 @@ fileInput.addEventListener('change', async (e) => {
       alert("Error loading image");
     }
   }
-});
+};
 
 /* --- 🏳️ HELPERS --- */
 function flag(code){
@@ -484,7 +478,7 @@ window.submitSignup = async () => {
   try {
     const newUser = {
       name, username, email, password: pass, birthday: dob,
-      photo: currentProfileBase64, // USES THE GALLERY IMAGE HERE
+      photo: currentProfileBase64, // Uses the Base64 from gallery
       instagram: insta, createdAt: serverTimestamp()
     };
     const docRef = await addDoc(collection(db, "users"), newUser);
@@ -593,4 +587,7 @@ onSnapshot(q, snap => {
 
     const div = document.createElement("div");
     div.className = "comment";
-  
+    div.innerHTML = `
+      <div class="del" onclick="openAdmin('${d.id}', 'comment')">
+        <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png">
+    
