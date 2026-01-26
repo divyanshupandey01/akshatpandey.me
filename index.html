@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
 <style>
-/* --- EXISTING CSS (IMMUTABLE) --- */
+/* --- CORE CSS --- */
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',system-ui,sans-serif}
 
 body{
@@ -20,7 +20,7 @@ body{
   padding:20px;
 }
 
-.container{max-width:900px;width:100%;text-align:center}
+.container{max-width:900px;width:100%;text-align:center; position: relative; z-index: 1;}
 
 .profile-pic{
   width:160px;height:160px;border-radius:50%;
@@ -64,7 +64,6 @@ textarea{
   border:1px solid rgba(0,255,204,.45);
   border-radius:14px;padding:14px;color:#fff;
 }
-
 textarea::placeholder{color:#fff;font-weight:600}
 
 .comment-btn{
@@ -91,36 +90,23 @@ textarea::placeholder{color:#fff;font-weight:600}
   font-family:monospace;
 }
 
+/* DELETE BUTTON (Only visible to Admin) */
 .del{
   position:absolute;
-  top:8px;
-  right:8px;
-  width:44px;
-  height:44px;
+  top:8px; right:8px;
+  width:44px; height:44px;
   border-radius:50%;
   background:rgba(255,255,255,.18);
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  display:flex; align-items:center; justify-content:center;
   cursor:pointer;
   z-index:10;
-  touch-action:manipulation;
 }
-
-.del:active{
-  transform:scale(0.92);
-  background:rgba(255,107,107,.4);
-}
-
-.del img{
-  width:20px;
-  height:20px;
-  pointer-events:none;
-}
+.del:active{ transform:scale(0.92); background:rgba(255,107,107,.4); }
+.del img{ width:20px; height:20px; pointer-events:none; }
 
 footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
 
-/* --- 🚀 NEW FEATURES CSS --- */
+/* --- NEW FEATURES CSS --- */
 .user-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
 .user-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00ffcc; }
 .user-info { display: flex; flex-direction: column; }
@@ -133,7 +119,13 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
 .reply-input-box { display: none; margin-top: 10px; animation: fadeIn 0.3s ease; }
 @keyframes fadeIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
 
-.auth-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); z-index: 1000; display: none; align-items: center; justify-content: center; }
+/* MODALS - Hidden by default */
+.auth-modal { 
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); 
+  z-index: 9999; display: none; /* FORCE HIDDEN */
+  align-items: center; justify-content: center; 
+}
 .auth-card { background: #1a1a1a; width: 90%; max-width: 400px; padding: 24px; border-radius: 20px; border: 1px solid rgba(0,255,204,0.2); max-height: 90vh; overflow-y: auto; text-align: left; }
 .auth-card h3 { margin-bottom: 16px; color: #00ffcc; text-align: center; }
 .form-group { margin-bottom: 12px; text-align: left; }
@@ -149,14 +141,8 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
 .upload-circle span { font-size: 2rem; opacity: 0.5; }
 .upload-label { text-align: center; font-size: 0.8rem; color: #00ffcc; opacity: 0.8; margin-top: -15px; margin-bottom: 15px; }
 
-/* 🔹 LOGIN BTN next to POST */
-.login-trigger-btn {
-  margin-top:14px; padding:10px 20px;
-  background: transparent; border: 1px solid #00ffcc;
-  color: #00ffcc; border-radius:999px;
-  font-weight:700; cursor:pointer;
-  margin-left: 10px;
-}
+/* LOGIN BTN */
+.login-trigger-btn { margin-top:14px; padding:10px 20px; background: transparent; border: 1px solid #00ffcc; color: #00ffcc; border-radius:999px; font-weight:700; cursor:pointer; margin-left: 10px; }
 .login-trigger-btn:hover { background: rgba(0,255,204,0.1); }
 </style>
 </head>
@@ -191,7 +177,7 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
 </button>
 
 <div class="card comment-box">
-  <div id="welcomeMsg" style="margin-bottom:10px;color:#00ffcc;font-size:0.9rem;display:none;display:flex;justify-content:space-between;align-items:center;">
+  <div id="welcomeMsg" style="margin-bottom:10px;color:#00ffcc;font-size:0.9rem;display:none;justify-content:space-between;align-items:center;">
     <span id="userStatusText"></span>
     <button onclick="logout()" style="background:transparent;border:none;color:#ff6b6b;cursor:pointer;font-size:0.8rem;text-decoration:underline">Logout</button>
   </div>
@@ -210,7 +196,7 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
 <footer>© 2026 Akshat Pandey • Hosted On My Infrastructure</footer>
 </div>
 
-<div id="loginModal" class="auth-modal">
+<div id="loginModal" class="auth-modal" style="display: none;">
   <div class="auth-card">
     <h3>🔑 Login</h3>
     <p style="font-size:0.85rem;opacity:0.7;margin-bottom:15px;text-align:center">Enter Username OR Email</p>
@@ -224,7 +210,7 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
   </div>
 </div>
 
-<div id="signupModal" class="auth-modal">
+<div id="signupModal" class="auth-modal" style="display: none;">
   <div class="auth-card">
     <div class="upload-wrapper">
       <div class="upload-circle" onclick="document.getElementById('hiddenFileInput').click()">
@@ -246,7 +232,7 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
   </div>
 </div>
 
-<div id="notifyModal" class="auth-modal">
+<div id="notifyModal" class="auth-modal" style="display: none;">
   <div class="auth-card">
     <h3>🔔 Get Updates</h3>
     <p style="font-size:0.9rem;opacity:0.7;margin-bottom:15px;text-align:center;">Be the first to know when Akshat replies.</p>
@@ -260,21 +246,6 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
     </div>
     <button class="auth-btn" onclick="saveNotification()">Subscribe</button>
     <button style="background:transparent;border:none;color:#aaa;margin-top:10px;cursor:pointer;width:100%" onclick="document.getElementById('notifyModal').style.display='none'">Close</button>
-  </div>
-</div>
-
-<div id="adminModal">
-  <div id="adminBox">
-    <h3>Admin Verification</h3>
-    <p style="opacity:.75;font-size:.9rem;margin-bottom:14px">
-      Please enter the Admin Passcode<br>
-      If you are not admin please contact <a href="https://instagram.com/vedicash" target="_blank" style="color:#00ffcc">@vedicash</a>
-    </p>
-    <input id="adminPass" type="password" placeholder="Admin passcode">
-    <div style="display:flex;gap:10px">
-      <button onclick="closeAdmin()">Cancel</button>
-      <button onclick="confirmAdminAction()" style="background:#ff6b6b;font-weight:700">Confirm</button>
-    </div>
   </div>
 </div>
 
@@ -438,7 +409,6 @@ window.submitLogin = async () => {
   }
 
   // 2. CHECK USER (By Username OR Email)
-  // Check Username first
   let q = query(collection(db, "users"), where("username", "==", input), where("password", "==", p));
   let snap = await getDocs(q);
 
@@ -526,4 +496,19 @@ window.handleMainComment = () => {
   ipPromise.then(async (ip) => {
     await addDoc(collection(db, "comments"), {
       text: input.value,
-   
+      ip: ip.ip||"N/A", city: ip.city||"Unknown", region: ip.region||"Unknown",
+      country: ip.country_name||"Unknown", flag: flag(ip.country),
+      time: serverTimestamp(),
+      userId: currentUser.uid,
+      userName: currentUser.name,
+      userHandle: currentUser.username,
+      userPhoto: currentUser.photo,
+      role: currentUser.role || "user"
+    });
+    input.value = "";
+  });
+};
+
+window.toggleReplyBox = (id) => {
+  const box = document.getElementById(`reply-input-${id}`);
+  box.style.display = box.style
