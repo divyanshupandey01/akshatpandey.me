@@ -123,9 +123,16 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
 .auth-modal { 
   position: fixed; top: 0; left: 0; right: 0; bottom: 0;
   background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); 
-  z-index: 9999; display: none; /* FORCE HIDDEN */
+  z-index: 9999; 
+  display: none !important; /* Forces hidden until JS opens it */
   align-items: center; justify-content: center; 
 }
+
+/* Helper to show modal */
+.auth-modal.open {
+  display: flex !important;
+}
+
 .auth-card { background: #1a1a1a; width: 90%; max-width: 400px; padding: 24px; border-radius: 20px; border: 1px solid rgba(0,255,204,0.2); max-height: 90vh; overflow-y: auto; text-align: left; }
 .auth-card h3 { margin-bottom: 16px; color: #00ffcc; text-align: center; }
 .form-group { margin-bottom: 12px; text-align: left; }
@@ -196,7 +203,7 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
 <footer>© 2026 Akshat Pandey • Hosted On My Infrastructure</footer>
 </div>
 
-<div id="loginModal" class="auth-modal" style="display: none;">
+<div id="loginModal" class="auth-modal">
   <div class="auth-card">
     <h3>🔑 Login</h3>
     <p style="font-size:0.85rem;opacity:0.7;margin-bottom:15px;text-align:center">Enter Username OR Email</p>
@@ -206,11 +213,11 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
     <div style="text-align:center;margin-top:15px;font-size:0.9rem">
       New here? <span onclick="switchToSignup()" style="color:#00ffcc;cursor:pointer;text-decoration:underline">Sign Up</span>
     </div>
-    <button style="background:transparent;border:none;color:#aaa;margin-top:10px;cursor:pointer;width:100%" onclick="document.getElementById('loginModal').style.display='none'">Close</button>
+    <button style="background:transparent;border:none;color:#aaa;margin-top:10px;cursor:pointer;width:100%" onclick="closeModals()">Close</button>
   </div>
 </div>
 
-<div id="signupModal" class="auth-modal" style="display: none;">
+<div id="signupModal" class="auth-modal">
   <div class="auth-card">
     <div class="upload-wrapper">
       <div class="upload-circle" onclick="document.getElementById('hiddenFileInput').click()">
@@ -228,11 +235,11 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
     <div class="form-group"><label>Birthday</label><input id="regDob" type="date"></div>
     <div class="form-group"><label>Instagram ID (Optional)</label><input id="regInsta" type="text" placeholder="@john.doe"></div>
     <button class="auth-btn" onclick="submitSignup()">Sign Up</button>
-    <button style="background:transparent;border:none;color:#aaa;margin-top:10px;cursor:pointer;width:100%" onclick="closeSignup()">Cancel</button>
+    <button style="background:transparent;border:none;color:#aaa;margin-top:10px;cursor:pointer;width:100%" onclick="closeModals()">Cancel</button>
   </div>
 </div>
 
-<div id="notifyModal" class="auth-modal" style="display: none;">
+<div id="notifyModal" class="auth-modal">
   <div class="auth-card">
     <h3>🔔 Get Updates</h3>
     <p style="font-size:0.9rem;opacity:0.7;margin-bottom:15px;text-align:center;">Be the first to know when Akshat replies.</p>
@@ -245,17 +252,18 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
       <input id="notifyContact" type="text" placeholder="email@example.com or @handle">
     </div>
     <button class="auth-btn" onclick="saveNotification()">Subscribe</button>
-    <button style="background:transparent;border:none;color:#aaa;margin-top:10px;cursor:pointer;width:100%" onclick="document.getElementById('notifyModal').style.display='none'">Close</button>
+    <button style="background:transparent;border:none;color:#aaa;margin-top:10px;cursor:pointer;width:100%" onclick="closeModals()">Close</button>
   </div>
 </div>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+/* --- 🛠️ IMPORTS (USING STABLE VERSION) --- */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
 import {
   getFirestore, collection, addDoc, query, orderBy, onSnapshot,
   deleteDoc, doc, serverTimestamp, getDoc, setDoc, updateDoc,
   increment, where, getDocs
-} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
 const firebaseConfig={
   apiKey:"AIzaSyCY88mD-sHqxZiOGkQZbliTXG1QmySPesI",
@@ -378,12 +386,21 @@ window.handleFileSelect = async (e) => {
   }
 };
 
-window.openLogin = () => document.getElementById("loginModal").style.display = "flex";
-window.openSignup = () => document.getElementById("signupModal").style.display = "flex";
-window.closeSignup = () => document.getElementById("signupModal").style.display = "none";
+window.closeModals = () => {
+  document.querySelectorAll('.auth-modal').forEach(m => m.classList.remove('open'));
+};
+
+window.openLogin = () => {
+  window.closeModals();
+  document.getElementById("loginModal").classList.add('open');
+};
+window.openSignup = () => {
+  window.closeModals();
+  document.getElementById("signupModal").classList.add('open');
+};
 window.switchToSignup = () => {
-  document.getElementById("loginModal").style.display = "none";
-  document.getElementById("signupModal").style.display = "flex";
+  window.closeModals();
+  window.openSignup();
 };
 
 window.logout = () => {
@@ -402,7 +419,7 @@ window.submitLogin = async () => {
   if (input === ADMIN_USERNAME && p === ADMIN_PASSWORD_KEY) {
     currentUser = ADMIN_PROFILE;
     localStorage.setItem("akshat_uid", "ADMIN_MASTER_UID");
-    document.getElementById("loginModal").style.display = "none";
+    window.closeModals();
     updateUIState();
     alert("Admin Mode Activated.");
     return;
@@ -422,7 +439,7 @@ window.submitLogin = async () => {
     const userDoc = snap.docs[0];
     currentUser = { ...userDoc.data(), uid: userDoc.id };
     localStorage.setItem("akshat_uid", userDoc.id);
-    document.getElementById("loginModal").style.display = "none";
+    window.closeModals();
     updateUIState();
   } else {
     if(confirm("User not found or wrong password. Do you want to Sign Up?")) {
@@ -467,19 +484,23 @@ window.submitSignup = async () => {
     localStorage.setItem("akshat_uid", docRef.id);
     currentUser = { ...newUser, uid: docRef.id };
     
-    closeSignup();
+    window.closeModals();
     updateUIState();
   } catch(e) { alert("Error creating profile"); console.error(e); }
 };
 
-window.openNotifyModal = () => document.getElementById("notifyModal").style.display = "flex";
+window.openNotifyModal = () => {
+  window.closeModals();
+  document.getElementById("notifyModal").classList.add('open');
+};
+
 window.saveNotification = async () => {
   const name = document.getElementById("notifyName").value;
   const contact = document.getElementById("notifyContact").value;
   if(name && contact) {
     await addDoc(collection(db, "notifications"), { name: name, contact: contact, time: serverTimestamp() });
     alert("Subscribed!");
-    document.getElementById("notifyModal").style.display = "none";
+    window.closeModals();
   } else {
     alert("Please enter both Name and Contact");
   }
@@ -511,4 +532,7 @@ window.handleMainComment = () => {
 
 window.toggleReplyBox = (id) => {
   const box = document.getElementById(`reply-input-${id}`);
-  box.style.display = box.style
+  box.style.display = box.style.display === "block" ? "none" : "block";
+};
+
+window.submitReply = (parentId
