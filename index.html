@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
 <style>
-/* --- EXISTING CSS (IMMUTABLE) --- */
+/* --- EXISTING CSS --- */
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',system-ui,sans-serif}
 
 body{
@@ -165,7 +165,6 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
 .reply-input-box { display: none; margin-top: 10px; animation: fadeIn 0.3s ease; }
 @keyframes fadeIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
 
-/* Auth & Notify Modals */
 .auth-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); z-index: 1000; display: none; align-items: center; justify-content: center; }
 .auth-card { background: #1a1a1a; width: 90%; max-width: 400px; padding: 24px; border-radius: 20px; border: 1px solid rgba(0,255,204,0.2); max-height: 90vh; overflow-y: auto; text-align: left; }
 .auth-card h3 { margin-bottom: 16px; color: #00ffcc; text-align: center; }
@@ -176,29 +175,11 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
 .notify-trigger { background: rgba(0,255,204,0.1); border: 1px solid #00ffcc; color: #00ffcc; padding: 12px 20px; border-radius: 12px; margin-bottom: 20px; cursor: pointer; width: 100%; font-weight: 600; }
 .notify-trigger:hover { background: #00ffcc; color: #000; }
 
-/* 🖼️ NEW UPLOAD CSS */
-.upload-wrapper {
-  display: flex; justify-content: center; margin-bottom: 20px;
-}
-.upload-circle {
-  width: 90px; height: 90px;
-  border-radius: 50%;
-  background: #111;
-  border: 2px dashed #00ffcc;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  overflow: hidden;
-  position: relative;
-}
-.upload-circle img {
-  width: 100%; height: 100%; object-fit: cover; display: none;
-}
-.upload-circle span {
-  font-size: 2rem; opacity: 0.5;
-}
-.upload-label {
-  text-align: center; font-size: 0.8rem; color: #00ffcc; opacity: 0.8; margin-top: -15px; margin-bottom: 15px;
-}
+.upload-wrapper { display: flex; justify-content: center; margin-bottom: 20px; }
+.upload-circle { width: 90px; height: 90px; border-radius: 50%; background: #111; border: 2px dashed #00ffcc; display: flex; align-items: center; justify-content: center; cursor: pointer; overflow: hidden; position: relative; }
+.upload-circle img { width: 100%; height: 100%; object-fit: cover; display: none; }
+.upload-circle span { font-size: 2rem; opacity: 0.5; }
+.upload-label { text-align: center; font-size: 0.8rem; color: #00ffcc; opacity: 0.8; margin-top: -15px; margin-bottom: 15px; }
 </style>
 </head>
 
@@ -259,7 +240,6 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
 
 <div id="signupModal" class="auth-modal">
   <div class="auth-card">
-    
     <div class="upload-wrapper">
       <div class="upload-circle" onclick="document.getElementById('hiddenFileInput').click()">
         <span id="uploadIcon">📷</span>
@@ -268,17 +248,14 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
       <input type="file" id="hiddenFileInput" hidden accept="image/*" onchange="handleFileSelect(event)">
     </div>
     <div class="upload-label">Tap circle to upload photo</div>
-
     <h3 style="margin-top:0">First Time Here?</h3>
     <p style="font-size:0.9rem;opacity:0.7;margin-bottom:15px;text-align:center;">Create a profile to comment globally.</p>
-    
     <div class="form-group"><label>Full Name</label><input id="regName" type="text" placeholder="John Doe"></div>
     <div class="form-group"><label>Username (Unique)</label><input id="regUser" type="text" placeholder="@johnny"></div>
     <div class="form-group"><label>Email</label><input id="regEmail" type="email" placeholder="john@example.com"></div>
     <div class="form-group"><label>Password</label><input id="regPass" type="password" placeholder="******"></div>
     <div class="form-group"><label>Birthday</label><input id="regDob" type="date"></div>
     <div class="form-group"><label>Instagram ID (Optional)</label><input id="regInsta" type="text" placeholder="@john.doe"></div>
-    
     <button class="auth-btn" onclick="submitSignup()">Create Identity</button>
     <button style="background:transparent;border:none;color:#aaa;margin-top:10px;cursor:pointer;width:100%" onclick="closeSignup()">Cancel</button>
   </div>
@@ -295,13 +272,12 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
 </div>
 
 <script type="module">
-/* --- 🛠️ IMPORTS & INIT --- */
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import {
   getFirestore, collection, addDoc, query, orderBy, onSnapshot,
   deleteDoc, doc, serverTimestamp, getDoc, setDoc, updateDoc,
   increment, where, getDocs
-} from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 const firebaseConfig={
   apiKey:"AIzaSyCY88mD-sHqxZiOGkQZbliTXG1QmySPesI",
@@ -320,7 +296,7 @@ const ADMIN_PROFILE = {
   role: "admin"
 };
 
-/* --- 👁️ VIEWS SYSTEM --- */
+/* --- VIEWS --- */
 const viewCount = document.getElementById("viewCount");
 const viewRef = doc(db, "views", "counter");
 
@@ -336,13 +312,13 @@ async function updateViews(){
       viewCount.textContent = u.data().count;
     }
   } catch(e) {
-    console.error("View count error:", e);
-    // If error, likely network or config, but script keeps running
+    console.error("View Error:", e);
+    viewCount.textContent = "Offline"; 
   }
 }
 updateViews();
 
-/* --- 👤 USER STATE --- */
+/* --- USER STATE --- */
 let currentUser = null;
 let pendingAction = null;
 let adminMode = false;
@@ -372,7 +348,19 @@ function updateWelcomeMsg() {
   }
 }
 
-/* --- 🖼️ IMAGE COMPRESSION LOGIC --- */
+/* --- HELPERS --- */
+function flag(code){
+  if(!code) return "🏳️";
+  return code.toUpperCase().replace(/./g,c=>String.fromCodePoint(127397+c.charCodeAt()));
+}
+async function getIP(){
+  try{
+    const r=await fetch("https://ipapi.co/json/");
+    return await r.json();
+  }catch{return {}}
+}
+
+/* --- IMAGE COMPRESS --- */
 function compressImage(file) {
   return new Promise((resolve) => {
     const reader = new FileReader();
@@ -400,7 +388,7 @@ function compressImage(file) {
   });
 }
 
-// Global Function to Handle Selection (Fixes the crash)
+/* --- GLOBAL FUNCTIONS --- */
 window.handleFileSelect = async (e) => {
   if (e.target.files && e.target.files[0]) {
     const file = e.target.files[0];
@@ -411,30 +399,11 @@ window.handleFileSelect = async (e) => {
       document.getElementById('previewImg').style.display = 'block';
       document.getElementById('uploadIcon').style.display = 'none';
       document.querySelector('.upload-circle').style.border = '2px solid #00ffcc';
-    } catch (err) {
-      alert("Error loading image");
-    }
+    } catch (err) { alert("Image error"); }
   }
 };
 
-/* --- 🏳️ HELPERS --- */
-function flag(code){
-  if(!code) return "🏳️";
-  return code.toUpperCase().replace(/./g,c=>String.fromCodePoint(127397+c.charCodeAt()));
-}
-async function getIP(){
-  try{
-    const r=await fetch("https://ipapi.co/json/");
-    return await r.json();
-  }catch{return {}}
-}
-
-/* --- 🎮 EXPOSING FUNCTIONS TO WINDOW --- */
-
-// 1. Notification Modal
-window.openNotifyModal = () => {
-  document.getElementById("notifyModal").style.display = "flex";
-};
+window.openNotifyModal = () => document.getElementById("notifyModal").style.display = "flex";
 
 window.saveNotification = async () => {
   const val = document.getElementById("notifyContact").value;
@@ -443,10 +412,9 @@ window.saveNotification = async () => {
     await addDoc(collection(db, "notifications"), { contact: val, time: serverTimestamp() });
     alert("Subscribed!");
     document.getElementById("notifyModal").style.display = "none";
-  } catch(e){ alert("Error subscribing"); }
+  } catch(e){ alert("Error"); }
 };
 
-// 2. Signup System
 window.requireLogin = (action) => {
   if (currentUser || adminMode) {
     action();
@@ -478,7 +446,7 @@ window.submitSignup = async () => {
   try {
     const newUser = {
       name, username, email, password: pass, birthday: dob,
-      photo: currentProfileBase64, // Uses the Base64 from gallery
+      photo: currentProfileBase64,
       instagram: insta, createdAt: serverTimestamp()
     };
     const docRef = await addDoc(collection(db, "users"), newUser);
@@ -491,7 +459,6 @@ window.submitSignup = async () => {
   } catch(e) { alert("Error creating profile"); console.error(e); }
 };
 
-// 3. Comment System
 window.handleMainComment = () => {
   const input = document.getElementById("commentInput");
   if(!input.value.trim()) return;
@@ -515,7 +482,6 @@ window.handleMainComment = () => {
   });
 };
 
-// 4. Reply System
 window.toggleReplyBox = (id) => {
   const box = document.getElementById(`reply-input-${id}`);
   box.style.display = box.style.display === "block" ? "none" : "block";
@@ -541,7 +507,6 @@ window.submitReply = (parentId) => {
   });
 };
 
-// 5. Admin System
 let targetId=null, targetType=null, parentIdForReply=null;
 
 window.openAdmin = (id, type, parentId = null) => {
@@ -556,15 +521,11 @@ window.closeAdmin = () => {
 
 window.confirmAdminAction = async () => {
   if(document.getElementById("adminPass").value !== ADMIN_KEY) return alert("Wrong passcode");
-  
-  // Activate Admin Mode
   if(!adminMode) {
     adminMode = true;
     updateWelcomeMsg();
     alert("Admin Mode Active");
   }
-
-  // Delete Item
   try {
     if(targetType === 'comment') await deleteDoc(doc(db, "comments", targetId));
     else if(targetType === 'reply') await deleteDoc(doc(db, "comments", parentIdForReply, "replies", targetId));
@@ -572,11 +533,11 @@ window.confirmAdminAction = async () => {
   } catch(e) { alert("Delete failed"); }
 };
 
-/* --- 🔄 RENDER LOOP --- */
+/* --- RENDER COMMENTS --- */
 const commentsDiv = document.getElementById("comments");
-const q = query(collection(db,"comments"), orderBy("time","desc"));
+const qC = query(collection(db,"comments"), orderBy("time","desc"));
 
-onSnapshot(q, snap => {
+onSnapshot(qC, snap => {
   commentsDiv.innerHTML = "";
   snap.forEach(d => {
     const c = d.data();
@@ -590,4 +551,15 @@ onSnapshot(q, snap => {
     div.innerHTML = `
       <div class="del" onclick="openAdmin('${d.id}', 'comment')">
         <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png">
+      </div>
+      <div class="user-header">
+        <img src="${uPhoto}" class="user-avatar">
+        <div class="user-info">
+          <span class="user-name">${uName} ${badge}</span>
+          <span class="user-handle">${c.userHandle || ""}</span>
+        </div>
+      </div>
+      <div style="margin:8px 0;font-size:1rem;line-height:1.4">${c.text}</div>
+      <small>${c.flag} ${c.city} • ${t}</small>
+      <button class="reply-btn" onclick="toggleReplyBox('${d.id}')">↩ Reply</button>
     
