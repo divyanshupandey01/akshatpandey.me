@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
 <style>
-/* --- EXISTING CSS --- */
+/* --- BASE STYLES --- */
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',system-ui,sans-serif}
 
 body{
@@ -120,7 +120,7 @@ textarea::placeholder{color:#fff;font-weight:600}
 
 footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
 
-/* admin modal */
+/* --- ADMIN & MODALS --- */
 #adminModal{
   position:fixed;
   inset:0;
@@ -152,7 +152,7 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
   border:none;
 }
 
-/* --- 🚀 FEATURES CSS --- */
+/* --- FEATURES CSS --- */
 .user-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
 .user-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00ffcc; }
 .user-info { display: flex; flex-direction: column; }
@@ -176,7 +176,7 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
 .notify-trigger { background: rgba(0,255,204,0.1); border: 1px solid #00ffcc; color: #00ffcc; padding: 12px 20px; border-radius: 12px; margin-bottom: 20px; cursor: pointer; width: 100%; font-weight: 600; }
 .notify-trigger:hover { background: #00ffcc; color: #000; }
 
-/* --- 📸 NEW UPLOAD STYLES --- */
+/* --- 📸 UPLOAD STYLES --- */
 .upload-container { display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; }
 .upload-circle { width: 100px; height: 100px; border-radius: 50%; background: #000; border: 2px dashed #00ffcc; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; cursor: pointer; transition: 0.3s; }
 .upload-circle:hover { background: rgba(0, 255, 204, 0.1); }
@@ -277,14 +277,15 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
 </div>
 
 <script type="module">
-/* --- 🛠️ IMPORTS & INIT --- */
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+/* --- 🛠️ IMPORTS (FIXED VERSIONS) --- */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import {
   getFirestore, collection, addDoc, query, orderBy, onSnapshot,
   deleteDoc, doc, serverTimestamp, getDoc, setDoc, updateDoc,
   increment, where, getDocs
-} from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
+/* --- ⚙️ CONFIG --- */
 const firebaseConfig={
   apiKey:"AIzaSyCY88mD-sHqxZiOGkQZbliTXG1QmySPesI",
   authDomain:"akshat-comments.firebaseapp.com",
@@ -364,7 +365,7 @@ async function getIP(){
   }catch{return {}}
 }
 
-/* --- 📸 IMAGE HANDLING LOGIC (NEW) --- */
+/* --- 📸 IMAGE HANDLING LOGIC --- */
 let finalPhotoData = "https://cdn-icons-png.flaticon.com/512/847/847969.png"; // Default
 
 window.handleFileUpload = (input) => {
@@ -373,15 +374,12 @@ window.handleFileUpload = (input) => {
 
   const reader = new FileReader();
   reader.onload = (e) => {
-    // Create an image object to resize it
     const img = new Image();
     img.src = e.target.result;
     img.onload = () => {
-      // Create canvas for resizing
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
       
-      // Resize to 150x150 to keep database fast
       const MAX_SIZE = 150;
       let width = img.width;
       let height = img.height;
@@ -401,11 +399,8 @@ window.handleFileUpload = (input) => {
       canvas.width = width;
       canvas.height = height;
       ctx.drawImage(img, 0, 0, width, height);
-      
-      // Get compressed data URL
       finalPhotoData = canvas.toDataURL("image/jpeg", 0.7);
       
-      // Show preview
       const preview = document.getElementById("previewImg");
       const icon = document.getElementById("uploadIcon");
       preview.src = finalPhotoData;
@@ -445,7 +440,7 @@ window.closeSignup = () => {
   pendingAction = null;
 };
 
-// UPDATED SUBMIT FUNCTION
+// SIGNUP SUBMIT
 window.submitSignup = async () => {
   const name = document.getElementById("regName").value.trim();
   const username = document.getElementById("regUser").value.trim();
@@ -467,7 +462,7 @@ window.submitSignup = async () => {
       email, 
       password: pass, 
       birthday: dob,
-      photo: finalPhotoData, // Using the processed image data
+      photo: finalPhotoData, 
       instagram: insta, 
       createdAt: serverTimestamp()
     };
@@ -581,4 +576,8 @@ onSnapshot(qC, snap => {
         <div class="user-info">
           <span class="user-name">${uName} ${badge}</span>
           <span class="user-handle">${c.userHandle || ""}</span>
-        </d
+        </div>
+      </div>
+      <div style="margin:8px 0;font-size:1rem;line-height:1.4">${c.text}</div>
+      <small>${c.flag} ${c.city} • ${t}</small>
+      <button class="reply-btn" onclick="toggleReplyBox('$
