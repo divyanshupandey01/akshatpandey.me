@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
 <style>
-/* --- BASE STYLES --- */
+/* --- EXISTING CSS (IMMUTABLE) --- */
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',system-ui,sans-serif}
 
 body{
@@ -120,7 +120,7 @@ textarea::placeholder{color:#fff;font-weight:600}
 
 footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
 
-/* --- ADMIN & MODALS --- */
+/* admin modal */
 #adminModal{
   position:fixed;
   inset:0;
@@ -152,7 +152,7 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
   border:none;
 }
 
-/* --- FEATURES CSS --- */
+/* --- 🚀 NEW FEATURES CSS --- */
 .user-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
 .user-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00ffcc; }
 .user-info { display: flex; flex-direction: column; }
@@ -175,14 +175,6 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
 .auth-btn { width: 100%; padding: 12px; background: #00ffcc; color: #000; font-weight: 700; border: none; border-radius: 99px; margin-top: 10px; cursor: pointer; }
 .notify-trigger { background: rgba(0,255,204,0.1); border: 1px solid #00ffcc; color: #00ffcc; padding: 12px 20px; border-radius: 12px; margin-bottom: 20px; cursor: pointer; width: 100%; font-weight: 600; }
 .notify-trigger:hover { background: #00ffcc; color: #000; }
-
-/* --- 📸 UPLOAD STYLES --- */
-.upload-container { display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; }
-.upload-circle { width: 100px; height: 100px; border-radius: 50%; background: #000; border: 2px dashed #00ffcc; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; cursor: pointer; transition: 0.3s; }
-.upload-circle:hover { background: rgba(0, 255, 204, 0.1); }
-.upload-circle img { width: 100%; height: 100%; object-fit: cover; display: none; }
-.upload-icon { font-size: 2rem; color: #00ffcc; pointer-events: none; }
-.upload-label { font-size: 0.8rem; color: #00ffcc; margin-top: 8px; opacity: 0.8; }
 </style>
 </head>
 
@@ -245,21 +237,12 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
   <div class="auth-card">
     <h3>👋 First Time Here?</h3>
     <p style="font-size:0.9rem;opacity:0.7;margin-bottom:15px;text-align:center;">Create a profile to comment globally.</p>
-
-    <div class="upload-container">
-      <div class="upload-circle" onclick="document.getElementById('fileInput').click()">
-        <span class="upload-icon" id="uploadIcon">+</span>
-        <img id="previewImg">
-      </div>
-      <span class="upload-label">Tap to upload photo</span>
-      <input type="file" id="fileInput" accept="image/*" style="display:none" onchange="handleFileUpload(this)">
-    </div>
-
     <div class="form-group"><label>Full Name</label><input id="regName" type="text" placeholder="John Doe"></div>
     <div class="form-group"><label>Username (Unique)</label><input id="regUser" type="text" placeholder="@johnny"></div>
     <div class="form-group"><label>Email</label><input id="regEmail" type="email" placeholder="john@example.com"></div>
     <div class="form-group"><label>Password</label><input id="regPass" type="password" placeholder="******"></div>
     <div class="form-group"><label>Birthday</label><input id="regDob" type="date"></div>
+    <div class="form-group"><label>Profile Photo URL (Optional)</label><input id="regPic" type="text" placeholder="https://..."></div>
     <div class="form-group"><label>Instagram ID (Optional)</label><input id="regInsta" type="text" placeholder="@john.doe"></div>
     <button class="auth-btn" onclick="submitSignup()">Create Identity</button>
     <button style="background:transparent;border:none;color:#aaa;margin-top:10px;cursor:pointer;width:100%" onclick="closeSignup()">Cancel</button>
@@ -277,15 +260,14 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
 </div>
 
 <script type="module">
-/* --- 🛠️ IMPORTS (FIXED VERSIONS) --- */
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+/* --- 🛠️ IMPORTS & INIT --- */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
 import {
   getFirestore, collection, addDoc, query, orderBy, onSnapshot,
   deleteDoc, doc, serverTimestamp, getDoc, setDoc, updateDoc,
   increment, where, getDocs
-} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
 
-/* --- ⚙️ CONFIG --- */
 const firebaseConfig={
   apiKey:"AIzaSyCY88mD-sHqxZiOGkQZbliTXG1QmySPesI",
   authDomain:"akshat-comments.firebaseapp.com",
@@ -303,7 +285,7 @@ const ADMIN_PROFILE = {
   role: "admin"
 };
 
-/* --- 👁️ VIEWS SYSTEM --- */
+/* --- 👁️ VIEWS SYSTEM (With Error Check) --- */
 const viewCount = document.getElementById("viewCount");
 const viewRef = doc(db, "views", "counter");
 
@@ -330,6 +312,7 @@ let currentUser = null;
 let pendingAction = null;
 let adminMode = false;
 
+// Auto Login
 async function autoLogin() {
   const uid = localStorage.getItem("akshat_uid");
   if(uid) {
@@ -365,53 +348,9 @@ async function getIP(){
   }catch{return {}}
 }
 
-/* --- 📸 IMAGE HANDLING LOGIC --- */
-let finalPhotoData = "https://cdn-icons-png.flaticon.com/512/847/847969.png"; // Default
+/* --- 🎮 EXPOSING FUNCTIONS TO WINDOW (Crucial Fix) --- */
 
-window.handleFileUpload = (input) => {
-  const file = input.files[0];
-  if (!file) return;
-
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    const img = new Image();
-    img.src = e.target.result;
-    img.onload = () => {
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
-      
-      const MAX_SIZE = 150;
-      let width = img.width;
-      let height = img.height;
-
-      if (width > height) {
-        if (width > MAX_SIZE) {
-          height *= MAX_SIZE / width;
-          width = MAX_SIZE;
-        }
-      } else {
-        if (height > MAX_SIZE) {
-          width *= MAX_SIZE / height;
-          height = MAX_SIZE;
-        }
-      }
-      
-      canvas.width = width;
-      canvas.height = height;
-      ctx.drawImage(img, 0, 0, width, height);
-      finalPhotoData = canvas.toDataURL("image/jpeg", 0.7);
-      
-      const preview = document.getElementById("previewImg");
-      const icon = document.getElementById("uploadIcon");
-      preview.src = finalPhotoData;
-      preview.style.display = "block";
-      icon.style.display = "none";
-    };
-  };
-  reader.readAsDataURL(file);
-};
-
-/* --- 🎮 EXPOSING FUNCTIONS --- */
+// 1. Notification Modal
 window.openNotifyModal = () => {
   document.getElementById("notifyModal").style.display = "flex";
 };
@@ -426,6 +365,7 @@ window.saveNotification = async () => {
   } catch(e){ alert("Error subscribing"); }
 };
 
+// 2. Signup System
 window.requireLogin = (action) => {
   if (currentUser || adminMode) {
     action();
@@ -440,13 +380,13 @@ window.closeSignup = () => {
   pendingAction = null;
 };
 
-// SIGNUP SUBMIT
 window.submitSignup = async () => {
   const name = document.getElementById("regName").value.trim();
   const username = document.getElementById("regUser").value.trim();
   const email = document.getElementById("regEmail").value.trim();
   const pass = document.getElementById("regPass").value;
   const dob = document.getElementById("regDob").value;
+  const pic = document.getElementById("regPic").value.trim();
   const insta = document.getElementById("regInsta").value.trim();
 
   if(!name || !username || !email || !pass || !dob) return alert("Fill required fields!");
@@ -457,14 +397,9 @@ window.submitSignup = async () => {
 
   try {
     const newUser = {
-      name, 
-      username, 
-      email, 
-      password: pass, 
-      birthday: dob,
-      photo: finalPhotoData, 
-      instagram: insta, 
-      createdAt: serverTimestamp()
+      name, username, email, password: pass, birthday: dob,
+      photo: pic || "https://cdn-icons-png.flaticon.com/512/847/847969.png",
+      instagram: insta, createdAt: serverTimestamp()
     };
     const docRef = await addDoc(collection(db, "users"), newUser);
     localStorage.setItem("akshat_uid", docRef.id);
@@ -476,6 +411,7 @@ window.submitSignup = async () => {
   } catch(e) { alert("Error creating profile"); console.error(e); }
 };
 
+// 3. Comment System
 window.handleMainComment = () => {
   const input = document.getElementById("commentInput");
   if(!input.value.trim()) return;
@@ -499,6 +435,7 @@ window.handleMainComment = () => {
   });
 };
 
+// 4. Reply System
 window.toggleReplyBox = (id) => {
   const box = document.getElementById(`reply-input-${id}`);
   box.style.display = box.style.display === "block" ? "none" : "block";
@@ -524,6 +461,7 @@ window.submitReply = (parentId) => {
   });
 };
 
+// 5. Admin System
 let targetId=null, targetType=null, parentIdForReply=null;
 
 window.openAdmin = (id, type, parentId = null) => {
@@ -539,12 +477,14 @@ window.closeAdmin = () => {
 window.confirmAdminAction = async () => {
   if(document.getElementById("adminPass").value !== ADMIN_KEY) return alert("Wrong passcode");
   
+  // Activate Admin Mode
   if(!adminMode) {
     adminMode = true;
     updateWelcomeMsg();
     alert("Admin Mode Active");
   }
 
+  // Delete Item
   try {
     if(targetType === 'comment') await deleteDoc(doc(db, "comments", targetId));
     else if(targetType === 'reply') await deleteDoc(doc(db, "comments", parentIdForReply, "replies", targetId));
@@ -554,9 +494,9 @@ window.confirmAdminAction = async () => {
 
 /* --- 🔄 RENDER LOOP --- */
 const commentsDiv = document.getElementById("comments");
-const qC = query(collection(db,"comments"), orderBy("time","desc"));
+const q = query(collection(db,"comments"), orderBy("time","desc"));
 
-onSnapshot(qC, snap => {
+onSnapshot(q, snap => {
   commentsDiv.innerHTML = "";
   snap.forEach(d => {
     const c = d.data();
@@ -580,4 +520,46 @@ onSnapshot(qC, snap => {
       </div>
       <div style="margin:8px 0;font-size:1rem;line-height:1.4">${c.text}</div>
       <small>${c.flag} ${c.city} • ${t}</small>
-      <button class="reply-btn" onclick="toggleReplyBox('$
+      <button class="reply-btn" onclick="toggleReplyBox('${d.id}')">↩ Reply</button>
+      <div id="reply-input-${d.id}" class="reply-box reply-input-box">
+        <textarea id="reply-text-${d.id}" placeholder="Reply..." style="width:100%;background:#111;color:#fff;border:1px solid #333;padding:8px;border-radius:8px;margin-bottom:8px"></textarea>
+        <button class="comment-btn" style="padding:6px 14px;font-size:0.8rem" onclick="submitReply('${d.id}')">Post</button>
+      </div>
+      <div class="replies-container" id="replies-${d.id}"></div>
+    `;
+    commentsDiv.appendChild(div);
+
+    // Load Replies
+    const rRef = collection(db, "comments", d.id, "replies");
+    onSnapshot(query(rRef, orderBy("time","asc")), rSnap => {
+      const rDiv = document.getElementById(`replies-${d.id}`);
+      if(rDiv) {
+        rDiv.innerHTML = "";
+        rSnap.forEach(rd => {
+          const rc = rd.data();
+          const rBadge = rc.role === "admin" ? `<span class="admin-badge">ADMIN</span>` : "";
+          const replyEl = document.createElement("div");
+          replyEl.style.marginTop="10px";
+          replyEl.style.position="relative";
+          replyEl.innerHTML = `
+             <div class="del" style="width:24px;height:24px;top:0;right:0;background:rgba(255,255,255,0.1)" onclick="openAdmin('${rd.id}', 'reply', '${d.id}')">
+               <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png" style="width:12px;height:12px">
+             </div>
+             <div class="user-header" style="margin-bottom:4px">
+               <img src="${rc.userPhoto}" class="user-avatar" style="width:28px;height:28px">
+               <div class="user-info">
+                 <span class="user-name" style="font-size:0.9rem">${rc.userName} ${rBadge}</span>
+               </div>
+             </div>
+             <div style="font-size:0.95rem;opacity:0.9">${rc.text}</div>
+          `;
+          rDiv.appendChild(replyEl);
+        });
+      }
+    });
+  });
+});
+</script>
+</body>
+  </html>
+  
