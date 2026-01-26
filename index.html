@@ -28,11 +28,9 @@ body{
   margin:20px auto 10px;
 }
 
-/* socials */
 .socials{display:flex;justify-content:center;gap:20px;margin-bottom:20px}
 .socials img{width:32px;height:32px;cursor:pointer}
 
-/* heading */
 h1{
   font-family:'Space Grotesk',sans-serif;
   font-size:clamp(2.5rem,8vw,4rem);
@@ -93,7 +91,6 @@ textarea::placeholder{color:#fff;font-weight:600}
   font-family:monospace;
 }
 
-/* 🔥 FIXED DELETE BUTTON */
 .del{
   position:absolute;
   top:8px;
@@ -156,116 +153,28 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
 }
 
 /* --- 🚀 NEW FEATURES CSS --- */
+.user-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.user-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00ffcc; }
+.user-info { display: flex; flex-direction: column; }
+.user-name { font-weight: 700; font-size: 1rem; color: #fff; }
+.user-handle { font-size: 0.8rem; opacity: 0.7; color: #00ffcc; }
+.admin-badge { background: #00ffcc; color: #000; font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; margin-left: 6px; font-weight: 800; vertical-align: middle; }
 
-/* User Identity Styling */
-.user-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 8px;
-}
-.user-avatar {
-  width: 40px; height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #00ffcc;
-}
-.user-info {
-  display: flex;
-  flex-direction: column;
-}
-.user-name {
-  font-weight: 700;
-  font-size: 1rem;
-  color: #fff;
-}
-.user-handle {
-  font-size: 0.8rem;
-  opacity: 0.7;
-  color: #00ffcc;
-}
-.admin-badge {
-  background: #00ffcc;
-  color: #000;
-  font-size: 0.7rem;
-  padding: 2px 6px;
-  border-radius: 4px;
-  margin-left: 6px;
-  font-weight: 800;
-  vertical-align: middle;
-}
-
-/* Reply System */
-.reply-btn {
-  background: transparent;
-  border: 1px solid rgba(0,255,204,0.3);
-  color: #00ffcc;
-  padding: 4px 12px;
-  border-radius: 99px;
-  font-size: 0.8rem;
-  cursor: pointer;
-  margin-top: 10px;
-}
-.replies-container {
-  margin-top: 12px;
-  padding-left: 14px;
-  border-left: 2px solid rgba(255,255,255,0.1);
-}
-.reply-input-box {
-  display: none;
-  margin-top: 10px;
-  animation: fadeIn 0.3s ease;
-}
+.reply-btn { background: transparent; border: 1px solid rgba(0,255,204,0.3); color: #00ffcc; padding: 4px 12px; border-radius: 99px; font-size: 0.8rem; cursor: pointer; margin-top: 10px; }
+.replies-container { margin-top: 12px; padding-left: 14px; border-left: 2px solid rgba(255,255,255,0.1); }
+.reply-input-box { display: none; margin-top: 10px; animation: fadeIn 0.3s ease; }
 @keyframes fadeIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
 
-/* Auth Modal */
-.auth-modal {
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.85);
-  backdrop-filter: blur(5px);
-  z-index: 1000;
-  display: none;
-  align-items: center; justify-content: center;
-}
-.auth-card {
-  background: #1a1a1a;
-  width: 90%; max-width: 400px;
-  padding: 24px;
-  border-radius: 20px;
-  border: 1px solid rgba(0,255,204,0.2);
-  max-height: 90vh;
-  overflow-y: auto;
-}
-.auth-card h3 { margin-bottom: 16px; color: #00ffcc; }
+/* Auth & Notify Modals */
+.auth-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); z-index: 1000; display: none; align-items: center; justify-content: center; }
+.auth-card { background: #1a1a1a; width: 90%; max-width: 400px; padding: 24px; border-radius: 20px; border: 1px solid rgba(0,255,204,0.2); max-height: 90vh; overflow-y: auto; text-align: left; }
+.auth-card h3 { margin-bottom: 16px; color: #00ffcc; text-align: center; }
 .form-group { margin-bottom: 12px; text-align: left; }
 .form-group label { font-size: 0.85rem; opacity: 0.8; display: block; margin-bottom: 4px; }
-.form-group input {
-  width: 100%; padding: 10px;
-  background: #000; border: 1px solid #333;
-  border-radius: 8px; color: #fff;
-}
-.auth-btn {
-  width: 100%; padding: 12px;
-  background: #00ffcc; color: #000;
-  font-weight: 700; border: none;
-  border-radius: 99px; margin-top: 10px;
-  cursor: pointer;
-}
-
-/* Notify Button */
-.notify-trigger {
-  background: rgba(0,255,204,0.1);
-  border: 1px solid #00ffcc;
-  color: #00ffcc;
-  padding: 12px 20px;
-  border-radius: 12px;
-  margin-bottom: 20px;
-  cursor: pointer;
-  width: 100%;
-  font-weight: 600;
-}
+.form-group input { width: 100%; padding: 10px; background: #000; border: 1px solid #333; border-radius: 8px; color: #fff; }
+.auth-btn { width: 100%; padding: 12px; background: #00ffcc; color: #000; font-weight: 700; border: none; border-radius: 99px; margin-top: 10px; cursor: pointer; }
+.notify-trigger { background: rgba(0,255,204,0.1); border: 1px solid #00ffcc; color: #00ffcc; padding: 12px 20px; border-radius: 12px; margin-bottom: 20px; cursor: pointer; width: 100%; font-weight: 600; }
 .notify-trigger:hover { background: #00ffcc; color: #000; }
-
 </style>
 </head>
 
@@ -275,15 +184,9 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
 <img src="https://i.postimg.cc/SKhqgHqv/IMG-20260111-212449-914.webp" class="profile-pic">
 
 <div class="socials">
-  <a href="https://instagram.com/vedicash" target="_blank">
-    <img src="https://i.postimg.cc/GmNvBpX1/instagram.png">
-  </a>
-  <a href="mailto:akshatpandey1307@gmail.com">
-    <img src="https://i.postimg.cc/bNwn3nMZ/gmail.png">
-  </a>
-  <a href="https://www.linkedin.com/in/akshat-pandey-5b2a552a3" target="_blank">
-    <img src="https://i.postimg.cc/764G7J79/linkedin.png">
-  </a>
+  <a href="https://instagram.com/vedicash" target="_blank"><img src="https://i.postimg.cc/GmNvBpX1/instagram.png"></a>
+  <a href="mailto:akshatpandey1307@gmail.com"><img src="https://i.postimg.cc/bNwn3nMZ/gmail.png"></a>
+  <a href="https://www.linkedin.com/in/akshat-pandey-5b2a552a3" target="_blank"><img src="https://i.postimg.cc/764G7J79/linkedin.png"></a>
 </div>
 
 <h1>Akshat Pandey</h1>
@@ -320,8 +223,7 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
     <h3>Admin Verification</h3>
     <p style="opacity:.75;font-size:.9rem;margin-bottom:14px">
       Please enter the Admin Passcode<br>
-      If you are not admin please contact
-      <a href="https://instagram.com/scionash" target="_blank" style="color:#00ffcc">@scionash</a>
+      If you are not admin please contact <a href="https://instagram.com/scionash" target="_blank" style="color:#00ffcc">@scionash</a>
     </p>
     <input id="adminPass" type="password" placeholder="Admin passcode">
     <div style="display:flex;gap:10px">
@@ -334,8 +236,7 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
 <div id="signupModal" class="auth-modal">
   <div class="auth-card">
     <h3>👋 First Time Here?</h3>
-    <p style="font-size:0.9rem;opacity:0.7;margin-bottom:15px;">Create a profile to comment globally.</p>
-    
+    <p style="font-size:0.9rem;opacity:0.7;margin-bottom:15px;text-align:center;">Create a profile to comment globally.</p>
     <div class="form-group"><label>Full Name</label><input id="regName" type="text" placeholder="John Doe"></div>
     <div class="form-group"><label>Username (Unique)</label><input id="regUser" type="text" placeholder="@johnny"></div>
     <div class="form-group"><label>Email</label><input id="regEmail" type="email" placeholder="john@example.com"></div>
@@ -343,32 +244,39 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
     <div class="form-group"><label>Birthday</label><input id="regDob" type="date"></div>
     <div class="form-group"><label>Profile Photo URL (Optional)</label><input id="regPic" type="text" placeholder="https://..."></div>
     <div class="form-group"><label>Instagram ID (Optional)</label><input id="regInsta" type="text" placeholder="@john.doe"></div>
-
     <button class="auth-btn" onclick="submitSignup()">Create Identity</button>
-    <button style="background:transparent;border:none;color:#aaa;margin-top:10px;cursor:pointer" onclick="closeSignup()">Cancel</button>
+    <button style="background:transparent;border:none;color:#aaa;margin-top:10px;cursor:pointer;width:100%" onclick="closeSignup()">Cancel</button>
   </div>
 </div>
 
 <div id="notifyModal" class="auth-modal">
   <div class="auth-card">
     <h3>🔔 Get Updates</h3>
-    <p style="font-size:0.9rem;opacity:0.7;margin-bottom:15px;">Enter email/social handle to get notified.</p>
+    <p style="font-size:0.9rem;opacity:0.7;margin-bottom:15px;text-align:center;">Enter email/social handle to get notified.</p>
     <input id="notifyContact" style="width:100%;padding:10px;border-radius:8px;border:none;margin-bottom:10px" placeholder="Email or Instagram Handle">
     <button class="auth-btn" onclick="saveNotification()">Subscribe</button>
-    <button style="background:transparent;border:none;color:#aaa;margin-top:10px;cursor:pointer" onclick="document.getElementById('notifyModal').style.display='none'">Close</button>
+    <button style="background:transparent;border:none;color:#aaa;margin-top:10px;cursor:pointer;width:100%" onclick="document.getElementById('notifyModal').style.display='none'">Close</button>
   </div>
 </div>
 
 <script type="module">
+/* --- 🛠️ IMPORTS & INIT --- */
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
 import {
-  getFirestore, collection, addDoc, query,
-  orderBy, onSnapshot, deleteDoc, doc,
-  serverTimestamp, getDoc, setDoc, updateDoc, increment,
-  where, getDocs
+  getFirestore, collection, addDoc, query, orderBy, onSnapshot,
+  deleteDoc, doc, serverTimestamp, getDoc, setDoc, updateDoc,
+  increment, where, getDocs
 } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
 
-/* 🔥 CONFIG & INIT */
+const firebaseConfig={
+  apiKey:"AIzaSyCY88mD-sHqxZiOGkQZbliTXG1QmySPesI",
+  authDomain:"akshat-comments.firebaseapp.com",
+  projectId:"akshat-comments"
+};
+
+const app=initializeApp(firebaseConfig);
+const db=getFirestore(app);
+
 const ADMIN_KEY="@Akshat130807";
 const ADMIN_PROFILE = {
   name: "Akshat Pandey",
@@ -377,65 +285,62 @@ const ADMIN_PROFILE = {
   role: "admin"
 };
 
-const firebaseConfig={
-  apiKey:"AIzaSyCY88mD-sHqxZiOGkQZbliTXG1QmySPesI",
-  authDomain:"akshat-comments.firebaseapp.com",
-  projectId:"akshat-comments",
-  storageBucket: "akshat-comments.firebasestorage.app",
-  messagingSenderId: "516778743649",
-  appId: "1:516778743649:web:69f76c9738dc7ebc295720"
-};
+/* --- 👁️ VIEWS SYSTEM (With Error Check) --- */
+const viewCount = document.getElementById("viewCount");
+const viewRef = doc(db, "views", "counter");
 
-const app=initializeApp(firebaseConfig);
-const db=getFirestore(app);
+async function updateViews(){
+  try {
+    const snap = await getDoc(viewRef);
+    if(!snap.exists()){
+      await setDoc(viewRef, {count:1});
+      viewCount.textContent = "1";
+    } else {
+      await updateDoc(viewRef, {count: increment(1)});
+      const u = await getDoc(viewRef);
+      viewCount.textContent = u.data().count;
+    }
+  } catch(e) {
+    console.error("View count error:", e);
+    viewCount.textContent = "Error";
+  }
+}
+updateViews();
 
-/* 👤 USER IDENTITY STATE */
+/* --- 👤 USER STATE --- */
 let currentUser = null;
-let pendingCommentAction = null; // Stores function to run after login
+let pendingAction = null;
 let adminMode = false;
 
-/* 🔄 AUTO LOGIN */
+// Auto Login
 async function autoLogin() {
   const uid = localStorage.getItem("akshat_uid");
   if(uid) {
-    const snap = await getDoc(doc(db, "users", uid));
-    if(snap.exists()) {
-      currentUser = { ...snap.data(), uid: snap.id };
-      updateWelcomeMsg();
-    }
+    try {
+      const snap = await getDoc(doc(db, "users", uid));
+      if(snap.exists()) {
+        currentUser = { ...snap.data(), uid: snap.id };
+        updateWelcomeMsg();
+      }
+    } catch(e){ console.error("Auto login error", e); }
   }
 }
 autoLogin();
 
 function updateWelcomeMsg() {
   const w = document.getElementById("welcomeMsg");
-  if(currentUser) {
+  if(currentUser || adminMode) {
     w.style.display = "block";
-    w.innerHTML = `Logged in as <b>${currentUser.name}</b> (${currentUser.username})`;
+    const name = adminMode ? "Akshat (Admin)" : currentUser.name;
+    w.innerHTML = `Logged in as <b>${name}</b>`;
   }
 }
 
-/* 👁️ GLOBAL VIEWS (Existing) */
-const viewRef=doc(db,"views","counter");
-async function updateViews(){
-  const snap=await getDoc(viewRef);
-  if(!snap.exists()){
-    await setDoc(viewRef,{count:1});
-    viewCount.textContent=1;
-  }else{
-    await updateDoc(viewRef,{count:increment(1)});
-    const u=await getDoc(viewRef);
-    viewCount.textContent=u.data().count;
-  }
-}
-updateViews();
-
-/* 🏳️ HELPER */
+/* --- 🏳️ HELPERS --- */
 function flag(code){
   if(!code) return "🏳️";
   return code.toUpperCase().replace(/./g,c=>String.fromCodePoint(127397+c.charCodeAt()));
 }
-
 async function getIP(){
   try{
     const r=await fetch("https://ipapi.co/json/");
@@ -443,19 +348,36 @@ async function getIP(){
   }catch{return {}}
 }
 
-/* 🚀 AUTH LOGIC */
+/* --- 🎮 EXPOSING FUNCTIONS TO WINDOW (Crucial Fix) --- */
+
+// 1. Notification Modal
+window.openNotifyModal = () => {
+  document.getElementById("notifyModal").style.display = "flex";
+};
+
+window.saveNotification = async () => {
+  const val = document.getElementById("notifyContact").value;
+  if(!val) return;
+  try {
+    await addDoc(collection(db, "notifications"), { contact: val, time: serverTimestamp() });
+    alert("Subscribed!");
+    document.getElementById("notifyModal").style.display = "none";
+  } catch(e){ alert("Error subscribing"); }
+};
+
+// 2. Signup System
 window.requireLogin = (action) => {
   if (currentUser || adminMode) {
     action();
   } else {
-    pendingCommentAction = action;
+    pendingAction = action;
     document.getElementById("signupModal").style.display = "flex";
   }
 };
 
 window.closeSignup = () => {
   document.getElementById("signupModal").style.display = "none";
-  pendingCommentAction = null;
+  pendingAction = null;
 };
 
 window.submitSignup = async () => {
@@ -467,60 +389,42 @@ window.submitSignup = async () => {
   const pic = document.getElementById("regPic").value.trim();
   const insta = document.getElementById("regInsta").value.trim();
 
-  if(!name || !username || !email || !pass || !dob) return alert("Please fill required fields!");
+  if(!name || !username || !email || !pass || !dob) return alert("Fill required fields!");
 
-  // Check unique username
   const q = query(collection(db, "users"), where("username", "==", username));
   const snap = await getDocs(q);
-  if(!snap.empty) return alert("Username already taken!");
+  if(!snap.empty) return alert("Username taken!");
 
   try {
     const newUser = {
       name, username, email, password: pass, birthday: dob,
       photo: pic || "https://cdn-icons-png.flaticon.com/512/847/847969.png",
-      instagram: insta,
-      createdAt: serverTimestamp()
+      instagram: insta, createdAt: serverTimestamp()
     };
-    
     const docRef = await addDoc(collection(db, "users"), newUser);
     localStorage.setItem("akshat_uid", docRef.id);
     currentUser = { ...newUser, uid: docRef.id };
     
     closeSignup();
     updateWelcomeMsg();
-    if(pendingCommentAction) pendingCommentAction();
-    
-  } catch(e) {
-    console.error(e);
-    alert("Error creating profile");
-  }
+    if(pendingAction) pendingAction();
+  } catch(e) { alert("Error creating profile"); console.error(e); }
 };
 
-/* 💬 COMMENT LOGIC */
-const commentsDiv=document.getElementById("comments");
-const input=document.getElementById("commentInput");
-const commentsRef=collection(db,"comments");
-
-// Wrapper for Main Comment
+// 3. Comment System
 window.handleMainComment = () => {
+  const input = document.getElementById("commentInput");
   if(!input.value.trim()) return;
   
-  requireLogin(async () => {
+  window.requireLogin(async () => {
     const ip = await getIP();
-    
-    // Determine Identity
-    let identity = currentUser;
-    if(adminMode) identity = ADMIN_PROFILE;
+    let identity = adminMode ? ADMIN_PROFILE : currentUser;
 
-    await addDoc(commentsRef,{
+    await addDoc(collection(db, "comments"), {
       text: input.value,
-      ip: ip.ip||"N/A",
-      city: ip.city||"Unknown",
-      region: ip.region||"Unknown",
-      country: ip.country_name||"Unknown",
-      flag: flag(ip.country),
+      ip: ip.ip||"N/A", city: ip.city||"Unknown", region: ip.region||"Unknown",
+      country: ip.country_name||"Unknown", flag: flag(ip.country),
       time: serverTimestamp(),
-      // Identity Fields
       userId: identity.uid || "admin",
       userName: identity.name,
       userHandle: identity.username,
@@ -531,89 +435,7 @@ window.handleMainComment = () => {
   });
 };
 
-/* 🔄 RENDER COMMENTS & REPLIES */
-const q=query(commentsRef,orderBy("time","desc"));
-onSnapshot(q,snap=>{
-  commentsDiv.innerHTML="";
-  snap.forEach(d=>{
-    const c=d.data();
-    const t=c.time ? new Date(c.time.seconds*1000).toLocaleString() : "Just now";
-    
-    // Fallback for old anonymous comments
-    const uName = c.userName || "Anonymous";
-    const uHandle = c.userHandle || "";
-    const uPhoto = c.userPhoto || "https://cdn-icons-png.flaticon.com/512/847/847969.png";
-    const badge = c.role === "admin" ? `<span class="admin-badge">ADMIN</span>` : "";
-
-    const div=document.createElement("div");
-    div.className="comment";
-    div.id = `comment-${d.id}`;
-    
-    div.innerHTML=`
-      <div class="del" onclick="openAdmin('${d.id}', 'comment')">
-        <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png">
-      </div>
-      
-      <div class="user-header">
-        <img src="${uPhoto}" class="user-avatar">
-        <div class="user-info">
-          <span class="user-name">${uName} ${badge}</span>
-          <span class="user-handle">${uHandle}</span>
-        </div>
-      </div>
-
-      <div style="margin: 8px 0; font-size:1rem; line-height:1.4">${c.text}</div>
-      
-      <small>${c.flag} ${c.city}, ${c.country} • ${t}</small>
-      
-      <button class="reply-btn" onclick="toggleReplyBox('${d.id}')">↩ Reply</button>
-      
-      <div id="reply-input-${d.id}" class="reply-box reply-input-box">
-        <textarea id="reply-text-${d.id}" placeholder="Write a reply..." style="min-height:60px;margin-bottom:8px"></textarea>
-        <button class="comment-btn" style="padding:6px 14px;font-size:0.8rem" onclick="submitReply('${d.id}')">Post Reply</button>
-      </div>
-
-      <div class="replies-container" id="replies-${d.id}"></div>
-    `;
-    commentsDiv.appendChild(div);
-
-    // 🔥 Realtime Replies Listener for this comment
-    const repliesRef = collection(db, "comments", d.id, "replies");
-    const qR = query(repliesRef, orderBy("time", "asc"));
-    onSnapshot(qR, (rSnap) => {
-      const rContainer = document.getElementById(`replies-${d.id}`);
-      if(rContainer) {
-        rContainer.innerHTML = "";
-        rSnap.forEach(rd => {
-          const rc = rd.data();
-          const rt = rc.time ? new Date(rc.time.seconds*1000).toLocaleString() : "Just now";
-          const rBadge = rc.role === "admin" ? `<span class="admin-badge">ADMIN</span>` : "";
-          
-          const rDiv = document.createElement("div");
-          rDiv.style.marginTop = "10px";
-          rDiv.style.position = "relative";
-          rDiv.innerHTML = `
-            <div class="del" style="width:30px;height:30px;top:0;right:0" onclick="openAdmin('${d.id}', 'reply', '${rd.id}')">
-               <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png" style="width:14px;height:14px">
-            </div>
-            <div class="user-header" style="margin-bottom:4px">
-              <img src="${rc.userPhoto}" class="user-avatar" style="width:30px;height:30px">
-              <div class="user-info">
-                <span class="user-name" style="font-size:0.9rem">${rc.userName} ${rBadge}</span>
-                <span class="user-handle" style="font-size:0.75rem">${rc.userHandle}</span>
-              </div>
-            </div>
-            <div style="font-size:0.95rem; opacity:0.9">${rc.text}</div>
-            <small style="margin-top:4px">${rt}</small>
-          `;
-          rContainer.appendChild(rDiv);
-        });
-      }
-    });
-  });
-});
-
-/* ↩ REPLY FUNCTIONALITY */
+// 4. Reply System
 window.toggleReplyBox = (id) => {
   const box = document.getElementById(`reply-input-${id}`);
   box.style.display = box.style.display === "block" ? "none" : "block";
@@ -623,11 +445,8 @@ window.submitReply = (parentId) => {
   const txt = document.getElementById(`reply-text-${parentId}`);
   if(!txt.value.trim()) return;
 
-  requireLogin(async () => {
-    // Identity
-    let identity = currentUser;
-    if(adminMode) identity = ADMIN_PROFILE;
-
+  window.requireLogin(async () => {
+    let identity = adminMode ? ADMIN_PROFILE : currentUser;
     await addDoc(collection(db, "comments", parentId, "replies"), {
       text: txt.value,
       time: serverTimestamp(),
@@ -642,34 +461,104 @@ window.submitReply = (parentId) => {
   });
 };
 
-/* 🛡️ ADMIN SYSTEM */
-let targetId = null;
-let targetType = null; // 'comment' or 'reply'
-let parentIdForReply = null; // needed for deleting replies
+// 5. Admin System
+let targetId=null, targetType=null, parentIdForReply=null;
 
 window.openAdmin = (id, type, parentId = null) => {
-  targetId = id;
-  targetType = type;
-  parentIdForReply = parentId;
+  targetId = id; targetType = type; parentIdForReply = parentId;
   document.getElementById("adminModal").style.display = "flex";
 };
 
 window.closeAdmin = () => {
   document.getElementById("adminModal").style.display = "none";
   document.getElementById("adminPass").value = "";
-  targetId = null;
 };
 
 window.confirmAdminAction = async () => {
-  const pass = document.getElementById("adminPass").value;
+  if(document.getElementById("adminPass").value !== ADMIN_KEY) return alert("Wrong passcode");
   
-  if(pass !== ADMIN_KEY) return alert("Wrong passcode");
-
-  // If passcode correct, enable ADMIN MODE for session
+  // Activate Admin Mode
   if(!adminMode) {
     adminMode = true;
-    updateWelcomeMsg(); // will show nothing special but enables admin posting
-    alert("Admin Mode Active. You can now post as Akshat Pandey.");
+    updateWelcomeMsg();
+    alert("Admin Mode Active");
   }
 
-  // Perform Del
+  // Delete Item
+  try {
+    if(targetType === 'comment') await deleteDoc(doc(db, "comments", targetId));
+    else if(targetType === 'reply') await deleteDoc(doc(db, "comments", parentIdForReply, "replies", targetId));
+    closeAdmin();
+  } catch(e) { alert("Delete failed"); }
+};
+
+/* --- 🔄 RENDER LOOP --- */
+const commentsDiv = document.getElementById("comments");
+const q = query(collection(db,"comments"), orderBy("time","desc"));
+
+onSnapshot(q, snap => {
+  commentsDiv.innerHTML = "";
+  snap.forEach(d => {
+    const c = d.data();
+    const t = c.time ? new Date(c.time.seconds*1000).toLocaleString() : "Just now";
+    const uName = c.userName || "Anonymous";
+    const uPhoto = c.userPhoto || "https://cdn-icons-png.flaticon.com/512/847/847969.png";
+    const badge = c.role === "admin" ? `<span class="admin-badge">ADMIN</span>` : "";
+
+    const div = document.createElement("div");
+    div.className = "comment";
+    div.innerHTML = `
+      <div class="del" onclick="openAdmin('${d.id}', 'comment')">
+        <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png">
+      </div>
+      <div class="user-header">
+        <img src="${uPhoto}" class="user-avatar">
+        <div class="user-info">
+          <span class="user-name">${uName} ${badge}</span>
+          <span class="user-handle">${c.userHandle || ""}</span>
+        </div>
+      </div>
+      <div style="margin:8px 0;font-size:1rem;line-height:1.4">${c.text}</div>
+      <small>${c.flag} ${c.city} • ${t}</small>
+      <button class="reply-btn" onclick="toggleReplyBox('${d.id}')">↩ Reply</button>
+      <div id="reply-input-${d.id}" class="reply-box reply-input-box">
+        <textarea id="reply-text-${d.id}" placeholder="Reply..." style="width:100%;background:#111;color:#fff;border:1px solid #333;padding:8px;border-radius:8px;margin-bottom:8px"></textarea>
+        <button class="comment-btn" style="padding:6px 14px;font-size:0.8rem" onclick="submitReply('${d.id}')">Post</button>
+      </div>
+      <div class="replies-container" id="replies-${d.id}"></div>
+    `;
+    commentsDiv.appendChild(div);
+
+    // Load Replies
+    const rRef = collection(db, "comments", d.id, "replies");
+    onSnapshot(query(rRef, orderBy("time","asc")), rSnap => {
+      const rDiv = document.getElementById(`replies-${d.id}`);
+      if(rDiv) {
+        rDiv.innerHTML = "";
+        rSnap.forEach(rd => {
+          const rc = rd.data();
+          const rBadge = rc.role === "admin" ? `<span class="admin-badge">ADMIN</span>` : "";
+          const replyEl = document.createElement("div");
+          replyEl.style.marginTop="10px";
+          replyEl.style.position="relative";
+          replyEl.innerHTML = `
+             <div class="del" style="width:24px;height:24px;top:0;right:0;background:rgba(255,255,255,0.1)" onclick="openAdmin('${rd.id}', 'reply', '${d.id}')">
+               <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png" style="width:12px;height:12px">
+             </div>
+             <div class="user-header" style="margin-bottom:4px">
+               <img src="${rc.userPhoto}" class="user-avatar" style="width:28px;height:28px">
+               <div class="user-info">
+                 <span class="user-name" style="font-size:0.9rem">${rc.userName} ${rBadge}</span>
+               </div>
+             </div>
+             <div style="font-size:0.95rem;opacity:0.9">${rc.text}</div>
+          `;
+          rDiv.appendChild(replyEl);
+        });
+      }
+    });
+  });
+});
+</script>
+</body>
+</html>
