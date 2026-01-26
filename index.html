@@ -175,6 +175,30 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
 .auth-btn { width: 100%; padding: 12px; background: #00ffcc; color: #000; font-weight: 700; border: none; border-radius: 99px; margin-top: 10px; cursor: pointer; }
 .notify-trigger { background: rgba(0,255,204,0.1); border: 1px solid #00ffcc; color: #00ffcc; padding: 12px 20px; border-radius: 12px; margin-bottom: 20px; cursor: pointer; width: 100%; font-weight: 600; }
 .notify-trigger:hover { background: #00ffcc; color: #000; }
+
+/* 🖼️ NEW UPLOAD CSS */
+.upload-wrapper {
+  display: flex; justify-content: center; margin-bottom: 20px;
+}
+.upload-circle {
+  width: 90px; height: 90px;
+  border-radius: 50%;
+  background: #111;
+  border: 2px dashed #00ffcc;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+}
+.upload-circle img {
+  width: 100%; height: 100%; object-fit: cover; display: none;
+}
+.upload-circle span {
+  font-size: 2rem; opacity: 0.5;
+}
+.upload-label {
+  text-align: center; font-size: 0.8rem; color: #00ffcc; opacity: 0.8; margin-top: -15px; margin-bottom: 15px;
+}
 </style>
 </head>
 
@@ -235,14 +259,23 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
 
 <div id="signupModal" class="auth-modal">
   <div class="auth-card">
-    <h3>👋 First Time Here?</h3>
+    
+    <div class="upload-wrapper">
+      <div class="upload-circle" onclick="document.getElementById('hiddenFileInput').click()">
+        <span id="uploadIcon">📷</span>
+        <img id="previewImg" src="">
+      </div>
+      <input type="file" id="hiddenFileInput" hidden accept="image/*">
+    </div>
+    <div class="upload-label">Tap to upload photo</div>
+
+    <h3 style="margin-top:0">First Time Here?</h3>
     <p style="font-size:0.9rem;opacity:0.7;margin-bottom:15px;text-align:center;">Create a profile to comment globally.</p>
     <div class="form-group"><label>Full Name</label><input id="regName" type="text" placeholder="John Doe"></div>
     <div class="form-group"><label>Username (Unique)</label><input id="regUser" type="text" placeholder="@johnny"></div>
     <div class="form-group"><label>Email</label><input id="regEmail" type="email" placeholder="john@example.com"></div>
     <div class="form-group"><label>Password</label><input id="regPass" type="password" placeholder="******"></div>
     <div class="form-group"><label>Birthday</label><input id="regDob" type="date"></div>
-    <div class="form-group"><label>Profile Photo URL (Optional)</label><input id="regPic" type="text" placeholder="https://..."></div>
     <div class="form-group"><label>Instagram ID (Optional)</label><input id="regInsta" type="text" placeholder="@john.doe"></div>
     <button class="auth-btn" onclick="submitSignup()">Create Identity</button>
     <button style="background:transparent;border:none;color:#aaa;margin-top:10px;cursor:pointer;width:100%" onclick="closeSignup()">Cancel</button>
@@ -311,6 +344,7 @@ updateViews();
 let currentUser = null;
 let pendingAction = null;
 let adminMode = false;
+let currentProfileBase64 = "https://cdn-icons-png.flaticon.com/512/847/847969.png"; // Default
 
 // Auto Login
 async function autoLogin() {
@@ -336,6 +370,57 @@ function updateWelcomeMsg() {
   }
 }
 
+/* --- 🖼️ IMAGE COMPRESSION LOGIC (Crucial for DB Storage) --- */
+function compressImage(file) {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      const img = new Image();
+      img.src = event.target.result;
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        // Resize to max 150px to save DB space
+        const MAX_SIZE = 150;
+        let width = img.width;
+        let height = img.height;
+        if (width > height) {
+          if (width > MAX_SIZE) { height *= MAX_SIZE / width; width = MAX_SIZE; }
+        } else {
+          if (height > MAX_SIZE) { width *= MAX_SIZE / height; height = MAX_SIZE; }
+        }
+        canvas.width = width;
+        canvas.height = height;
+        ctx.drawImage(img, 0, 0, width, height);
+        // Returns Base64 string
+        resolve(canvas.toDataURL("image/jpeg", 0.7)); 
+      };
+    };
+  });
+}
+
+// Handle File Select
+const fileInput = document.getElementById('hiddenFileInput');
+fileInput.addEventListener('change', async (e) => {
+  if (e.target.files && e.target.files[0]) {
+    const file = e.target.files[0];
+    try {
+      // Compress and get Base64
+      const base64 = await compressImage(file);
+      currentProfileBase64 = base64;
+      
+      // Update Preview
+      document.getElementById('previewImg').src = base64;
+      document.getElementById('previewImg').style.display = 'block';
+      document.getElementById('uploadIcon').style.display = 'none';
+      document.querySelector('.upload-circle').style.border = '2px solid #00ffcc';
+    } catch (err) {
+      alert("Error loading image");
+    }
+  }
+});
+
 /* --- 🏳️ HELPERS --- */
 function flag(code){
   if(!code) return "🏳️";
@@ -348,7 +433,7 @@ async function getIP(){
   }catch{return {}}
 }
 
-/* --- 🎮 EXPOSING FUNCTIONS TO WINDOW (Crucial Fix) --- */
+/* --- 🎮 EXPOSING FUNCTIONS TO WINDOW --- */
 
 // 1. Notification Modal
 window.openNotifyModal = () => {
@@ -386,7 +471,6 @@ window.submitSignup = async () => {
   const email = document.getElementById("regEmail").value.trim();
   const pass = document.getElementById("regPass").value;
   const dob = document.getElementById("regDob").value;
-  const pic = document.getElementById("regPic").value.trim();
   const insta = document.getElementById("regInsta").value.trim();
 
   if(!name || !username || !email || !pass || !dob) return alert("Fill required fields!");
@@ -398,7 +482,7 @@ window.submitSignup = async () => {
   try {
     const newUser = {
       name, username, email, password: pass, birthday: dob,
-      photo: pic || "https://cdn-icons-png.flaticon.com/512/847/847969.png",
+      photo: currentProfileBase64, // Uses the Base64 from gallery
       instagram: insta, createdAt: serverTimestamp()
     };
     const docRef = await addDoc(collection(db, "users"), newUser);
@@ -507,58 +591,4 @@ onSnapshot(q, snap => {
 
     const div = document.createElement("div");
     div.className = "comment";
-    div.innerHTML = `
-      <div class="del" onclick="openAdmin('${d.id}', 'comment')">
-        <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png">
-      </div>
-      <div class="user-header">
-        <img src="${uPhoto}" class="user-avatar">
-        <div class="user-info">
-          <span class="user-name">${uName} ${badge}</span>
-          <span class="user-handle">${c.userHandle || ""}</span>
-        </div>
-      </div>
-      <div style="margin:8px 0;font-size:1rem;line-height:1.4">${c.text}</div>
-      <small>${c.flag} ${c.city} • ${t}</small>
-      <button class="reply-btn" onclick="toggleReplyBox('${d.id}')">↩ Reply</button>
-      <div id="reply-input-${d.id}" class="reply-box reply-input-box">
-        <textarea id="reply-text-${d.id}" placeholder="Reply..." style="width:100%;background:#111;color:#fff;border:1px solid #333;padding:8px;border-radius:8px;margin-bottom:8px"></textarea>
-        <button class="comment-btn" style="padding:6px 14px;font-size:0.8rem" onclick="submitReply('${d.id}')">Post</button>
-      </div>
-      <div class="replies-container" id="replies-${d.id}"></div>
-    `;
-    commentsDiv.appendChild(div);
-
-    // Load Replies
-    const rRef = collection(db, "comments", d.id, "replies");
-    onSnapshot(query(rRef, orderBy("time","asc")), rSnap => {
-      const rDiv = document.getElementById(`replies-${d.id}`);
-      if(rDiv) {
-        rDiv.innerHTML = "";
-        rSnap.forEach(rd => {
-          const rc = rd.data();
-          const rBadge = rc.role === "admin" ? `<span class="admin-badge">ADMIN</span>` : "";
-          const replyEl = document.createElement("div");
-          replyEl.style.marginTop="10px";
-          replyEl.style.position="relative";
-          replyEl.innerHTML = `
-             <div class="del" style="width:24px;height:24px;top:0;right:0;background:rgba(255,255,255,0.1)" onclick="openAdmin('${rd.id}', 'reply', '${d.id}')">
-               <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png" style="width:12px;height:12px">
-             </div>
-             <div class="user-header" style="margin-bottom:4px">
-               <img src="${rc.userPhoto}" class="user-avatar" style="width:28px;height:28px">
-               <div class="user-info">
-                 <span class="user-name" style="font-size:0.9rem">${rc.userName} ${rBadge}</span>
-               </div>
-             </div>
-             <div style="font-size:0.95rem;opacity:0.9">${rc.text}</div>
-          `;
-          rDiv.appendChild(replyEl);
-        });
-      }
-    });
-  });
-});
-</script>
-</body>
-</html>
+    div.inner
