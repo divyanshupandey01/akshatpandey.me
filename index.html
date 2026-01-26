@@ -1,325 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Akshat Pandey</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',system-ui,sans-serif}
-
-body{
-  min-height:100vh;
-  background:radial-gradient(circle at top,#111,#000);
-  color:#fff;
-  display:flex;
-  justify-content:center;
-  padding:20px;
-}
-
-.container{max-width:900px;width:100%;text-align:center}
-
-.profile-pic{
-  width:160px;height:160px;border-radius:50%;
-  object-fit:cover;border:4px solid #00ffcc;
-  margin:20px auto 10px;
-}
-
-/* socials */
-.socials{display:flex;justify-content:center;gap:20px;margin-bottom:20px}
-.socials img{width:32px;height:32px;cursor:pointer}
-
-/* heading */
-h1{
-  font-family:'Space Grotesk',sans-serif;
-  font-size:clamp(2.5rem,8vw,4rem);
-}
-
-.views{
-  display:flex;justify-content:center;gap:8px;
-  align-items:center;font-size:.95rem;opacity:.75;margin-top:6px;
-}
-
-.tagline{opacity:.85;margin:12px 0 30px}
-
-.card{
-  background:rgba(255,255,255,.06);
-  border-radius:18px;
-  padding:26px;
-  margin-bottom:26px;
-  text-align:left;
-}
-
-.btn{
-  display:inline-block;margin-top:14px;padding:10px 20px;
-  background:#00ffcc;color:#000;border-radius:999px;
-  font-weight:700;text-decoration:none;
-}
-
-.comment-box h2{margin-bottom:18px}
-
-textarea{
-  width:100%;min-height:100px;background:#000;
-  border:1px solid rgba(0,255,204,.45);
-  border-radius:14px;padding:14px;color:#fff;
-}
-
-textarea::placeholder{color:#fff;font-weight:600}
-
-.comment-btn{
-  margin-top:14px;padding:10px 20px;
-  background:#00ffcc;color:#000;border:none;
-  border-radius:999px;font-weight:700;cursor:pointer;
-}
-
-.comments{margin-top:26px}
-
-.comment{
-  background:rgba(255,255,255,.08);
-  border-radius:14px;
-  padding:14px 14px 18px;
-  margin-bottom:14px;
-  font-size:.95rem;
-  position:relative;
-}
-
-.comment small{
-  opacity:.7;
-  display:block;
-  margin-bottom:4px;
-  font-family:monospace;
-}
-
-/* 🔥 FIXED DELETE BUTTON */
-.del{
-  position:absolute;
-  top:8px;
-  right:8px;
-  width:44px;
-  height:44px;
-  border-radius:50%;
-  background:rgba(255,255,255,.18);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  z-index:10;
-  touch-action:manipulation;
-}
-
-.del:active{
-  transform:scale(0.92);
-  background:rgba(255,107,107,.4);
-}
-
-.del img{
-  width:20px;
-  height:20px;
-  pointer-events:none;
-}
-
-footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
-
-/* admin modal */
-#adminModal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.75);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:999;
-}
-#adminBox{
-  background:#111;
-  width:90%;
-  max-width:360px;
-  padding:22px;
-  border-radius:16px;
-  text-align:center;
-}
-#adminBox input{
-  width:100%;
-  padding:10px;
-  border-radius:10px;
-  border:none;
-  margin-bottom:14px;
-}
-#adminBox button{
-  flex:1;
-  padding:10px;
-  border-radius:999px;
-  border:none;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,sans-serif}
+body{background:#0b0b0b;color:#fff;display:flex;justify-content:center;padding:20px}
+.container{max-width:900px;width:100%}
+h1{font-family:Space Grotesk;font-size:3rem;text-align:center}
+.card{background:#151515;border-radius:18px;padding:22px;margin:20px 0}
+input,textarea{width:100%;padding:12px;border-radius:12px;border:none;margin-top:10px;background:#000;color:#fff}
+button{margin-top:14px;padding:12px;border-radius:999px;border:none;background:#00ffcc;color:#000;font-weight:700;cursor:pointer}
+.comment{background:#1c1c1c;border-radius:14px;padding:14px;margin-top:14px;position:relative}
+.reply{margin-left:40px;margin-top:10px;background:#121212}
+.user{display:flex;gap:10px;align-items:center;margin-bottom:6px}
+.user img{width:36px;height:36px;border-radius:50%}
+.badge{font-size:.7rem;background:#00ffcc;color:#000;padding:2px 6px;border-radius:6px;margin-left:6px}
+small{opacity:.6;font-family:monospace}
+.del{position:absolute;top:10px;right:10px;cursor:pointer}
+.hidden{display:none}
 </style>
 </head>
 
 <body>
 <div class="container">
 
-<img src="https://i.postimg.cc/SKhqgHqv/IMG-20260111-212449-914.webp" class="profile-pic">
-
-<div class="socials">
-  <a href="https://instagram.com/vedicash" target="_blank">
-    <img src="https://i.postimg.cc/GmNvBpX1/instagram.png">
-  </a>
-  <a href="mailto:akshatpandey1307@gmail.com">
-    <img src="https://i.postimg.cc/bNwn3nMZ/gmail.png">
-  </a>
-  <a href="https://www.linkedin.com/in/akshat-pandey-5b2a552a3" target="_blank">
-    <img src="https://i.postimg.cc/764G7J79/linkedin.png">
-  </a>
-</div>
-
 <h1>Akshat Pandey</h1>
-<div class="views">👁️ <span id="viewCount">loading...</span> views</div>
 
-<div class="tagline">Personal Landing Page</div>
-
-<div class="card">
-  Nigga this my landing page running on my personal server computer 24/7.
-  <br><br>
-  <a href="https://naturally-partial-wrote-scout.trycloudflare.com/a80cccda/instagram" target="_blank">
-    https://naturally-partial-wrote-scout.trycloudflare.com/a80cccda/instagram
-  </a><br>
-  <a class="btn" href="https://naturally-partial-wrote-scout.trycloudflare.com/a80cccda/instagram">Go →</a>
+<!-- AUTH -->
+<div class="card" id="authBox">
+  <h3>Sign Up / Login</h3>
+  <input id="email" placeholder="Email (required)">
+  <input id="password" type="password" placeholder="Password (required)">
+  <input id="username" placeholder="Username (required)">
+  <input id="pfp" type="file">
+  <button onclick="authUser()">Continue</button>
 </div>
 
-<div class="card comment-box">
-  <h2>Drop a Comment</h2>
-  <textarea id="commentInput" placeholder="Please comment anonymously"></textarea>
-  <button class="comment-btn" onclick="addComment()">Post</button>
-  <div class="comments" id="comments"></div>
+<!-- COMMENT BOX -->
+<div class="card hidden" id="commentBox">
+  <h3>Drop a Comment</h3>
+  <textarea id="commentText" placeholder="Write something…"></textarea>
+  <button onclick="postComment()">Post</button>
 </div>
 
-<footer>© 2026 Akshat Pandey • Hosted On My Infrastructure</footer>
+<!-- COMMENTS -->
+<div id="comments"></div>
+
 </div>
 
-<!-- ADMIN MODAL -->
-<div id="adminModal">
-  <div id="adminBox">
-    <h3>Admin Verification</h3>
-    <p style="opacity:.75;font-size:.9rem;margin-bottom:14px">
-      Please enter the Admin Passcode<br>
-      If you are not admin please contact
-      <a href="https://instagram.com/scionash" target="_blank" style="color:#00ffcc">@scionash</a>
-    </p>
-    <input id="adminPass" type="password" placeholder="Admin passcode">
-    <div style="display:flex;gap:10px">
-      <button onclick="closeAdmin()">Cancel</button>
-      <button onclick="confirmDelete()" style="background:#ff6b6b;font-weight:700">Delete</button>
-    </div>
-  </div>
-</div>
-
+<!-- FIREBASE -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+import { 
+  getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged 
+} from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 import {
-  getFirestore, collection, addDoc, query,
-  orderBy, onSnapshot, deleteDoc, doc,
-  serverTimestamp, getDoc, setDoc, updateDoc, increment
+  getFirestore, collection, addDoc, doc, getDoc, setDoc,
+  query, orderBy, onSnapshot, serverTimestamp, deleteDoc
 } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
 
-const ADMIN_KEY="@Akshat130807";
+const ADMIN_UID = "ADMIN_UID_PUT_YOURS_HERE";
+const ADMIN_PFP = "https://i.postimg.cc/SKhqgHqv/IMG-20260111-212449-914.webp";
 
-const firebaseConfig={
-  apiKey:"AIzaSyCY88mD-sHqxZiOGkQZbliTXG1QmySPesI",
-  authDomain:"akshat-comments.firebaseapp.com",
-  projectId:"akshat-comments"
+const firebaseConfig = {
+  apiKey: "AIzaSyCY88mD-sHqxZiOGkQZbliTXG1QmySPesI",
+  authDomain: "akshat-comments.firebaseapp.com",
+  projectId: "akshat-comments"
 };
 
-const app=initializeApp(firebaseConfig);
-const db=getFirestore(app);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-/* 👁️ GLOBAL VIEWS */
-const viewRef=doc(db,"views","counter");
-async function updateViews(){
-  const snap=await getDoc(viewRef);
-  if(!snap.exists()){
-    await setDoc(viewRef,{count:1});
-    viewCount.textContent=1;
-  }else{
-    await updateDoc(viewRef,{count:increment(1)});
-    const u=await getDoc(viewRef);
-    viewCount.textContent=u.data().count;
-  }
-}
-updateViews();
+const authBox = document.getElementById("authBox");
+const commentBox = document.getElementById("commentBox");
+const commentsDiv = document.getElementById("comments");
 
-/* 💬 COMMENTS */
-const commentsDiv=document.getElementById("comments");
-const input=document.getElementById("commentInput");
-const commentsRef=collection(db,"comments");
+/* AUTH */
+window.authUser = async () => {
+  const email = email.value;
+  const password = password.value;
+  const username = username.value;
+  if(!email || !password || !username) return alert("All required");
 
-function flag(code){
-  if(!code) return "🏳️";
-  return code.toUpperCase().replace(/./g,c=>String.fromCodePoint(127397+c.charCodeAt()));
-}
-
-async function getIP(){
   try{
-    const r=await fetch("https://ipapi.co/json/");
-    return await r.json();
-  }catch{return {}}
-}
-
-window.addComment=async()=>{
-  if(!input.value.trim())return;
-  const ip=await getIP();
-  await addDoc(commentsRef,{
-    text:input.value,
-    ip:ip.ip||"N/A",
-    city:ip.city||"Unknown",
-    region:ip.region||"Unknown",
-    country:ip.country_name||"Unknown",
-    flag:flag(ip.country),
-    time:serverTimestamp()
-  });
-  input.value="";
+    const res = await createUserWithEmailAndPassword(auth,email,password);
+    await setDoc(doc(db,"users",res.user.uid),{
+      username,
+      pfp:"",
+      created:serverTimestamp()
+    });
+  }catch{
+    await signInWithEmailAndPassword(auth,email,password);
+  }
 };
 
-let deleteId=null;
-const q=query(commentsRef,orderBy("time","desc"));
-onSnapshot(q,snap=>{
+/* AUTO LOGIN */
+onAuthStateChanged(auth, async user=>{
+  if(!user) return;
+  authBox.classList.add("hidden");
+  commentBox.classList.remove("hidden");
+});
+
+/* COMMENTS */
+window.postComment = async ()=>{
+  if(!commentText.value.trim()) return;
+  await addDoc(collection(db,"comments"),{
+    text:commentText.value,
+    uid:auth.currentUser.uid,
+    time:serverTimestamp(),
+    replies:[]
+  });
+  commentText.value="";
+};
+
+onSnapshot(query(collection(db,"comments"),orderBy("time","desc")), async snap=>{
   commentsDiv.innerHTML="";
-  snap.forEach(d=>{
+  for(const d of snap.docs){
     const c=d.data();
-    const t=c.time
-      ? new Date(c.time.seconds*1000).toLocaleString()
-      : "Just now";
+    const u=await getDoc(doc(db,"users",c.uid));
+    const user=u.data();
 
     const div=document.createElement("div");
     div.className="comment";
     div.innerHTML=`
-      <div class="del" onclick="openAdmin('${d.id}')">
-        <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png">
+      <div class="user">
+        <img src="${user?.pfp||'https://i.postimg.cc/3N1Z0vZy/user.png'}">
+        <b>${user?.username}</b>
+        ${c.uid===ADMIN_UID?'<span class="badge">ADMIN</span>':""}
       </div>
-      <small>${c.flag} ${c.city}, ${c.region}, ${c.country} • IP: ${c.ip}</small>
-      <small>🕒 ${t}</small>
-      ${c.text}
+      <small>${new Date(c.time?.seconds*1000).toLocaleString()}</small>
+      <p>${c.text}</p>
     `;
     commentsDiv.appendChild(div);
-  });
+  }
 });
-
-window.openAdmin=id=>{
-  deleteId=id;
-  adminModal.style.display="flex";
-};
-
-window.closeAdmin=()=>{
-  deleteId=null;
-  adminModal.style.display="none";
-  adminPass.value="";
-};
-
-window.confirmDelete=async()=>{
-  if(adminPass.value!==ADMIN_KEY) return alert("Wrong passcode");
-  await deleteDoc(doc(db,"comments",deleteId));
-  closeAdmin();
-};
 </script>
 
 </body>
