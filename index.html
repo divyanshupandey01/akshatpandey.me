@@ -176,7 +176,7 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
 .notify-trigger { background: rgba(0,255,204,0.1); border: 1px solid #00ffcc; color: #00ffcc; padding: 12px 20px; border-radius: 12px; margin-bottom: 20px; cursor: pointer; width: 100%; font-weight: 600; }
 .notify-trigger:hover { background: #00ffcc; color: #000; }
 
-/* 🖼️ NEW UPLOAD CSS */
+/* 🖼️ NEW UPLOAD CSS (Added) */
 .upload-wrapper {
   display: flex; justify-content: center; margin-bottom: 20px;
 }
@@ -267,16 +267,18 @@ footer{margin-top:30px;font-size:.9rem;opacity:.65;text-align:center}
       </div>
       <input type="file" id="hiddenFileInput" hidden accept="image/*">
     </div>
-    <div class="upload-label">Tap to upload photo</div>
+    <div class="upload-label">Tap circle to upload photo</div>
 
     <h3 style="margin-top:0">First Time Here?</h3>
     <p style="font-size:0.9rem;opacity:0.7;margin-bottom:15px;text-align:center;">Create a profile to comment globally.</p>
+    
     <div class="form-group"><label>Full Name</label><input id="regName" type="text" placeholder="John Doe"></div>
     <div class="form-group"><label>Username (Unique)</label><input id="regUser" type="text" placeholder="@johnny"></div>
     <div class="form-group"><label>Email</label><input id="regEmail" type="email" placeholder="john@example.com"></div>
     <div class="form-group"><label>Password</label><input id="regPass" type="password" placeholder="******"></div>
     <div class="form-group"><label>Birthday</label><input id="regDob" type="date"></div>
     <div class="form-group"><label>Instagram ID (Optional)</label><input id="regInsta" type="text" placeholder="@john.doe"></div>
+    
     <button class="auth-btn" onclick="submitSignup()">Create Identity</button>
     <button style="background:transparent;border:none;color:#aaa;margin-top:10px;cursor:pointer;width:100%" onclick="closeSignup()">Cancel</button>
   </div>
@@ -318,7 +320,7 @@ const ADMIN_PROFILE = {
   role: "admin"
 };
 
-/* --- 👁️ VIEWS SYSTEM (With Error Check) --- */
+/* --- 👁️ VIEWS SYSTEM --- */
 const viewCount = document.getElementById("viewCount");
 const viewRef = doc(db, "views", "counter");
 
@@ -344,7 +346,7 @@ updateViews();
 let currentUser = null;
 let pendingAction = null;
 let adminMode = false;
-let currentProfileBase64 = "https://cdn-icons-png.flaticon.com/512/847/847969.png"; // Default
+let currentProfileBase64 = "https://cdn-icons-png.flaticon.com/512/847/847969.png"; // Default image
 
 // Auto Login
 async function autoLogin() {
@@ -482,7 +484,7 @@ window.submitSignup = async () => {
   try {
     const newUser = {
       name, username, email, password: pass, birthday: dob,
-      photo: currentProfileBase64, // Uses the Base64 from gallery
+      photo: currentProfileBase64, // USES THE GALLERY IMAGE HERE
       instagram: insta, createdAt: serverTimestamp()
     };
     const docRef = await addDoc(collection(db, "users"), newUser);
@@ -591,4 +593,4 @@ onSnapshot(q, snap => {
 
     const div = document.createElement("div");
     div.className = "comment";
-    div.inner
+  
