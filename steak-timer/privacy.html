@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Privacy Policy — Steak Timer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0A0402;
+      --surface:   #130806;
+      --card:      #1C0D09;
+      --border:    #2E1410;
+      --red:       #C0392B;
+      --red-dim:   #7A2318;
+      --red-glow:  rgba(192,57,43,0.12);
+      --text:      #EDE0DC;
+      --muted:     #8A6E6A;
+      --caption:   #5A3E3A;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.75;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,4,2,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .header-icon {
+      width: 36px; height: 36px;
+      background: var(--red);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .header-text { flex: 1; }
+    .header-text .app-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      color: white;
+      letter-spacing: 0.05em;
+    }
+    .header-text .doc-type {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .header-badge {
+      font-size: 11px;
+      color: var(--red);
+      border: 1px solid var(--red-dim);
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.08em;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 64px 24px 48px;
+      max-width: 760px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 400px; height: 200px;
+      background: radial-gradient(ellipse, rgba(192,57,43,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 32px; height: 1px;
+      background: var(--red);
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(32px, 6vw, 52px);
+      font-weight: 800;
+      line-height: 1.1;
+      color: white;
+      margin-bottom: 20px;
+    }
+
+    h1 span { color: var(--red); }
+
+    .hero-meta {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .meta-label { font-size: 11px; color: var(--caption); text-transform: uppercase; letter-spacing: 0.12em; }
+    .meta-value { font-size: 14px; color: var(--muted); font-weight: 500; }
+
+    /* ── CONTENT ── */
+    .content {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, var(--red) 0%, var(--border) 40%, transparent 100%);
+      margin: 48px 0;
+    }
+
+    /* Section */
+    .section { margin-bottom: 52px; }
+
+    h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    h2 .section-num {
+      font-size: 11px;
+      color: var(--red);
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      min-width: 28px;
+    }
+
+    p { color: var(--text); margin-bottom: 14px; font-size: 15px; }
+    p:last-child { margin-bottom: 0; }
+
+    /* Card */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      margin: 20px 0;
+    }
+
+    .card-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--red);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 14px;
+    }
+
+    ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    ul li {
+      font-size: 15px;
+      color: var(--text);
+      padding-left: 20px;
+      position: relative;
+    }
+
+    ul li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--red-dim);
+      font-weight: 300;
+    }
+
+    /* Highlight box */
+    .highlight {
+      background: var(--red-glow);
+      border-left: 3px solid var(--red);
+      border-radius: 0 10px 10px 0;
+      padding: 16px 20px;
+      margin: 20px 0;
+    }
+
+    .highlight p { font-size: 14px; color: var(--muted); margin: 0; }
+
+    /* Table */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 14px;
+    }
+
+    .data-table th {
+      text-align: left;
+      padding: 10px 14px;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .data-table td {
+      padding: 12px 14px;
+      color: var(--text);
+      border-bottom: 1px solid rgba(46,20,16,0.5);
+      vertical-align: top;
+    }
+
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table td:first-child { color: var(--muted); font-size: 13px; }
+
+    a { color: var(--red); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── CONTACT FORM ── */
+    .contact-section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px 32px;
+      margin: 60px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-section::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(192,57,43,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .contact-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .contact-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      color: white;
+      margin-bottom: 8px;
+    }
+
+    .contact-sub {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    @media (max-width: 540px) {
+      .form-row { grid-template-columns: 1fr; }
+      .hero-meta { flex-direction: column; gap: 14px; }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--red);
+    }
+
+    .form-group textarea { resize: vertical; min-height: 120px; }
+
+    .form-group select option { background: #1C0D09; }
+
+    .submit-btn {
+      width: 100%;
+      padding: 15px 24px;
+      background: var(--red);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Syne', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+      margin-top: 8px;
+    }
+
+    .submit-btn:hover { opacity: 0.88; }
+    .submit-btn:active { transform: scale(0.98); }
+
+    .form-note {
+      text-align: center;
+      font-size: 12px;
+      color: var(--caption);
+      margin-top: 14px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+    }
+
+    .footer-inner {
+      max-width: 760px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      color: white;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-logo span { color: var(--red); }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      font-size: 13px;
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--caption);
+      margin-top: 6px;
+    }
+
+    /* Success state */
+    #form-success {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    #form-success .success-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    #form-success h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 22px;
+      color: white;
+      margin-bottom: 8px;
+    }
+
+    #form-success p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-icon">🥩</div>
+  <div class="header-text">
+    <div class="app-name">STEAK TIMER</div>
+    <div class="doc-type">Legal · Privacy Policy</div>
+  </div>
+  <div class="header-badge">v1.0</div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Legal Document</div>
+  <h1>Privacy <span>Policy</span></h1>
+  <p style="color: var(--muted); font-size: 15px; max-width: 560px;">
+    This policy explains what information Steak Timer collects, why it collects it, and how you can control it. We keep it short and plain — no legalese walls.
+  </p>
+  <div class="hero-meta">
+    <div class="meta-item">
+      <span class="meta-label">Effective Date</span>
+      <span class="meta-value">June 22, 2026</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Last Updated</span>
+      <span class="meta-value">June 22, 2026</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Developer</span>
+      <span class="meta-value">Akshat Pandey</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Contact</span>
+      <span class="meta-value">vedicashcapcut@gmail.com</span>
+    </div>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <div class="divider"></div>
+
+  <!-- 1 -->
+  <div class="section">
+    <h2><span class="section-num">01</span> Who We Are</h2>
+    <p>Steak Timer ("the App") is developed and maintained by <strong>Akshat Pandey</strong>, an independent developer. This Privacy Policy applies to the Steak Timer mobile application available on Google Play and the Apple App Store.</p>
+    <p>If you have any questions about this policy, you can reach us at <a href="mailto:vedicashcapcut@gmail.com">vedicashcapcut@gmail.com</a>.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 2 -->
+  <div class="section">
+    <h2><span class="section-num">02</span> What We Collect</h2>
+    <p>We collect the minimum data necessary to run the app, serve ads, process subscriptions, and fix crashes. Here is a full breakdown:</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Data Type</th>
+          <th>What It Is</th>
+          <th>Why We Collect It</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Device identifiers</td>
+          <td>Advertising ID (GAID / IDFA), device model, OS version</td>
+          <td>Ad personalisation (Google AdMob)</td>
+        </tr>
+        <tr>
+          <td>Purchase data</td>
+          <td>Subscription status, transaction ID (no card details)</td>
+          <td>Verifying ad-free subscription via RevenueCat</td>
+        </tr>
+        <tr>
+          <td>Crash reports</td>
+          <td>Stack traces, device state at time of crash</td>
+          <td>Bug fixing via Sentry</td>
+        </tr>
+        <tr>
+          <td>Usage analytics</td>
+          <td>Screens visited, features tapped, session duration (anonymous)</td>
+          <td>Product improvement via Mixpanel / Amplitude</td>
+        </tr>
+        <tr>
+          <td>Cook preferences</td>
+          <td>Your saved defaults (cut type, thickness, method)</td>
+          <td>Stored locally on your device only — never sent to our servers</td>
+        </tr>
+        <tr>
+          <td>Cook history</td>
+          <td>Past cook entries and notes you create</td>
+          <td>Stored locally on your device only — never sent to our servers</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="highlight">
+      <p>🔒 Your cook history and personal preferences are stored <strong>only on your device</strong>. We never upload them to any server.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 3 -->
+  <div class="section">
+    <h2><span class="section-num">03</span> Third-Party Services</h2>
+    <p>The app uses the following third-party SDKs. Each has its own privacy policy:</p>
+
+    <div class="card">
+      <div class="card-title">Integrated Third Parties</div>
+      <ul>
+        <li><strong>Google AdMob</strong> — serves banner advertisements to free-tier users. <a href="https://policies.google.com/privacy" target="_blank">Privacy Policy ↗</a></li>
+        <li><strong>RevenueCat</strong> — manages in-app subscription purchases and restores. <a href="https://www.revenuecat.com/privacy" target="_blank">Privacy Policy ↗</a></li>
+        <li><strong>Sentry</strong> — collects crash reports and error logs. <a href="https://sentry.io/privacy/" target="_blank">Privacy Policy ↗</a></li>
+        <li><strong>Google Play Services / Apple StoreKit</strong> — processes subscription payments. Subject to Google / Apple's privacy policies.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 4 -->
+  <div class="section">
+    <h2><span class="section-num">04</span> Advertising</h2>
+    <p>Free-tier users see a banner advertisement at the bottom of the main screen, served by Google AdMob. AdMob may use your device's Advertising ID to show personalised ads based on your interests.</p>
+    <p>You can opt out of personalised advertising at any time:</p>
+    <div class="card">
+      <ul>
+        <li><strong>Android:</strong> Settings → Google → Ads → "Opt out of Ads Personalisation"</li>
+        <li><strong>iOS:</strong> Settings → Privacy → Tracking → disable "Allow Apps to Request to Track"</li>
+        <li><strong>In-App:</strong> Subscribing to Steak Timer Pro ($3.49/yr) removes all ads entirely</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 5 -->
+  <div class="section">
+    <h2><span class="section-num">05</span> Children's Privacy</h2>
+    <p>Steak Timer is not directed at children under the age of 13. We do not knowingly collect personal information from children under 13. If you believe a child has provided us personal data, please contact us at <a href="mailto:vedicashcapcut@gmail.com">vedicashcapcut@gmail.com</a> and we will delete it promptly.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 6 -->
+  <div class="section">
+    <h2><span class="section-num">06</span> Your Rights</h2>
+    <p>Depending on your location, you may have the following rights regarding your data:</p>
+    <div class="card">
+      <ul>
+        <li><strong>Access:</strong> Request a copy of data we hold about you</li>
+        <li><strong>Deletion:</strong> Request deletion of your data from our third-party providers</li>
+        <li><strong>Opt-out:</strong> Opt out of analytics or personalised advertising (see Section 4)</li>
+        <li><strong>GDPR (EU/UK):</strong> You have rights under GDPR including data portability and erasure</li>
+        <li><strong>CCPA (California):</strong> You have the right to know what personal data is sold or disclosed</li>
+      </ul>
+    </div>
+    <p>To exercise any of these rights, contact us using the form below or email <a href="mailto:vedicashcapcut@gmail.com">vedicashcapcut@gmail.com</a>. We will respond within 30 days.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 7 -->
+  <div class="section">
+    <h2><span class="section-num">07</span> Data Retention</h2>
+    <p>Analytics and crash data retained by third-party SDKs follow their own retention policies (typically 90 days for crash data; up to 25 months for analytics). We do not retain any personal data on our own servers. Cook history and preferences stored locally on your device are retained until you uninstall the app or clear app data.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 8 -->
+  <div class="section">
+    <h2><span class="section-num">08</span> Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time. When we do, we will update the "Last Updated" date at the top of this page. Continued use of the app after changes constitutes acceptance of the updated policy. For significant changes, we will display a notice within the app.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CONTACT FORM -->
+  <div class="contact-section">
+    <div class="contact-eyebrow">Get In Touch</div>
+    <div class="contact-title">Privacy Questions?</div>
+    <p class="contact-sub">Data requests, deletion inquiries, or anything about this policy — we reply within 48 hours.</p>
+
+    <div id="form-container">
+      <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" id="contact-form">
+        <input type="hidden" name="_subject" value="Steak Timer — Privacy Inquiry"/>
+        <input type="hidden" name="_redirect" value="false"/>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" placeholder="John Smith" required/>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" required/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="inquiry">Type of Inquiry</label>
+          <select id="inquiry" name="inquiry_type" required>
+            <option value="" disabled selected>Select a topic</option>
+            <option value="data-access">Request my data</option>
+            <option value="data-deletion">Delete my data</option>
+            <option value="opt-out">Opt out of analytics/ads</option>
+            <option value="gdpr">GDPR / CCPA request</option>
+            <option value="other">General privacy question</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="Describe your request or question..." required></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">Send Message →</button>
+        <p class="form-note">Replies sent to your email within 48 hours · vedicashcapcut@gmail.com</p>
+      </form>
+    </div>
+
+    <div id="form-success">
+      <div class="success-icon">✅</div>
+      <h3>Me
