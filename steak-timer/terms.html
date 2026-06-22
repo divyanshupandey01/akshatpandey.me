@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Terms &amp; Conditions — Steak Timer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0A0402;
+      --surface:   #130806;
+      --card:      #1C0D09;
+      --border:    #2E1410;
+      --red:       #C0392B;
+      --red-dim:   #7A2318;
+      --red-glow:  rgba(192,57,43,0.12);
+      --text:      #EDE0DC;
+      --muted:     #8A6E6A;
+      --caption:   #5A3E3A;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.75;
+      min-height: 100vh;
+    }
+
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,4,2,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px;
+      display: flex; align-items: center; gap: 14px;
+    }
+
+    .header-icon {
+      width: 36px; height: 36px;
+      background: var(--red); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
+    }
+
+    .header-text .app-name {
+      font-family: 'Syne', sans-serif; font-size: 15px;
+      font-weight: 800; color: white; letter-spacing: 0.05em;
+    }
+    .header-text .doc-type {
+      font-size: 11px; color: var(--muted);
+      letter-spacing: 0.1em; text-transform: uppercase;
+    }
+
+    .header-badge {
+      font-size: 11px; color: var(--red);
+      border: 1px solid var(--red-dim);
+      padding: 4px 10px; border-radius: 20px; letter-spacing: 0.08em;
+      margin-left: auto;
+    }
+
+    .hero {
+      padding: 64px 24px 48px;
+      max-width: 760px; margin: 0 auto; position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute; top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 400px; height: 200px;
+      background: radial-gradient(ellipse, rgba(192,57,43,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px; letter-spacing: 0.2em; color: var(--red);
+      text-transform: uppercase; margin-bottom: 16px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .hero-eyebrow::before {
+      content: ''; display: block; width: 32px; height: 1px; background: var(--red);
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(32px, 6vw, 52px);
+      font-weight: 800; line-height: 1.1; color: white; margin-bottom: 20px;
+    }
+    h1 span { color: var(--red); }
+
+    .hero-meta {
+      display: flex; gap: 24px; flex-wrap: wrap; margin-top: 28px;
+    }
+    .meta-item { display: flex; flex-direction: column; gap: 2px; }
+    .meta-label { font-size: 11px; color: var(--caption); text-transform: uppercase; letter-spacing: 0.12em; }
+    .meta-value { font-size: 14px; color: var(--muted); font-weight: 500; }
+
+    .content {
+      max-width: 760px; margin: 0 auto; padding: 0 24px 80px;
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, var(--red) 0%, var(--border) 40%, transparent 100%);
+      margin: 48px 0;
+    }
+
+    .section { margin-bottom: 52px; }
+
+    h2 {
+      font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700;
+      color: white; margin-bottom: 16px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    h2 .section-num {
+      font-size: 11px; color: var(--red); font-family: 'Inter', sans-serif;
+      font-weight: 600; letter-spacing: 0.1em; min-width: 28px;
+    }
+
+    p { color: var(--text); margin-bottom: 14px; font-size: 15px; }
+    p:last-child { margin-bottom: 0; }
+
+    .card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 24px; margin: 20px 0;
+    }
+    .card-title {
+      font-size: 13px; font-weight: 600; color: var(--red);
+      text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px;
+    }
+
+    ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    ul li { font-size: 15px; color: var(--text); padding-left: 20px; position: relative; }
+    ul li::before { content: '—'; position: absolute; left: 0; color: var(--red-dim); font-weight: 300; }
+
+    .highlight {
+      background: var(--red-glow); border-left: 3px solid var(--red);
+      border-radius: 0 10px 10px 0; padding: 16px 20px; margin: 20px 0;
+    }
+    .highlight p { font-size: 14px; color: var(--muted); margin: 0; }
+
+    /* Subscription pricing box */
+    .pricing-box {
+      background: var(--surface);
+      border: 1px solid var(--red-dim);
+      border-radius: 16px;
+      padding: 28px;
+      margin: 20px 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 540px) {
+      .pricing-box { grid-template-columns: 1fr; }
+      .hero-meta { flex-direction: column; gap: 14px; }
+    }
+
+    .pricing-tier {
+      padding: 20px;
+      border-radius: 12px;
+      background: var(--card);
+      border: 1px solid var(--border);
+    }
+
+    .pricing-tier.featured { border-color: var(--red); }
+
+    .tier-name {
+      font-size: 11px; font-weight: 600; color: var(--red);
+      text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 6px;
+    }
+
+    .tier-price {
+      font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800;
+      color: white; margin-bottom: 4px;
+    }
+
+    .tier-price span { font-size: 14px; font-weight: 400; color: var(--muted); }
+
+    .tier-desc { font-size: 13px; color: var(--muted); }
+
+    a { color: var(--red); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Contact form */
+    .contact-section {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 20px; padding: 40px 32px; margin: 60px 0 0;
+      position: relative; overflow: hidden;
+    }
+
+    .contact-section::before {
+      content: '';
+      position: absolute; top: -60px; right: -60px;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(192,57,43,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .contact-eyebrow { font-size: 11px; letter-spacing: 0.2em; color: var(--red); text-transform: uppercase; margin-bottom: 10px; }
+    .contact-title { font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800; color: white; margin-bottom: 8px; }
+    .contact-sub { font-size: 14px; color: var(--muted); margin-bottom: 32px; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    @media (max-width: 540px) { .form-row { grid-template-columns: 1fr; } }
+
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+    .form-group label { font-size: 12px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; }
+
+    .form-group input, .form-group select, .form-group textarea {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 12px 16px; color: var(--text);
+      font-family: 'Inter', sans-serif; font-size: 14px;
+      outline: none; transition: border-color 0.2s; width: 100%;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--red); }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+    .form-group select option { background: #1C0D09; }
+
+    .submit-btn {
+      width: 100%; padding: 15px 24px; background: var(--red);
+      color: white; border: none; border-radius: 12px;
+      font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700;
+      letter-spacing: 0.05em; cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s; margin-top: 8px;
+    }
+    .submit-btn:hover { opacity: 0.88; }
+    .submit-btn:active { transform: scale(0.98); }
+    .form-note { text-align: center; font-size: 12px; color: var(--caption); margin-top: 14px; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 24px; text-align: center;
+    }
+    .footer-inner {
+      max-width: 760px; margin: 0 auto;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+    }
+    .footer-logo { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; color: white; letter-spacing: 0.05em; }
+    .footer-logo span { color: var(--red); }
+    .footer-links { display: flex; gap: 24px; font-size: 13px; }
+    .footer-copy { font-size: 12px; color: var(--caption); margin-top: 6px; }
+
+    #form-success { display: none; text-align: center; padding: 40px 20px; }
+    #form-success .success-icon { font-size: 48px; margin-bottom: 16px; }
+    #form-success h3 { font-family: 'Syne', sans-serif; font-size: 22px; color: white; margin-bottom: 8px; }
+    #form-success p { color: var(--muted); font-size: 14px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">🥩</div>
+  <div class="header-text">
+    <div class="app-name">STEAK TIMER</div>
+    <div class="doc-type">Legal · Terms &amp; Conditions</div>
+  </div>
+  <div class="header-badge">v1.0</div>
+</header>
+
+<div class="hero">
+  <div class="hero-eyebrow">Legal Document</div>
+  <h1>Terms &amp; <span>Conditions</span></h1>
+  <p style="color: var(--muted); font-size: 15px; max-width: 560px;">
+    By downloading or using Steak Timer, you agree to these terms. They govern your use of the app, subscriptions, and our liability limitations.
+  </p>
+  <div class="hero-meta">
+    <div class="meta-item">
+      <span class="meta-label">Effective Date</span>
+      <span class="meta-value">June 22, 2026</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Last Updated</span>
+      <span class="meta-value">June 22, 2026</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Developer</span>
+      <span class="meta-value">Akshat Pandey</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Governing Law</span>
+      <span class="meta-value">India</span>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+
+  <div class="divider"></div>
+
+  <!-- 1 -->
+  <div class="section">
+    <h2><span class="section-num">01</span> Acceptance of Terms</h2>
+    <p>By downloading, installing, or using Steak Timer ("the App"), you agree to be bound by these Terms and Conditions. If you do not agree, do not use the App. These terms apply to all versions of the App on both Google Play and the Apple App Store.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 2 -->
+  <div class="section">
+    <h2><span class="section-num">02</span> Use of the App</h2>
+    <p>Steak Timer is a cooking timer utility designed to assist users with timing steak preparation. The app provides suggested cooking times based on user-inputted variables including cut type, thickness, and cooking method.</p>
+
+    <div class="highlight">
+      <p>⚠️ <strong>Important:</strong> Cooking times provided by the app are suggestions based on general culinary guidelines. Actual cook times vary significantly based on your specific equipment, heat source, meat density, and other factors. Always use a meat thermometer to verify internal temperature for food safety.</p>
+    </div>
+
+    <p>You agree to use the App only for lawful purposes and in accordance with these Terms. You must not misuse, reverse-engineer, or attempt to extract the source code of the App.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 3 -->
+  <div class="section">
+    <h2><span class="section-num">03</span> Subscription — Steak Timer Pro</h2>
+    <p>The App offers a paid subscription ("Steak Timer Pro") that removes all advertisements. Subscription details:</p>
+
+    <div class="pricing-box">
+      <div class="pricing-tier featured">
+        <div class="tier-name">⭐ Annual — Best Value</div>
+        <div class="tier-price">$3.49 <span>/ year</span></div>
+        <div class="tier-desc">Auto-renews annually. Cancel anytime.</div>
+      </div>
+      <div class="pricing-tier">
+        <div class="tier-name">Monthly</div>
+        <div class="tier-price">$0.49 <span>/ month</span></div>
+        <div class="tier-desc">Auto-renews monthly. Cancel anytime.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Subscription Terms</div>
+      <ul>
+        <li>Payment is charged to your Google Play or Apple App Store account at confirmation of purchase</li>
+        <li>Subscriptions automatically renew unless cancelled at least 24 hours before the end of the current period</li>
+        <li>Your account is charged for renewal within 24 hours prior to the end of the current period</li>
+        <li>You can manage and cancel subscriptions in your Google Play or Apple App Store account settings after purchase</li>
+        <li>No partial refunds are provided for unused periods of an active subscription</li>
+        <li>The free tier of the App (core timer functionality) remains available regardless of subscription status</li>
+        <li>To cancel on Android: Google Play → Profile → Payments &amp; subscriptions → Subscriptions → Steak Timer → Cancel</li>
+        <li>To cancel on iOS: Settings → [Your Name] → Subscriptions → Steak Timer → Cancel</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 4 -->
+  <div class="section">
+    <h2><span class="section-num">04</span> Restoring Purchases</h2>
+    <p>If you reinstall the App or switch devices, you can restore your Pro subscription by tapping "Restore Purchases" in the App's subscription screen. Restoration is handled through your Google Play or Apple account — no login to Steak Timer is required. Your subscription is tied to your store account, not the device.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 5 -->
+  <div class="section">
+    <h2><span class="section-num">05</span> Disclaimer of Liability</h2>
+    <p>The cooking times and guidance provided by Steak Timer are for informational and convenience purposes only. Akshat Pandey makes no representations or warranties that:</p>
+    <div class="card">
+      <ul>
+        <li>The cooking times will produce a specific doneness outcome on your specific equipment</li>
+        <li>The App is suitable as the sole method to determine food safety (always use a thermometer)</li>
+        <li>The App will be available uninterrupted or error-free at all times</li>
+      </ul>
+    </div>
+    <p>To the maximum extent permitted by applicable law, Akshat Pandey shall not be liable for any direct, indirect, incidental, or consequential damages arising from use of the App, including but not limited to improperly cooked food, property damage, or personal injury.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 6 -->
+  <div class="section">
+    <h2><span class="section-num">06</span> Intellectual Property</h2>
+    <p>All content within the App — including but not limited to the name "Steak Timer," the app design, icons, animations, timer algorithms, and written content — is the intellectual property of Akshat Pandey and is protected by applicable copyright and trademark laws.</p>
+    <p>You are granted a limited, non-exclusive, non-transferable licence to use the App for personal, non-commercial purposes. You may not copy, modify, distribute, or create derivative works from the App.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 7 -->
+  <div class="section">
+    <h2><span class="section-num">07</span> Third-Party Services</h2>
+    <p>The App integrates third-party services including Google AdMob (advertising), RevenueCat (subscription management), and Sentry (crash reporting). Your use of these services within the App is also subject to their respective terms of service. We are not responsible for the practices of these third-party providers.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 8 -->
+  <div class="section">
+    <h2><span class="section-num">08</span> App Store Terms</h2>
+    <p>These Terms are between you and Akshat Pandey only, and not with Apple Inc. or Google LLC. Apple and Google are not responsible for the App or its content. However, Apple and Google are third-party beneficiaries of these Terms and have the right to enforce them against you.</p>
+    <p>In the event of any conflict between these Terms and the rules set out by Apple's App Store or Google Play, the platform's rules will take precedence.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 9 -->
+  <div class="section">
+    <h2><span class="section-num">09</span> Changes to the App and Terms</h2>
+    <p>Akshat Pandey reserves the right to modify, update, or discontinue the App or any feature at any time. We may update these Terms from time to time. Continued use of the App after changes constitutes acceptance of the updated Terms. The "Last Updated" date at the top of this page reflects the most recent revision.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 10 -->
+  <div class="section">
+    <h2><span class="section-num">10</span> Governing Law</h2>
+    <p>These Terms are governed by and construed in accordance with the laws of India, without regard to its conflict of law provisions. Any disputes arising under these Terms shall be subject to the exclusive jurisdiction of the courts of India.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CONTACT FORM -->
+  <div class="contact-section">
+    <div class="contact-eyebrow">Get In Touch</div>
+    <div class="contact-title">Questions about Terms?</div>
+    <p class="contact-sub">Subscription issues, legal questions, or feedback — we respond within 48 hours.</p>
+
+    <div id="form-container">
+      <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" id="contact-form">
+        <input type="hidden" name="_subject" value="Steak Timer — Terms Inquiry"/>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" placeholder="John Smith" required/>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" required/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="inquiry">Type of Inquiry</label>
+          <select id="inquiry" name="inquiry_type" required>
+            <option value="" disabled selected>Select a topic</option>
+            <option value="subscription">Subscription or billing question</option>
+            <option value="refund">Refund request</option>
+            <option value="restore">Can't restore purchase</option>
+            <option value="legal">Legal question</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="Describe your question or issue..." required></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">Send Message →</button>
+        <p class="form-note">Replies sent to your email within 48 hours · vedicashcapcut@gmail.com</p>
+      </form>
+    </div>
+
+    <div id="form-success">
+      <div class="success-icon">✅</div>
+      <h3>Message Sent</h3>
+      <p>We'll get back to you at your email within 48 hours.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">STEAK <span>TIMER</span></div>
+    <div class="footer-links">
+      <a href="./privacy.html">Privacy Policy</a>
+      <a href="./terms.html">Terms &amp; Conditions</a>
+      <a href="mailto:vedicashcapcut@gmail.com">Contact</a>
+                                                                                                                     </div>
+  
