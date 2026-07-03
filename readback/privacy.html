@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — ReadBack</title>
+<style>
+  :root{
+    --bg:#0F1115;
+    --panel:#15181F;
+    --panel-2:#1B1F28;
+    --line:#262B36;
+    --text:#E7E9EE;
+    --text-dim:#9AA1AE;
+    --text-faint:#5C6270;
+    --accent:#7C9CFF;
+    --accent-dim:#3A4266;
+    --mono:'SF Mono', ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace;
+    --sans:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --serif:'Newsreader', Georgia, serif;
+    --radius:14px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation:none !important; transition:none !important;}
+  }
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* subtle ambient grid, like a reading-progress texture */
+  .bg-texture{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:64px 64px;
+    opacity:0.12;
+    mask-image:radial-gradient(ellipse 80% 50% at 50% 0%, black 40%, transparent 90%);
+  }
+
+  .shell{
+    position:relative;
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* ---------- HEADER ---------- */
+  header{
+    border-bottom:1px solid var(--line);
+    position:sticky;
+    top:0;
+    background:rgba(15,17,21,0.85);
+    backdrop-filter:blur(12px);
+    z-index:50;
+  }
+  .header-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 32px;
+    max-width:1180px;
+    margin:0 auto;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-weight:600;
+    letter-spacing:-0.01em;
+    color:var(--text);
+    text-decoration:none;
+    font-size:15px;
+  }
+  .brand-mark{
+    width:26px;height:26px;
+    position:relative;
+    flex-shrink:0;
+  }
+  .brand-mark svg{width:100%;height:100%;display:block;}
+  .header-meta{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    font-size:12.5px;
+    color:var(--text-faint);
+    font-family:var(--mono);
+  }
+  .version-pill{
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:3px 10px;
+    color:var(--text-dim);
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:88px 0 56px;
+    border-bottom:1px solid var(--line);
+    position:relative;
+  }
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--accent);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:22px;
+  }
+  .eyebrow::before{
+    content:'';
+    width:6px;height:6px;
+    border-radius:50%;
+    background:var(--accent);
+    box-shadow:0 0 0 3px var(--accent-dim);
+  }
+  h1{
+    font-family:var(--serif);
+    font-weight:500;
+    font-size:clamp(36px, 5vw, 56px);
+    line-height:1.08;
+    letter-spacing:-0.02em;
+    max-width:14ch;
+    margin-bottom:20px;
+  }
+  .hero-sub{
+    color:var(--text-dim);
+    font-size:16.5px;
+    max-width:56ch;
+    line-height:1.7;
+  }
+  .hero-facts{
+    display:flex;
+    flex-wrap:wrap;
+    gap:28px;
+    margin-top:36px;
+    padding-top:28px;
+    border-top:1px solid var(--line);
+  }
+  .fact{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+  }
+  .fact-label{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--text-faint);
+  }
+  .fact-value{
+    font-size:14.5px;
+    color:var(--text);
+    font-weight:500;
+  }
+
+  /* ---------- LAYOUT ---------- */
+  .layout{
+    display:grid;
+    grid-template-columns:240px minmax(0,1fr);
+    gap:64px;
+    padding:56px 0 100px;
+  }
+
+  /* ---------- TOC ---------- */
+  .toc{
+    position:sticky;
+    top:88px;
+    align-self:start;
+    max-height:calc(100vh - 120px);
+    overflow-y:auto;
+  }
+  .toc-label{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    margin-bottom:14px;
+  }
+  .toc ol{
+    list-style:none;
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+    counter-reset:toc;
+  }
+  .toc a{
+    counter-increment:toc;
+    display:flex;
+    gap:10px;
+    padding:8px 10px;
+    margin-left:-10px;
+    border-radius:8px;
+    text-decoration:none;
+    color:var(--text-dim);
+    font-size:13.5px;
+    line-height:1.4;
+    transition:background 0.15s ease, color 0.15s ease;
+  }
+  .toc a::before{
+    content:counter(toc, decimal-leading-zero);
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--text-faint);
+    padding-top:1px;
+  }
+  .toc a:hover{
+    background:var(--panel-2);
+    color:var(--text);
+  }
+
+  /* ---------- CONTENT ---------- */
+  .content section{
+    padding-bottom:52px;
+    margin-bottom:52px;
+    border-bottom:1px solid var(--line);
+    scroll-margin-top:96px;
+  }
+  .content section:last-child{
+    border-bottom:none;
+    margin-bottom:0;
+  }
+  .section-num{
+    font-family:var(--mono);
+    font-size:12.5px;
+    color:var(--accent);
+    margin-bottom:10px;
+  }
+  h2{
+    font-family:var(--serif);
+    font-weight:500;
+    font-size:26px;
+    letter-spacing:-0.01em;
+    margin-bottom:16px;
+  }
+  h3{
+    font-size:15px;
+    font-weight:600;
+    margin:28px 0 12px;
+    color:var(--text);
+  }
+  p{
+    color:var(--text-dim);
+    font-size:15px;
+    max-width:68ch;
+    margin-bottom:14px;
+  }
+  p:last-child{margin-bottom:0;}
+  strong{color:var(--text); font-weight:600;}
+
+  /* data table used for permissions + data map */
+  .card-grid{
+    display:grid;
+    gap:12px;
+    margin-top:18px;
+  }
+  .perm-card{
+    border:1px solid var(--line);
+    background:var(--panel);
+    border-radius:var(--radius);
+    padding:18px 20px;
+    display:grid;
+    grid-template-columns:150px 1fr;
+    gap:18px;
+    align-items:start;
+  }
+  .perm-name{
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--accent);
+    padding-top:2px;
+  }
+  .perm-desc p{font-size:14px; margin-bottom:0; max-width:none;}
+
+  .data-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:18px;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+  }
+  .data-table th,
+  .data-table td{
+    text-align:left;
+    padding:12px 16px;
+    font-size:14px;
+    border-bottom:1px solid var(--line);
+  }
+  .data-table th{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    background:var(--panel-2);
+    font-weight:500;
+  }
+  .data-table td{color:var(--text-dim);}
+  .data-table tr:last-child td{border-bottom:none;}
+  .data-table td.item{color:var(--text); font-weight:500;}
+
+  .check-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-top:16px;
+  }
+  .check-item{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    font-size:14.5px;
+    color:var(--text-dim);
+  }
+  .check-item svg{flex-shrink:0; margin-top:3px;}
+  .check-item.no svg{color:#E8734A;}
+  .check-item.yes svg{color:#6FCF97;}
+
+  .callout{
+    border:1px solid var(--accent-dim);
+    background:linear-gradient(180deg, rgba(124,156,255,0.08), rgba(124,156,255,0.02));
+    border-radius:var(--radius);
+    padding:20px 22px;
+    margin-top:18px;
+  }
+  .callout p{color:var(--text); font-size:14.5px; margin-bottom:0;}
+
+  .future-tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:16px;
+  }
+  .future-tags span{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--text-faint);
+    border:1px dashed var(--line);
+    border-radius:8px;
+    padding:6px 12px;
+  }
+
+  .contact-card{
+    border:1px solid var(--line);
+    background:var(--panel);
+    border-radius:var(--radius);
+    padding:26px 28px;
+    margin-top:18px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:20px;
+  }
+  .contact-card a{
+    color:var(--accent);
+    text-decoration:none;
+    font-family:var(--mono);
+    font-size:15px;
+  }
+  .contact-card a:hover{text-decoration:underline;}
+  .contact-role{
+    font-size:12.5px;
+    color:var(--text-faint);
+    margin-top:4px;
+  }
+
+  footer{
+    border-top:1px solid var(--line);
+    padding:32px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    max-width:1180px;
+    margin:0 auto;
+    color:var(--text-faint);
+    font-size:12.5px;
+    font-family:var(--mono);
+    flex-wrap:wrap;
+    gap:12px;
+  }
+
+  @media (max-width: 900px){
+    .layout{grid-template-columns:1fr; gap:32px;}
+    .toc{position:static; max-height:none;}
+    .perm-card{grid-template-columns:1fr; gap:6px;}
+    .hero{padding:56px 0 40px;}
+    .shell{padding:0 20px;}
+    .header-inner{padding:16px 20px;}
+    footer{padding:24px 20px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-texture"></div>
+
+<header>
+  <div class="header-inner">
+    <a href="#" class="brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 26 26" fill="none">
+          <path d="M6 4 L6 22" stroke="#7C9CFF" stroke-width="2" stroke-linecap="round"/>
+          <path d="M6 13 A9 9 0 0 1 15 4" stroke="#7C9CFF" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+          <circle cx="19" cy="7" r="2.4" fill="#7C9CFF"/>
+        </svg>
+      </span>
+      ReadBack
+    </a>
+    <div class="header-meta">
+      <span class="version-pill">v1.0.0</span>
+      <span>Chrome Extension</span>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <section class="hero">
+    <div class="eyebrow">Privacy Policy</div>
+    <h1>Your reading data stays on your device — always.</h1>
+    <p class="hero-sub">
+      ReadBack is a Chrome extension that remembers where you stopped reading, so you can pick
+      up from the exact paragraph next time. This page explains exactly what it stores, why each
+      Chrome permission is needed, and confirms that nothing ever leaves your browser.
+    </p>
+    <div class="hero-facts">
+      <div class="fact">
+        <span class="fact-label">Last updated</span>
+        <span class="fact-value" id="lastUpdated"></span>
+      </div>
+      <div class="fact">
+        <span class="fact-label">Data storage</span>
+        <span class="fact-value">Local (chrome.storage only)</span>
+      </div>
+      <div class="fact">
+        <span class="fact-label">Account required</span>
+        <span class="fact-value">No</span>
+      </div>
+      <div class="fact">
+        <span class="fact-label">Data sold or shared</span>
+        <span class="fact-value">Never</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="layout">
+    <nav class="toc" aria-label="Table of contents">
+      <div class="toc-label">On this page</div>
+      <ol>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#data-we-store">Data we store</a></li>
+        <li><a href="#permissions">Permissions explained</a></li>
+        <li><a href="#not-collected">What we don't collect</a></li>
+        <li><a href="#local-storage">Local-only storage</a></li>
+        <li><a href="#no-sharing">No selling or sharing</a></li>
+        <li><a href="#your-rights">Your rights</a></li>
+        <li><a href="#future">Future features</a></li>
+        <li><a href="#children">Children's privacy</a></li>
+        <li><a href="#changes">Policy changes</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ol>
+    </nav>
+
+    <main class="content">
+
+      <section id="overview">
+        <div class="section-num">01</div>
+        <h2>Overview</h2>
+        <p>
+          ReadBack is built by an independent developer and designed around one principle:
+          the extension should know exactly as much as it needs to help you resume reading —
+          and nothing more. It does not require an account, does not run a backend server,
+          and does not phone home. Every saved page, note, and statistic lives inside your
+          own browser's local storage.
+        </p>
+        <p>
+          Saving a page is always something <strong>you</strong> choose to do — either from the
+          popup or the right-click menu. ReadBack does not automatically track or save pages
+          you haven't explicitly saved, so your library only ever contains what you put there.
+        </p>
+      </section>
+
+      <section id="data-we-store">
+        <div class="section-num">02</div>
+        <h2>Data ReadBack stores</h2>
+        <p>
+          When you save a page, ReadBack records the following, so it can rebuild your reading
+          position later:
+        </p>
+        <table class="data-table">
+          <thead>
+            <tr><th>Item</th><th>Purpose</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="item">Page URL &amp; title</td><td>To identify and relist the saved page</td></tr>
+            <tr><td class="item">Website favicon</td><td>Displayed in your Reading Library for quick recognition</td></tr>
+            <tr><td class="item">Scroll position &amp; saved paragraph</td><td>To scroll you back and highlight where you left off</td></tr>
+            <tr><td class="item">Reading progress</td><td>Powers progress bars and completion status</td></tr>
+            <tr><td class="item">Reading time &amp; session info</td><td>Used for Statistics, Streaks, and Timeline features</td></tr>
+            <tr><td class="item">Notes, folders, favorites</td><td>Organizational data you create yourself</td></tr>
+          </tbody>
+        </table>
+        <div class="callout">
+          <p>
+            All of the above is stored using Chrome's built-in <strong>storage API</strong>,
+            scoped to your browser profile. None of it is transmitted anywhere.
+          </p>
+        </div>
+      </section>
+
+      <section id="permissions">
+        <div class="section-num">03</div>
+        <h2>Permissions, explained</h2>
+        <p>
+          Chrome requires extensions to declare permissions up front. Here's what ReadBack asks
+          for and why — nothing is used beyond this stated purpose.
+        </p>
+        <div class="card-grid">
+          <div class="perm-card">
+            <div class="perm-name">storage</div>
+            <div class="perm-desc">
+              <p>Stores saved pages, reading progress, notes, folders, favorites, streaks, and settings locally in your browser.</p>
+            </div>
+          </div>
+          <div class="perm-card">
+            <div class="perm-name">activeTab</div>
+            <div class="perm-desc">
+              <p>Lets ReadBack read the current tab's content <strong>only</strong> at the moment you explicitly click Save Page — never in the background.</p>
+            </div>
+          </div>
+          <div class="perm-card">
+            <div class="perm-name">alarms</div>
+            <div class="perm-desc">
+              <p>Schedules routine statistic updates and light maintenance tasks (e.g. recalculating streaks) — no network activity involved.</p>
+            </div>
+          </div>
+          <div class="perm-card">
+            <div class="perm-name">contextMenus</div>
+            <div class="perm-desc">
+              <p>Adds a "Save Page" option to Chrome's right-click menu as a shortcut to the same save action available in the popup.</p>
+            </div>
+          </div>
+          <div class="perm-card">
+            <div class="perm-name">host permissions</div>
+            <div class="perm-desc">
+              <p>Used solely to locate and restore your saved paragraph on pages you've chosen to save — not to monitor browsing on other sites.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="not-collected">
+        <div class="section-num">04</div>
+        <h2>What ReadBack doesn't collect</h2>
+        <div class="check-list">
+          <div class="check-item no">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            No names, emails, or account credentials — there's no account system at all
+          </div>
+          <div class="check-item no">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            No browsing history outside the pages you manually save
+          </div>
+          <div class="check-item no">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            No cross-site tracking or third-party analytics scripts
+          </div>
+          <div class="check-item no">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            No advertising identifiers, and no ads displayed within the extension
+          </div>
+          <div class="check-item no">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            No location, device, or financial data of any kind
+          </div>
+        </div>
+      </section>
+
+      <section id="local-storage">
+        <div class="section-num">05</div>
+        <h2>Everything stays local</h2>
+        <p>
+          ReadBack has no backend server. There is nowhere for your data to be uploaded to,
+          because no such destination exists in the extension. Uninstalling ReadBack, or clearing
+          your browser's extension storage, permanently removes all saved data — there is no
+          copy retained anywhere else.
+        </p>
+        <div class="check-list">
+          <div class="check-item yes">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Stored entirely inside <span style="font-family:var(--mono); color:var(--text);">chrome.storage</span> on your device
+          </div>
+          <div class="check-item yes">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            No cloud sync in this version — your library exists only on this browser profile
+          </div>
+          <div class="check-item yes">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Deleting the extension deletes your data — no residual backups
+          </div>
+        </div>
+      </section>
+
+      <section id="no-sharing">
+        <div class="section-num">06</div>
+        <h2>We never sell or share your data</h2>
+        <p>
+          ReadBack does not sell, rent, trade, or share your reading data with any third party,
+          advertiser, analytics provider, or data broker — under any circumstance. There is no
+          monetization model built around your data; ReadBack does not display advertisements.
+        </p>
+      </section>
+
+      <section id="your-rights">
+        <div class="section-num">07</div>
+        <h2>Your rights and control</h2>
+        <p>Because everything lives in your own browser, you're always in full control:</p>
+        <div class="check-list">
+          <div class="check-item yes">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg
