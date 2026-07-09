@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO Tags -->
+  <title>Privacy Policy — CopyBack</title>
+  <meta name="description" content="Official Privacy Policy for the CopyBack Chrome extension. Read about our local-only storage model, extension permissions, and user data protections.">
+  <meta name="author" content="Akshat Pandey">
+  <link rel="canonical" href="https://akshatpandey.me/copyback/privacypolicy.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://akshatpandey.me/copyback/privacypolicy.html">
+  <meta property="og:title" content="Privacy Policy — CopyBack">
+  <meta property="og:description" content="CopyBack is built with a single privacy rule: what you copy is your business. 100% local, secure, and transparent.">
+  <meta property="og:image" content="https://akshatpandey.me/copyback/og-image.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://akshatpandey.me/copyback/privacypolicy.html">
+  <meta property="twitter:title" content="Privacy Policy — CopyBack">
+  <meta property="twitter:description" content="CopyBack is built with a single privacy rule: what you copy is your business. 100% local, secure, and transparent.">
+  <meta property="twitter:image" content="https://akshatpandey.me/copyback/og-image.png">
+
+  <!-- Favicon (Inline SVG Data URI) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0%200%20512%20512'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3E%3Crect%20x='96'%20y='96'%20width='320'%20height='360'%20rx='40'%20fill='white'%20stroke='%234C82FB'%20stroke-width='24'/%3E%3Cpath%20d='M192%2096C192%2064.5%20217.5%2040%20249%2040H263C294.5%2040%20320%2064.5%20320%2096H192Z'%20fill='%2375A4FF'%20stroke='%234C82FB'%20stroke-width='16'%20stroke-linejoin='round'/%3E%3Ccircle%20cx='256'%20cy='76'%20r='10'%20fill='white'/%3E%3Cline%20x1='160'%20y1='180'%20x2='352'%20y2='180'%20stroke='%23D1E2FF'%20stroke-width='18'%20stroke-linecap='round'/%3E%3Cline%20x1='160'%20y1='240'%20x2='352'%20y2='240'%20stroke='%23D1E2FF'%20stroke-width='18'%20stroke-linecap='round'/%3E%3Cline%20x1='160'%20y1='300'%20x2='280'%20y2='300'%20stroke='%23D1E2FF'%20stroke-width='18'%20stroke-linecap='round'/%3E%3Cpath%20d='M280%20430C360%20430%20430%20380%20430%20310C430%20240%20370%20190%20290%20190'%20stroke='%23375DFB'%20stroke-width='28'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3Cpath%20d='M330%20140L280%20190L330%20240'%20stroke='%23375DFB'%20stroke-width='28'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E">
+
+  <!-- Google Fonts Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* CSS Variables matching Apple HIG (Light theme only) */
+    :root {
+      --font-family: -apple-system, BlinkMacSystemFont, "Inter", "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+      --bg-primary: #FFFFFF;
+      --bg-secondary: #F5F5F7;
+      --bg-tertiary: #FBFBFD;
+      --text-primary: #1D1D1F;
+      --text-secondary: #86868B;
+      --text-tertiary: #6E6E73;
+      --accent-blue: #0071E3;
+      --accent-blue-hover: #0077ED;
+      --border-color: #E5E5EA;
+      --shadow-subtle: 0 4px 24px rgba(0, 0, 0, 0.04);
+      --shadow-premium: 0 12px 40px rgba(0, 0, 0, 0.06);
+      --corner-radius-sm: 8px;
+      --corner-radius-md: 14px;
+      --corner-radius-lg: 20px;
+      --corner-radius-pill: 30px;
+      --transition-fast: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    /* Base Setup */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-family);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Typography */
+    h1, h2, h3 {
+      font-weight: 700;
+      letter-spacing: -0.022em;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-size: 1.6rem;
+      line-height: 1.25;
+      margin-top: 48px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 8px;
+    }
+
+    h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-top: 24px;
+      margin-bottom: 8px;
+    }
+
+    p {
+      color: #3A3A3C;
+      font-size: 1.05rem;
+      margin-bottom: 16px;
+    }
+
+    ul, ol {
+      margin-bottom: 20px;
+      padding-left: 24px;
+    }
+
+    li {
+      margin-bottom: 8px;
+      color: #3A3A3C;
+      font-size: 1rem;
+    }
+
+    code {
+      font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 0.9em;
+      background-color: var(--bg-secondary);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #FF2D55;
+    }
+
+    /* Layout Constraints */
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Header Nav */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: rgba(255, 255, 255, 0.85);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      z-index: 100;
+    }
+
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .logo-svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-links a {
+      color: var(--text-tertiary);
+      font-size: 0.95rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: var(--transition-fast);
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+
+    /* Privacy Layout Content */
+    .privacy-content-wrapper {
+      padding-top: 140px;
+      padding-bottom: 100px;
+    }
+
+    .meta-date {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      font-weight: 500;
+      margin-bottom: 40px;
+    }
+
+    .badge-local {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background-color: #E8F5E9;
+      color: #2E7D32;
+      font-weight: 600;
+      font-size: 0.85rem;
+      padding: 6px 12px;
+      border-radius: var(--corner-radius-sm);
+      margin-bottom: 24px;
+    }
+
+    .badge-local svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .highlight-card {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--corner-radius-md);
+      padding: 24px;
+      margin: 32px 0;
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .highlight-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .permission-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+    }
+
+    .permission-table th, .permission-table td {
+      border: 1px solid var(--border-color);
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+
+    .permission-table th {
+      background-color: var(--bg-secondary);
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .permission-table td strong {
+      color: var(--accent-blue);
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--bg-primary);
+      border-top: 1px solid var(--border-color);
+      padding: 48px 0;
+    }
+
+    .footer-grid {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+
+    .footer-info {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .footer-info p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-links a {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: var(--transition-fast);
+    }
+
+    .footer-links a:hover {
+      color: var(--text-primary);
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 2.2rem; }
+      .nav-links { display: none; }
+      .footer-grid {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header>
+    <div class="container nav-container">
+      <a href="index.html" class="logo-link">
+        <svg class="logo-svg" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="96" y="96" width="320" height="360" rx="40" fill="white" stroke="#4C82FB" stroke-width="24"/>
+          <path d="M192 96C192 64.5 217.5 40 249 40H263C294.5 40 320 64.5 320 96H192Z" fill="#75A4FF" stroke="#4C82FB" stroke-width="16" stroke-linejoin="round"/>
+          <circle cx="256" cy="76" r="10" fill="white"/>
+          <line x1="160" y1="180" x2="352" y2="180" stroke="#D1E2FF" stroke-width="18" stroke-linecap="round"/>
+          <line x1="160" y1="240" x2="352" y2="240" stroke="#D1E2FF" stroke-width="18" stroke-linecap="round"/>
+          <line x1="160" y1="300" x2="280" y2="300" stroke="#D1E2FF" stroke-width="18" stroke-linecap="round"/>
+          <path d="M280 430C360 430 430 380 430 310C430 240 370 190 290 190" stroke="#375DFB" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M330 140L280 190L330 240" stroke="#375DFB" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>CopyBack</span>
+      </a>
+      <nav class="nav-links">
+        <a href="index.html#features">Features</a>
+        <a href="index.html#timeline">How it Works</a>
+        <a href="index.html#faq">FAQ</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="index.html" class="nav-links">Back to Landing Page</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Privacy Content Wrapper -->
+  <main class="container privacy-content-wrapper">
+    <div class="badge-local">
+      <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2.166 4.9L10 1.166 17.834 4.9A2 2 0 0119 6.754V12a10 10 0 01-9 9.95A10 10 0 011 12V6.754a2 2 0 011.166-1.854zM10 3.167L3 6.502v5.187C3 16.592 7 20 10 20s7-3.408 7-8.311V6.502L10 3.167z" clip-rule="evenodd"/></svg>
+      100% Local Storage - No Server Transmission
+    </div>
+    
+    <h1>Privacy Policy</h1>
+    <div class="meta-date">Last Updated: July 9, 2026</div>
+
+    <div class="highlight-card">
+      <p><strong>Executive Summary:</strong> CopyBack is built to be exactly as private as it sounds. All text you copy is stored locally on your device inside Google Chrome's secure sandboxed database. No remote servers exist, no sync calls are scheduled, no accounts are required, and no third-party tracking is present. What you copy stays entirely on your computer.</p>
+    </div>
+
+    <h2>1. Overview</h2>
+    <p>CopyBack is a standalone utility extension for the Google Chrome web browser, developed by <strong>Akshat Pandey</strong>. The extension is designed to run locally, providing a history stack of text snippets copied during browsing sessions to protect users from clipboard data loss. We maintain a strict zero-telemetry policy.</p>
+
+    <h2>2. Information Collected &amp; Stored</h2>
+    <p>CopyBack only captures data when you explicitly perform a "Copy" command (such as pressing <code>Ctrl+C</code> / <code>Cmd+C</code> or selecting "Save to CopyBack" from the context menu) on standard websites. The following parameters are generated and written to Chrome's local database:</p>
+    <ul>
+      <li><strong>Copied Text:</strong> The text payload of your copy event. This is capped at a maximum of 20,000 characters per item to preserve space.</li>
+      <li><strong>Webpage URL:</strong> The web address (URL) of the active tab where the text copy took place.</li>
+      <li><strong>Page Title:</strong> The HTML document title of the page where the content was copied.</li>
+      <li><strong>Website Hostname:</strong> The domain name (e.g., <code>en.wikipedia.org</code>) of the source webpage.</li>
+      <li><strong>Favicon URL:</strong> The website icon associated with the source webpage.</li>
+      <li><strong>Temporal Metadata:</strong> The exact date and timestamp of the copy event.</li>
+      <li><strong>Quantitative Statistics:</strong> A character count and word count calculated locally from the text payload.</li>
+      <li><strong>Item States:</strong> Toggle fields indicating whether you have marked the clip as a <em>Favorite</em> or <em>Pinned</em> item.</li>
+      <li><strong>Extension Preferences:</strong> Your selected history cleanup duration (30, 90, 180 days, or "never") and toast notification preferences.</li>
+    </ul>
+
+    <h2>3. How Your Data is Used &amp; Storage Architecture</h2>
+    <p>Stored data is exclusively used by the extension to render your copy history list in the popup frame and search through past items. We do not use this data for any secondary purposes.</p>
+    <ul>
+      <li><strong>Storage Backend:</strong> All elements are saved in Chrome's sandboxed local filesystem using the <code>chrome.storage.local</code> API.</li>
+      <li><strong>No Remote Processing:</strong> There is no remote database server. Stored data is never synced to any server, transmitted over the internet, or made available to the developer, Google, or any third-party providers.</li>
+      <li><strong>Data Deletion:</strong> Removing/Uninstalling the CopyBack extension from your browser automatically deletes Chrome's sandboxed filesystem directory, wiping 100% of your clipboard history files from your hard drive immediately.</li>
+    </ul>
+
+    <h2>4. Required Permissions Explained</h2>
+    <p>In accordance with Google Chrome Web Store Developer Policies, CopyBack requests only the narrowest possible permissions necessary to execute its functions. Each permission is mapped directly to actual features:</p>
+
+    <table class="permission-table">
+      <thead>
+        <tr>
+          <th>Permission ID</th>
+          <th>Usage Scope &amp; Necessity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>storage</strong></td>
+          <td>Required to write, read, and delete clipboard history items and settings locally in the browser profile database (<code>chrome.storage.local</code>).</td>
+        </tr>
+        <tr>
+          <td><strong>contextMenus</strong></td>
+          <td>Enables adding the "Save to CopyBack" item to the browser right-click menu, allowing you to highlight text and manually save it.</td>
+        </tr>
+        <tr>
+          <td><strong>alarms</strong></td>
+          <td>Launches a background timer that runs once every 4 hours to verify if history items are older than your auto-cleanup retention window.</td>
+        </tr>
+        <tr>
+          <td><strong>notifications</strong></td>
+          <td>Displays native browser notifications to warn you one day in advance before unpinned/unfavorited clips are permanently cleared by automatic cleanup.</td>
+        </tr>
+        <tr>
+          <td><strong>tabs</strong></td>
+          <td>Used to access website titles, URLs, and favicon icons during copy events to attach metadata. It is also used to query and inject copy hooks into open tabs when you install or reload the extension.</td>
+        </tr>
+        <tr>
+          <td><strong>scripting</strong></td>
+          <td>Used during extension install or update to insert the light content observer script (<code>content.js</code>) dynamically into existing tabs without forcing a page refresh.</td>
+        </tr>
+        <tr>
+          <td><strong>host_permissions</strong> (<code>http://*/*</code>, <code>https://*/*</code>)</td>
+          <td>Allows the content observer script to load on web pages to listen for the copy event and display the visual "Saved to CopyBack" confirm toast dynamically.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>5. Exclusions &amp; Scope Limits</h2>
+    <p>CopyBack's scope is strictly defined by Chrome API boundaries and browser sandbox constraints:</p>
+    <ul>
+      <li><strong>Incognito Mode:</strong> CopyBack does not observe copy events in incognito/private windows unless the user explicitly grants the extension permission to run in Incognito via Chrome settings.</li>
+      <li><strong>Restricted Pages:</strong> Chrome blocks script execution on system pages. CopyBack cannot observe or save copies made on <code>chrome://</code> pages, the Chrome Web Store, local PDF files opened in Chrome, or browser address/UI bars.</li>
+      <li><strong>External System Copies:</strong> CopyBack is a browser extension. It has no access to copies made inside desktop applications, text editors, folders, or other applications outside of standard Chrome tabs.</li>
+    </ul>
+
+    <h2>6. Automatic Cleanup &amp; Hard Storage Limits</h2>
+    <p>CopyBack provides settings to control database size and data retention:</p>
+    <ul>
+      <li><strong>Automated Deletion:</strong> Items older than your selected threshold (30, 90, or 180 days) are automatically deleted by the background service worker. This clean-up check is triggered every 4 hours via Chrome alarms and on every popup reload.</li>
+      <li><strong>Pins and Favorites Exemption:</strong> Pinned and Favorited clips are excluded from the retention timer and will remain in storage indefinitely until you manually delete them.</li>
+      <li><strong>Storage Limit Overflow Handling:</strong> Chrome local storage operates with a size quota. If this quota limit is reached, CopyBack's helper script will search for the oldest unpinned and unfavorited clipboard item, delete it to clear buffer space, and save the incoming clip to avoid service disruption.</li>
+    </ul>
+
+    <h2>7. User Controls &amp; Choice</h2>
+    <p>You maintain full control over all database elements:</p>
+    <ul>
+      <li><strong>Individual Deletion:</strong> You can click the Trash icon on any card inside the history popup to permanently delete a specific clipboard item instantly.</li>
+      <li><strong>Silencing Notifications:</strong> You can toggle off browser notifications and toast alerts inside the settings panel.</li>
+      <li><strong>Changing Retention:</strong> You can choose "Never" as the cleanup duration to preserve history indefinitely.</li>
+    </ul>
+
+    <h2>8. Security Auditing</h2>
+    <ul>
+      <li><strong>No Remote Code:</strong> CopyBack complies with Manifest V3 restrictions. All program execution logic is packaged locally within the extension. It does not call external resources or load dynamic scripts.</li>
+      <li><strong>Zero Third-Party Libraries:</strong> The landing page, privacy policy, extension worker, and content hooks are written strictly in pure vanilla JavaScript, CSS, and HTML. No tracking dependencies, Webpack bundlers, or remote framework scripts are included.</li>
+    </ul>
+
+    <h2>9. Contact &amp; Questions</h2>
+    <p>If you have any questions or concerns regarding CopyBack or this privacy policy, you can contact the developer, <strong>Akshat Pandey</strong>, via <a href="https://mail.google.com/mail/?view=cm&fs=1&to=ashbuildsinpublic@gmail.com" target="_blank" rel="noopener noreferrer">ashbuildsinpublic@gmail.com</a>.</p>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-grid">
+      <div class="footer-info">
+        <a href="index.html" class="logo-link" style="font-size:1.1rem; gap:8px;">
+          <svg class="logo-svg" style="width:22px; height:22px;" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="96" y="96" width="320" height="360" rx="40" fill="white" stroke="#4C82FB" stroke-width="24"/>
+            <path d="M192 96C192 64.5 217.5 40 249 40H263C294.5 40 320 64.5 320 96H192Z" fill="#75A4FF" stroke="#4C82FB" stroke-width="16" stroke-linejoin="round"/>
+            <circle cx="256" cy="76" r="10" fill="white"/>
+            <line x1="160" y1="180" x2="352" y2="180" stroke="#D1E2FF" stroke-width="18" stroke-linecap="round"/>
+            <line x1="160" y1="240" x2="352" y2="240" stroke="#D1E2FF" stroke-width="18" stroke-linecap="round"/>
+            <line x1="160" y1="300" x2="280" y2="300" stroke="#D1E2FF" stroke-width="18" stroke-linecap="round"/>
+            <path d="M280 430C360 430 430 380 430 310C430 240 370 190 290 190" stroke="#375DFB" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M330 140L280 190L330 240" stroke="#375DFB" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>CopyBack</span>
+        </a>
+        <p>Built by Akshat Pandey. All rights reserved.</p>
+      </div>
+      <div class="footer-links">
+        <a href="privacypolicy.html">Privacy Policy</a>
+        <a href="#">Chrome Web Store</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

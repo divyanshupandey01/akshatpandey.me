@@ -1,1 +1,1868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO Tags -->
+  <title>CopyBack — Never Lose Anything You Copy</title>
+  <meta name="description" content="CopyBack is a premium, privacy-first Chrome extension that quietly remembers everything you copy. 100% local storage, automated cleanup, and instant search.">
+  <meta name="keywords" content="CopyBack, clipboard manager, chrome extension, privacy-first, copy paste history, local clipboard, akshat pandey">
+  <meta name="author" content="Akshat Pandey">
+  <link rel="canonical" href="https://akshatpandey.me/copyback/">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://akshatpandey.me/copyback/">
+  <meta property="og:title" content="CopyBack — Never Lose Anything You Copy">
+  <meta property="og:description" content="CopyBack quietly remembers everything you copy in Chrome, so you never lose it again. 100% local, secure, and fast.">
+  <meta property="og:image" content="https://akshatpandey.me/copyback/og-image.png">
 
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://akshatpandey.me/copyback/">
+  <meta property="twitter:title" content="CopyBack — Never Lose Anything You Copy">
+  <meta property="twitter:description" content="CopyBack quietly remembers everything you copy in Chrome, so you never lose it again. 100% local, secure, and fast.">
+  <meta property="twitter:image" content="https://akshatpandey.me/copyback/og-image.png">
+
+  <!-- Favicon (Inline SVG Data URI for zero dependencies) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0%200%20512%20512'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3E%3Crect%20x='96'%20y='96'%20width='320'%20height='360'%20rx='40'%20fill='white'%20stroke='%234C82FB'%20stroke-width='24'/%3E%3Cpath%20d='M192%2096C192%2064.5%20217.5%2040%20249%2040H263C294.5%2040%20320%2064.5%20320%2096H192Z'%20fill='%2375A4FF'%20stroke='%234C82FB'%20stroke-width='16'%20stroke-linejoin='round'/%3E%3Ccircle%20cx='256'%20cy='76'%20r='10'%20fill='white'/%3E%3Cline%20x1='160'%20y1='180'%20x2='352'%20y2='180'%20stroke='%23D1E2FF'%20stroke-width='18'%20stroke-linecap='round'/%3E%3Cline%20x1='160'%20y1='240'%20x2='352'%20y2='240'%20stroke='%23D1E2FF'%20stroke-width='18'%20stroke-linecap='round'/%3E%3Cline%20x1='160'%20y1='300'%20x2='280'%20y2='300'%20stroke='%23D1E2FF'%20stroke-width='18'%20stroke-linecap='round'/%3E%3Cpath%20d='M280%20430C360%20430%20430%20380%20430%20310C430%20240%20370%20190%20290%20190'%20stroke='%23375DFB'%20stroke-width='28'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3Cpath%20d='M330%20140L280%20190L330%20240'%20stroke='%23375DFB'%20stroke-width='28'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E">
+
+  <!-- Google Fonts Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* CSS Variables matching Apple HIG (Light theme only) */
+    :root {
+      --font-family: -apple-system, BlinkMacSystemFont, "Inter", "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+      --bg-primary: #FFFFFF;
+      --bg-secondary: #F5F5F7;
+      --bg-tertiary: #FBFBFD;
+      --text-primary: #1D1D1F;
+      --text-secondary: #86868B;
+      --text-tertiary: #6E6E73;
+      --accent-blue: #0071E3;
+      --accent-blue-hover: #0077ED;
+      --accent-blue-light: #E8F2FF;
+      --border-color: #E5E5EA;
+      --border-hover: #D2D2D7;
+      --shadow-subtle: 0 4px 24px rgba(0, 0, 0, 0.04);
+      --shadow-premium: 0 12px 40px rgba(0, 0, 0, 0.06);
+      --shadow-popup: 0 20px 50px rgba(0, 0, 0, 0.1);
+      --corner-radius-sm: 8px;
+      --corner-radius-md: 14px;
+      --corner-radius-lg: 20px;
+      --corner-radius-pill: 30px;
+      --transition-fast: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --transition-medium: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    /* Base Setup */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-family);
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4 {
+      font-weight: 700;
+      letter-spacing: -0.022em;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      line-height: 1.08;
+    }
+
+    h2 {
+      font-size: 2.2rem;
+      line-height: 1.15;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    h3 {
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+
+    p {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--accent-blue);
+      text-decoration: none;
+      transition: var(--transition-fast);
+    }
+
+    a:hover {
+      color: var(--accent-blue-hover);
+    }
+
+    /* Layout Constraints */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .section-padding {
+      padding: 100px 0;
+    }
+
+    /* Header Nav */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: rgba(255, 255, 255, 0.85);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      z-index: 100;
+      transition: var(--transition-fast);
+    }
+
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--text-primary);
+    }
+
+    .logo-svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-links a {
+      color: var(--text-tertiary);
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 24px;
+      font-size: 0.95rem;
+      font-weight: 600; /* Feeling bold */
+      border-radius: var(--corner-radius-pill);
+      transition: var(--transition-fast);
+      cursor: pointer;
+      border: none;
+    }
+
+    /* Force download text color to always remain bold and pure white */
+    .btn-primary, .nav-links a.btn-primary {
+      background-color: var(--accent-blue);
+      color: #FFFFFF !important; 
+    }
+
+    .btn-primary:hover, .nav-links a.btn-primary:hover {
+      background-color: var(--accent-blue-hover);
+      color: #FFFFFF !important; 
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 113, 227, 0.2);
+    }
+
+    .btn-secondary {
+      background-color: var(--bg-secondary);
+      color: var(--text-primary);
+    }
+
+    .btn-secondary:hover {
+      background-color: #E8E8ED;
+      transform: translateY(-1px);
+    }
+
+    .btn-nav-download {
+      padding: 6px 14px;
+      font-size: 0.85rem;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      padding-top: 140px;
+      padding-bottom: 80px;
+      background: radial-gradient(circle at 75% 20%, #EBF3FF 0%, rgba(255,255,255,0) 50%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .hero-content {
+      max-width: 580px;
+    }
+
+    .hero-content h1 span.highlight {
+      color: var(--accent-blue);
+      background: linear-gradient(120deg, #375DFB 0%, #0071E3 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-desc {
+      margin-top: 24px;
+      margin-bottom: 36px;
+      font-size: 1.25rem;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .hero-features-strip {
+      display: flex;
+      gap: 20px;
+      margin-top: 48px;
+    }
+
+    .hero-feat-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      background-color: var(--bg-secondary);
+      padding: 6px 12px;
+      border-radius: var(--corner-radius-sm);
+      line-height: 1;
+    }
+
+    .hero-feat-item svg {
+      width: 14px;
+      height: 14px;
+      display: block;
+      overflow: visible; /* Fix lock icon display issues */
+      flex-shrink: 0;
+    }
+
+    /* Interactive Extension Popup Mockup styling */
+    .mockup-container {
+      display: flex;
+      justify-content: center;
+      perspective: 1000px;
+    }
+
+    .popup-mockup {
+      width: 360px;
+      height: 512px;
+      background: var(--bg-primary);
+      border-radius: var(--corner-radius-lg);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-popup);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      font-size: 13px;
+      font-family: var(--font-family);
+      color: #14161A;
+      position: relative;
+      transition: var(--transition-medium);
+      transform: rotateY(-3deg) rotateX(2deg);
+    }
+
+    .popup-mockup:hover {
+      transform: rotateY(0deg) rotateX(0deg);
+    }
+
+    .mockup-header {
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #F0F0F2;
+    }
+
+    .mockup-header-title {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .mockup-settings-icon {
+      width: 18px;
+      height: 18px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .mockup-settings-icon:hover {
+      color: var(--text-primary);
+      transform: rotate(45deg);
+    }
+
+    .mockup-search-container {
+      padding: 10px 16px;
+      border-bottom: 1px solid #F0F0F2;
+    }
+
+    .mockup-search-input {
+      width: 100%;
+      padding: 8px 12px;
+      padding-left: 30px;
+      border-radius: var(--corner-radius-sm);
+      border: 1px solid #E2E2E6;
+      background-color: #F2F2F7;
+      font-family: var(--font-family);
+      outline: none;
+      font-size: 12px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0%200%2024%2024' stroke='%238e8e93'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M21%2021l-6-6m2-5a7%207%200%2011-14%200%207%207%200%200114%200z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: 9px 9px;
+      background-size: 13px;
+      transition: var(--transition-fast);
+    }
+
+    .mockup-search-input:focus {
+      background-color: var(--bg-primary);
+      border-color: var(--accent-blue);
+    }
+
+    .mockup-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 14px 16px;
+    }
+
+    .mockup-section-title {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .mockup-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .mockup-card {
+      border: 1px solid #EAEAEA;
+      border-radius: var(--corner-radius-md);
+      padding: 12px 14px;
+      background: #FFFFFF;
+      transition: var(--transition-fast);
+      position: relative;
+    }
+
+    .mockup-card:hover {
+      border-color: #D6D6DB;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+    }
+
+    .mockup-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .mockup-card-site {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-tertiary);
+    }
+
+    .mockup-card-favicon {
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+    }
+
+    .mockup-card-title {
+      font-weight: 600;
+      font-size: 12px;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .mockup-card-text {
+      color: var(--text-tertiary);
+      font-size: 11.5px;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .mockup-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid #F2F2F7;
+      padding-top: 8px;
+      gap: 8px; /* Balanced layout spacing */
+    }
+
+    .mockup-card-meta {
+      font-size: 10px;
+      color: var(--text-secondary);
+    }
+
+    /* Fixed Layout matching extension UI from screenshots */
+    .mockup-card-actions-left,
+    .mockup-card-actions-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .mockup-action-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      border-radius: 4px;
+      color: var(--text-secondary);
+      transition: var(--transition-fast);
+    }
+
+    .mockup-action-btn:hover {
+      background-color: #F2F2F7;
+      color: var(--text-primary);
+    }
+
+    .mockup-action-btn.active {
+      color: #FF2D55;
+    }
+
+    .mockup-copy-btn {
+      background-color: #EBF2FF;
+      color: var(--accent-blue);
+      border: none;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      transition: var(--transition-fast);
+      flex: 1; /* Expands to fill middle space */
+      white-space: nowrap;
+    }
+
+    .mockup-copy-btn:hover {
+      background-color: #D1E3FF;
+    }
+
+    .mockup-toast {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background-color: rgba(20, 22, 26, 0.95);
+      color: white;
+      padding: 8px 16px;
+      border-radius: var(--corner-radius-pill);
+      font-size: 11px;
+      font-weight: 500;
+      pointer-events: none;
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 10;
+    }
+
+    .mockup-toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    .mockup-toast-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #34C759;
+    }
+
+    /* Live Toast Simulator on Website Root */
+    .real-toast-root {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 1000;
+      pointer-events: none;
+    }
+
+    .real-toast {
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid var(--border-color);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      padding: 12px 20px;
+      border-radius: var(--corner-radius-md);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-primary);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      backdrop-filter: blur(10px);
+    }
+
+    .real-toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .real-toast-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--accent-blue);
+      box-shadow: 0 0 8px rgba(0, 113, 227, 0.6);
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.6; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Problem Section Fixed layout: 3 Cards Grid + 1 Large Solution Row below */
+    .problem-section {
+      background-color: var(--bg-tertiary);
+    }
+
+    .problem-grid-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 30px;
+      margin-top: 60px;
+    }
+
+    .problem-card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--corner-radius-md);
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: var(--shadow-subtle);
+      transition: var(--transition-fast);
+      position: relative;
+    }
+
+    .problem-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-premium);
+    }
+
+    .problem-num {
+      position: absolute;
+      top: -15px;
+      background-color: var(--text-primary);
+      color: white;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .problem-card-icon {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 16px;
+      color: #FF3B30; /* Red warning theme for problem */
+    }
+
+    .problem-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .problem-card p {
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    /* Large full-width card underneath representing Step 4 (The Solution) */
+    .solution-container {
+      margin-top: 40px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .solution-card-wide {
+      background-color: #F2FDF5;
+      border: 1px solid #34C759;
+      border-radius: var(--corner-radius-lg);
+      padding: 32px 40px;
+      max-width: 800px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      box-shadow: var(--shadow-subtle);
+      transition: var(--transition-fast);
+      position: relative;
+    }
+
+    .solution-card-wide:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-premium);
+    }
+
+    .solution-card-wide .problem-num {
+      background-color: #34C759;
+    }
+
+    .solution-icon-wrap {
+      background-color: #E8F8EC;
+      color: #34C759;
+      padding: 16px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .solution-icon-wrap svg {
+      width: 36px;
+      height: 36px;
+    }
+
+    .solution-text-wrap {
+      text-align: left;
+    }
+
+    .solution-text-wrap h3 {
+      font-size: 1.3rem;
+      color: #2E7D32;
+      margin-bottom: 6px;
+    }
+
+    .solution-text-wrap p {
+      color: #3A3A3C;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    /* Features Grid Section */
+    .features-section {
+      background-color: var(--bg-primary);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 30px;
+      margin-top: 60px;
+    }
+
+    .feat-card {
+      border: 1px solid var(--border-color);
+      border-radius: var(--corner-radius-md);
+      padding: 24px;
+      transition: var(--transition-fast);
+      background-color: var(--bg-tertiary);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .feat-card:hover {
+      background-color: var(--bg-primary);
+      border-color: var(--border-hover);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-premium);
+    }
+
+    .feat-illus {
+      width: 100%;
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--bg-primary);
+      border-radius: var(--corner-radius-sm);
+      margin-bottom: 20px;
+      border: 1px solid rgba(0,0,0,0.02);
+      overflow: hidden;
+    }
+
+    .feat-illus svg {
+      width: 64px;
+      height: 64px;
+    }
+
+    .feat-card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+    }
+
+    .feat-card p {
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    /* How It Works Section */
+    .how-section {
+      background-color: var(--bg-secondary);
+    }
+
+    .timeline {
+      position: relative;
+      max-width: 800px;
+      margin: 60px auto 0;
+      padding: 20px 0;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background-color: var(--border-color);
+      transform: translateX(-50%);
+    }
+
+    .timeline-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-img {
+      width: 45%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .timeline-img svg {
+      width: 160px;
+      height: 120px;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.03));
+    }
+
+    .timeline-content {
+      width: 45%;
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--corner-radius-md);
+      padding: 24px;
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .timeline-step {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent-blue);
+      background-color: var(--accent-blue-light);
+      padding: 2px 8px;
+      border-radius: var(--corner-radius-sm);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .timeline-content h3 {
+      font-size: 1.25rem;
+      margin-bottom: 8px;
+    }
+
+    .timeline-content p {
+      font-size: 0.95rem;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: 50%;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background-color: var(--accent-blue);
+      border: 4px fill var(--bg-secondary);
+      transform: translateX(-50%);
+      z-index: 5;
+    }
+
+    .timeline-item:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+
+    /* FAQ Section */
+    .faq-section {
+      background-color: var(--bg-tertiary);
+    }
+
+    .faq-list {
+      max-width: 720px;
+      margin: 48px auto 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    details {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--corner-radius-md);
+      padding: 16px 20px;
+      transition: var(--transition-fast);
+    }
+
+    details[open] {
+      border-color: var(--border-hover);
+    }
+
+    summary {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary::after {
+      content: '+';
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: var(--text-secondary);
+      transition: var(--transition-fast);
+    }
+
+    details[open] summary::after {
+      content: '−';
+      transform: rotate(180deg);
+    }
+
+    details p {
+      margin-top: 12px;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* Contact Section & Formspree form (HIG Design) */
+    .contact-section {
+      background-color: var(--bg-primary);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 60px;
+      margin-top: 60px;
+      align-items: start;
+    }
+
+    .contact-info-panel {
+      max-width: 440px;
+    }
+
+    .contact-info-panel h3 {
+      font-size: 1.5rem;
+      margin-bottom: 12px;
+    }
+
+    .contact-info-panel p {
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+
+    .contact-link-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background-color: var(--bg-secondary);
+      padding: 12px 24px;
+      border-radius: var(--corner-radius-pill);
+      font-weight: 600;
+      color: var(--text-primary);
+      transition: var(--transition-fast);
+    }
+
+    .contact-link-pill:hover {
+      background-color: var(--accent-blue-light);
+      color: var(--accent-blue);
+    }
+
+    .contact-link-pill svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .contact-form {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--corner-radius-lg);
+      padding: 40px;
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .form-input, .form-textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: var(--corner-radius-sm);
+      border: 1px solid var(--border-color);
+      background-color: var(--bg-primary);
+      font-family: var(--font-family);
+      font-size: 0.95rem;
+      outline: none;
+      transition: var(--transition-fast);
+    }
+
+    .form-input:focus, .form-textarea:focus {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.15);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .form-submit-btn {
+      width: 100%;
+      padding: 14px;
+      background-color: var(--accent-blue);
+      color: #FFFFFF !important; /* Bold white */
+      border-radius: var(--corner-radius-pill);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: var(--transition-fast);
+    }
+
+    .form-submit-btn:hover {
+      background-color: var(--accent-blue-hover);
+      box-shadow: 0 4px 12px rgba(0, 113, 227, 0.2);
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--bg-primary);
+      border-top: 1px solid var(--border-color);
+      padding: 48px 0 64px;
+    }
+
+    .footer-grid {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+
+    .footer-info {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .footer-info p {
+      font-size: 0.9rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-links a {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .footer-links a:hover {
+      color: var(--text-primary);
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 900px) {
+      h1 { font-size: 2.8rem; }
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: center;
+      }
+      .hero-content {
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .hero-ctas {
+        justify-content: center;
+      }
+      .hero-features-strip {
+        justify-content: center;
+      }
+      .mockup-container {
+        margin-top: 20px;
+      }
+      .popup-mockup {
+        transform: none !important;
+      }
+      .problem-grid-top {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .solution-card-wide {
+        flex-direction: column;
+        text-align: center;
+      }
+      .solution-text-wrap {
+        text-align: center;
+      }
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .contact-info-panel {
+        max-width: 100%;
+        text-align: center;
+      }
+      .timeline::before {
+        left: 20px;
+      }
+      .timeline-dot {
+        left: 20px;
+      }
+      .timeline-item {
+        flex-direction: column !important;
+        align-items: flex-start;
+        padding-left: 40px;
+      }
+      .timeline-img, .timeline-content {
+        width: 100%;
+      }
+      .timeline-img {
+        justify-content: flex-start;
+        margin-bottom: 12px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 2.3rem; }
+      h2 { font-size: 1.8rem; }
+      .nav-links { display: none; } /* Mobile hides inner nav links */
+      .hero-features-strip {
+        flex-wrap: wrap;
+      }
+      .hero-ctas {
+        flex-direction: column;
+        width: 100%;
+      }
+      .hero-ctas .btn {
+        width: 100%;
+      }
+      .footer-grid {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header>
+    <div class="container nav-container">
+      <a href="index.html" class="logo-link">
+        <svg class="logo-svg" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="96" y="96" width="320" height="360" rx="40" fill="white" stroke="#4C82FB" stroke-width="24"/>
+          <path d="M192 96C192 64.5 217.5 40 249 40H263C294.5 40 320 64.5 320 96H192Z" fill="#75A4FF" stroke="#4C82FB" stroke-width="16" stroke-linejoin="round"/>
+          <circle cx="256" cy="76" r="10" fill="white"/>
+          <line x1="160" y1="180" x2="352" y2="180" stroke="#D1E2FF" stroke-width="18" stroke-linecap="round"/>
+          <line x1="160" y1="240" x2="352" y2="240" stroke="#D1E2FF" stroke-width="18" stroke-linecap="round"/>
+          <line x1="160" y1="300" x2="280" y2="300" stroke="#D1E2FF" stroke-width="18" stroke-linecap="round"/>
+          <path d="M280 430C360 430 430 380 430 310C430 240 370 190 290 190" stroke="#375DFB" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M330 140L280 190L330 240" stroke="#375DFB" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>CopyBack</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#timeline">How it Works</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+        <a href="privacypolicy.html">Privacy Policy</a>
+        <a href="#" class="btn btn-primary btn-nav-download">Download</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <h1>Never lose <span class="highlight">anything</span> you copy.</h1>
+        <p class="hero-desc">CopyBack quietly remembers everything you copy while browsing so you can recover anything you've accidentally overwritten. Zero cloud, 100% local, and built to be private by design.</p>
+        
+        <div class="hero-ctas">
+          <a href="#" class="btn btn-primary">
+            <svg style="margin-right:8px; width:16px; height:16px;" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+            </svg>
+            Download on Chrome Web Store
+          </a>
+          <a href="privacypolicy.html" class="btn btn-secondary">Privacy Policy</a>
+        </div>
+
+        <div class="hero-features-strip">
+          <span class="hero-feat-item">
+            <!-- Lock Icon with overflow correction -->
+            <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+            </svg>
+            Private &amp; Secure
+          </span>
+          <span class="hero-feat-item">
+            <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.8 2.8a1 1 0 001.414-1.414L11 9.586V6z" clip-rule="evenodd"/></svg>
+            Auto-Cleanup
+          </span>
+          <span class="hero-feat-item">
+            <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8 4a3 3 0 00-3 3v4a3 3 0 006 0V7a1 1 0 112 0v4a5 5 0 01-10 0V7a5 5 0 0110 0v4a7 7 0 11-14 0V7a9 9 0 0118 0v4a11 11 0 11-22 0V7a13 13 0 0126 0v4a13 13 0 01-26 0V7a11 11 0 0122 0v4a9 9 0 01-18 0V7a7 7 0 0114 0v4a5 5 0 01-10 0V7a3 3 0 00-3-3z" clip-rule="evenodd"/></svg>
+            Pin &amp; Favorites
+          </span>
+        </div>
+      </div>
+
+      <!-- Interactive Mockup -->
+      <div class="mockup-container">
+        <div class="popup-mockup">
+          <div class="mockup-header">
+            <div class="mockup-header-title">
+              <svg style="width:16px; height:16px;" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="96" y="96" width="320" height="360" rx="40" fill="white" stroke="#4C82FB" stroke-width="32"/>
+                <path d="M192 96C192 64.5 217.5 40 249 40H263C294.5 40 320 64.5 320 96H192Z" fill="#75A4FF" stroke="#4C82FB" stroke-width="24" stroke-linejoin="round"/>
+                <circle cx="256" cy="76" r="14" fill="#4C82FB"/>
+              </svg>
+              <span>CopyBack</span>
+            </div>
+            <!-- Gear Icon -->
+            <svg class="mockup-settings-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </div>
+
+          <div class="mockup-search-container">
+            <input type="text" class="mockup-search-input" id="mockupSearch" placeholder="Search copied text, site, or URL">
+          </div>
+
+          <div class="mockup-body" id="mockupBody">
+            <!-- Dynamic Content Injected via Script -->
+          </div>
+
+          <!-- Internal Notification Toast -->
+          <div class="mockup-toast" id="mockupToast">
+            <span class="mockup-toast-dot"></span>
+            <span>Copied to Clipboard</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem Section (Balanced 3-card grid + 1 Solution callout underneath) -->
+  <section class="section-padding problem-section">
+    <div class="container">
+      <h2>The Clipboard Dilemma</h2>
+      <p style="text-align: center; max-width: 600px; margin: 0 auto 30px;">By default, your operating system clipboard only remembers one item at a time. One accidental copy can overwrite hours of work.</p>
+      
+      <div class="problem-grid-top">
+        <div class="problem-card">
+          <div class="problem-num">1</div>
+          <svg class="problem-card-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+          </svg>
+          <h3>Copy Text</h3>
+          <p>You copy a Wikipedia block detailing the FIFA World Cup history for your report.</p>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-num">2</div>
+          <svg class="problem-card-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+          </svg>
+          <h3>Copy Again</h3>
+          <p>You copy a useful link from a Medium reference article immediately after.</p>
+        </div>
+
+        <div class="problem-card" style="border-color:#FF3B30; background-color:#FFF5F5;">
+          <div class="problem-num" style="background-color:#FF3B30;">3</div>
+          <svg class="problem-card-icon" style="color:#FF3B30;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+          <h3 style="color:#FF3B30;">Clipboard Lost</h3>
+          <p>The Wikipedia text is overwritten. It is lost from the clipboard buffer forever.</p>
+        </div>
+      </div>
+
+      <!-- Solution callout filling the remaining space symmetrically -->
+      <div class="solution-container">
+        <div class="solution-card-wide">
+          <div class="problem-num">4</div>
+          <div class="solution-icon-wrap">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <div class="solution-text-wrap">
+            <h3>Enter CopyBack: Continuous Local Capture</h3>
+            <p>CopyBack catches every copy transaction in the background and saves it on-device. Both your Wikipedia excerpt and your Medium URL are held securely in your local database for instant, single-click recovery whenever needed.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="section-padding features-section">
+    <div class="container">
+      <h2>Engineered for Simplicity &amp; Power</h2>
+      <p style="text-align: center; max-width: 600px; margin: 0 auto 48px;">No complicated setups. A tool that runs silently in the background, keeping your data accessible whenever you need it.</p>
+      
+      <div class="features-grid">
+        <!-- Feature 1: Automatic History -->
+        <div class="feat-card">
+          <div class="feat-illus">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 8H17m-6 4v4l3 3M12 2v2M12 20v2M2 12h2M20 12h2" />
+            </svg>
+          </div>
+          <h3>Automatic Clipboard History</h3>
+          <p>Quietly records text copied on standard HTTP/HTTPS websites. Your copy history is always running, with up to 20,000 characters saved per clip.</p>
+        </div>
+
+        <!-- Feature 2: Instant Search -->
+        <div class="feat-card">
+          <div class="feat-illus">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+          <h3>Instant Search</h3>
+          <p>Filter through your clipboard library dynamically by typing in the search bar. Instantly search by text content, page title, or site URL.</p>
+        </div>
+
+        <!-- Feature 3: Copy Again -->
+        <div class="feat-card">
+          <div class="feat-illus">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+            </svg>
+          </div>
+          <h3>Copy Again</h3>
+          <p>Re-copy any history item back onto your active system clipboard with a single click of the "Copy Again" button. Ready to paste immediately.</p>
+        </div>
+
+        <!-- Feature 4: Pinned Items -->
+        <div class="feat-card">
+          <div class="feat-illus">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+            </svg>
+          </div>
+          <h3>Pinned Items</h3>
+          <p>Pin essential code blocks, templates, or links to the top of your list so they never get swept away by cleanup schedules or new copies.</p>
+        </div>
+
+        <!-- Feature 5: Favorite Items -->
+        <div class="feat-card">
+          <div class="feat-illus">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+          </div>
+          <h3>Favorite Items</h3>
+          <p>Mark recurring snippets as Favorites. Favorited items are safe from deletion and stand out in your history list for quick visual indexing.</p>
+        </div>
+
+        <!-- Feature 6: Automatic Cleanup -->
+        <div class="feat-card">
+          <div class="feat-illus">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
+          </div>
+          <h3>Automatic Cleanup</h3>
+          <p>Keep your extension fast and light. Automatically delete unpinned and unfavorited clips older than 30, 90, or 180 days based on settings.</p>
+        </div>
+
+        <!-- Feature 7: Privacy First -->
+        <div class="feat-card">
+          <div class="feat-illus">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <h3>Privacy First</h3>
+          <p>All items remain on your computer inside `chrome.storage.local`. Absolutely no servers, no third-party scripts, and no user tracking.</p>
+        </div>
+
+        <!-- Feature 8: Open Original Website -->
+        <div class="feat-card">
+          <div class="feat-illus">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </div>
+          <h3>Open Original Website</h3>
+          <p>Every clip saves the page URL where it was copied. Click the link icon on any clipboard item to jump right back to the source webpage.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section id="timeline" class="section-padding how-section">
+    <div class="container">
+      <h2>Simple Integration, Daily Value</h2>
+      <p style="text-align: center; max-width: 600px; margin: 0 auto 30px;">How CopyBack fits seamlessly into your day-to-day workflow.</p>
+      
+      <div class="timeline">
+        <!-- Step 1 -->
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-img">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <rect x="5" y="3" width="14" height="18" rx="2" stroke-width="1.5"/>
+              <path d="M9 7h6M9 11h6M9 15h4" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="timeline-content">
+            <span class="timeline-step">Step 1</span>
+            <h3>Copy Text</h3>
+            <p>Highlight and copy text content (Ctrl+C / Cmd+C) on any standard HTTP or HTTPS webpage inside Google Chrome.</p>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-img">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M5 22h14a2 2 0 002-2V8l-6-6H5a2 2 0 00-2 2v16a2 2 0 002 2z" stroke-width="1.5"/>
+              <path d="M14 2v6h6m-8 6h3m-3-3h5m-8-3h8" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="timeline-content">
+            <span class="timeline-step">Step 2</span>
+            <h3>Auto-Saved Locally</h3>
+            <p>The content script detects the copy event and immediately stores the text alongside metadata in your browser's private local storage database.</p>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-img">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8" stroke-width="1.5"/>
+              <path d="M21 21l-4.35-4.35" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="timeline-content">
+            <span class="timeline-step">Step 3</span>
+            <h3>Search Your History</h3>
+            <p>Click the CopyBack icon in the extension bar. Scroll your feed or use the search bar to find past items by content or source webpage.</p>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-img">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="timeline-content">
+            <span class="timeline-step">Step 4</span>
+            <h3>Restore with One Click</h3>
+            <p>Click "Copy Again" on the card. The extension replaces your clipboard contents. Paste it anywhere immediately (Ctrl+V / Cmd+V).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="section-padding faq-section">
+    <div class="container">
+      <h2>Frequently Asked Questions</h2>
+      <p style="text-align: center; max-width: 600px; margin: 0 auto 30px;">Everything you need to know about security, controls, and data limits.</p>
+      
+      <div class="faq-list">
+        <details>
+          <summary>Does CopyBack work outside of Chrome?</summary>
+          <p>No. CopyBack is a Google Chrome extension. It can only record copies that occur inside standard webpage tabs running in the Google Chrome browser. It cannot read clipboard changes triggered inside desktop apps, other web browsers, your operating system, or restricted Chrome pages (such as Chrome settings or the Web Store).</p>
+        </details>
+
+        <details>
+          <summary>Where is my clipboard history stored?</summary>
+          <p>Your history is saved locally inside your Chrome browser profile directory using Chrome's secure storage API (`chrome.storage.local`). The data is fully sandboxed on your physical hard drive and is never uploaded, synced, or backed up to any cloud endpoints.</p>
+        </details>
+
+        <details>
+          <summary>Does it upload or transmit my copied text?</summary>
+          <p>Absolutely not. CopyBack has no remote servers, no syncing APIs, and no telemetry databases. All network connectivity is blocked. Your clipboard items stay exclusively on your local computer.</p>
+        </details>
+
+        <details>
+          <summary>Can I disable the "Saved to CopyBack" notifications?</summary>
+          <p>Yes. Open the CopyBack popup interface, click the gear icon in the top right to open the settings panel, and toggle off the "Show Save Notification" switch. This will silence the confirmation toasts that appear in the browser window during copy events.</p>
+        </details>
+
+        <details>
+          <summary>Can I adjust or disable the automatic cleanup window?</summary>
+          <p>Yes. Inside the extension's settings panel, you can choose to auto-delete items after 30, 90, or 180 days, or select "Never" to keep history indefinitely. Pinned items and Favorites are automatically preserved and are never deleted by cleanup schedules.</p>
+        </details>
+
+        <details>
+          <summary>What happens if the local storage quota is reached?</summary>
+          <p>Chrome allocates a generous, sandboxed storage quota for local extensions. If this quota is exceeded, CopyBack's database helper automatically searches for the oldest unpinned and unfavorited clipboard item, deletes it to clear buffer space, and stores the new copy without breaking operation.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section & Formspree Form (Apple HIG Styled) -->
+  <section id="contact" class="section-padding contact-section">
+    <div class="container">
+      <h2>Get in Touch</h2>
+      <p style="text-align: center; max-width: 600px; margin: 0 auto 30px;">Have questions, feedback, or need assistance? Reach out directly.</p>
+      
+      <div class="contact-grid">
+        <div class="contact-info-panel">
+          <h3>Contact Details</h3>
+          <p>You can send an email directly using Gmail for any inquiries, feature requests, or developer partnerships. We usually respond within 24 hours.</p>
+          
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=ashbuildsinpublic@gmail.com" target="_blank" rel="noopener noreferrer" class="contact-link-pill">
+            <!-- Mail Icon -->
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
+            Send Email via Gmail
+          </a>
+        </div>
+        
+        <!-- Formspree contact form -->
+        <form class="contact-form" action="https://formspree.io/f/mzdlloay" method="POST">
+          <div class="form-group">
+            <label for="form-name">Name</label>
+            <input type="text" name="name" id="form-name" class="form-input" placeholder="Your Name" required>
+          </div>
+          <div class="form-group">
+            <label for="form-email">Email Address</label>
+            <input type="email" name="_replyto" id="form-email" class="form-input" placeholder="you@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="form-message">Message</label>
+            <textarea name="message" id="form-message" class="form-textarea" placeholder="How can we help?" required></textarea>
+          </div>
+          <button type="submit" class="form-submit-btn">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-grid">
+      <div class="footer-info">
+        <a href="index.html" class="logo-link" style="font-size:1.1rem; gap:8px;">
+          <svg class="logo-svg" style="width:22px; height:22px;" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="96" y="96" width="320" height="360" rx="40" fill="white" stroke="#4C82FB" stroke-width="24"/>
+            <path d="M192 96C192 64.5 217.5 40 249 40H263C294.5 40 320 64.5 320 96H192Z" fill="#75A4FF" stroke="#4C82FB" stroke-width="16" stroke-linejoin="round"/>
+            <circle cx="256" cy="76" r="10" fill="white"/>
+            <line x1="160" y1="180" x2="352" y2="180" stroke="#D1E2FF" stroke-width="18" stroke-linecap="round"/>
+            <line x1="160" y1="240" x2="352" y2="240" stroke="#D1E2FF" stroke-width="18" stroke-linecap="round"/>
+            <line x1="160" y1="300" x2="280" y2="300" stroke="#D1E2FF" stroke-width="18" stroke-linecap="round"/>
+            <path d="M280 430C360 430 430 380 430 310C430 240 370 190 290 190" stroke="#375DFB" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M330 140L280 190L330 240" stroke="#375DFB" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>CopyBack</span>
+        </a>
+        <p>Built by Akshat Pandey. All rights reserved.</p>
+      </div>
+      <div class="footer-links">
+        <a href="privacypolicy.html">Privacy Policy</a>
+        <a href="#">Chrome Web Store</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Real Toast Simulator Root -->
+  <div class="real-toast-root">
+    <div class="real-toast" id="realToast">
+      <span class="real-toast-dot"></span>
+      <span>Saved to CopyBack</span>
+    </div>
+  </div>
+
+  <!-- Interactive Mockup Javascript -->
+  <script>
+    // Initial data for the mockup, matching the layout and attributes of actual CopyBack items
+    let mockupItems = [
+      {
+        id: "clip-1",
+        siteName: "en.wikipedia.org",
+        pageTitle: "FIFA World Cup - Wikipedia",
+        text: "The FIFA World Cup is an international association football competition contested by the senior men's national teams of the members of the Fédération Internationale de Football Association (FIFA), the sport's global governing body.",
+        favicon: "https://en.wikipedia.org/favicon.ico",
+        meta: "Today • 5:06 PM • 76 words",
+        pinned: true,
+        favorite: true,
+        url: "https://en.wikipedia.org/wiki/FIFA_World_Cup"
+      },
+      {
+        id: "clip-2",
+        siteName: "medium.com",
+        pageTitle: "Designing Privacy-First Web Extensions",
+        text: "When building browser extensions that handle clipboard data, storing user data locally inside chrome.storage.local ensures compliance with modern user-data guidelines and protects user privacy.",
+        favicon: "https://medium.com/favicon.ico",
+        meta: "Today • 5:05 PM • 84 words",
+        pinned: true,
+        favorite: true,
+        url: "https://medium.com/designing-privacy-first-extensions"
+      },
+      {
+        id: "clip-3",
+        siteName: "aljazeera.com",
+        pageTitle: "Al Jazeera English | Live US & World News",
+        text: "Breaking news, analysis and opinions on politics, conflict, business, technology and human interest from the Middle East, Asia, Africa and across the world.",
+        favicon: "https://www.aljazeera.com/favicon.ico",
+        meta: "Today • 4:32 PM • 26 words",
+        pinned: false,
+        favorite: false,
+        url: "https://www.aljazeera.com"
+      },
+      {
+        id: "clip-4",
+        siteName: "stackoverflow.com",
+        pageTitle: "How to center a div - Stack Overflow",
+        text: "Use CSS flexbox. Just add display: flex; justify-content: center; align-items: center; to the parent container element, and it will align perfectly vertically and horizontally.",
+        favicon: "https://cdn.sstatic.net/Sites/stackoverflow/Img/favicon.ico",
+        meta: "Yesterday • 9:11 AM • 28 words",
+        pinned: false,
+        favorite: false,
+        url: "https://stackoverflow.com/questions/1000/center-a-div"
+      }
+    ];
+
+    const mockupSearch = document.getElementById('mockupSearch');
+    const mockupBody = document.getElementById('mockupBody');
+    const mockupToast = document.getElementById('mockupToast');
+    const realToast = document.getElementById('realToast');
+
+    let toastTimer = null;
+    let realToastTimer = null;
+
+    // Listen to searches and update the list
+    mockupSearch.addEventListener('input', renderMockup);
+
+    // Initial render
+    renderMockup();
+
+    function renderMockup() {
+      const searchTerm = mockupSearch.value.trim().toLowerCase();
+      mockupBody.innerHTML = '';
+
+      // Filter lists based on input
+      const filtered = mockupItems.filter(item => {
+        return item.text.toLowerCase().includes(searchTerm) || 
+               item.pageTitle.toLowerCase().includes(searchTerm) ||
+               item.siteName.toLowerCase().includes(searchTerm);
+      });
+
+      // Split into Pinned & Favorites VS Recents
+      const pinnedFavorites = filtered.filter(item => item.pinned || item.favorite);
+      const recents = filtered.filter(item => !item.pinned && !item.favorite);
+
+      // 1. PINNED & FAVORITES SECTION
+      if (pinnedFavorites.length > 0) {
+        const titleEl = document.createElement('div');
+        titleEl.className = 'mockup-section-title';
+        titleEl.textContent = 'Pinned & Favorites';
+        mockupBody.appendChild(titleEl);
+
+        const listEl = document.createElement('div');
+        listEl.className = 'mockup-list';
+
+        pinnedFavorites.forEach(item => {
+          listEl.appendChild(createCard(item));
+        });
+
+        mockupBody.appendChild(listEl);
+      }
+
+      // 2. RECENT SECTION
+      if (recents.length > 0) {
+        const titleEl = document.createElement('div');
+        titleEl.className = 'mockup-section-title';
+        titleEl.textContent = 'Recent';
+        mockupBody.appendChild(titleEl);
+
+        const listEl = document.createElement('div');
+        listEl.className = 'mockup-list';
+
+        recents.forEach(item => {
+          listEl.appendChild(createCard(item));
+        });
+
+        mockupBody.appendChild(listEl);
+      }
+
+      // Empty State
+      if (filtered.length === 0) {
+        const emptyEl = document.createElement('div');
+        emptyEl.style.textAlign = 'center';
+        emptyEl.style.padding = '40px 20px';
+        emptyEl.style.color = 'var(--text-secondary)';
+        emptyEl.innerHTML = `
+          <svg style="width:32px; height:32px; color:var(--border-hover); margin-bottom:8px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <div style="font-weight:600; color:var(--text-primary);">No Results Found</div>
+          <div style="font-size:11px; margin-top:4px;">Try searching for "FIFA" or "Medium"</div>
+        `;
+        mockupBody.appendChild(emptyEl);
+      }
+    }
+
+    function createCard(item) {
+      const card = document.createElement('div');
+      card.className = 'mockup-card';
+
+      card.innerHTML = `
+        <div class="mockup-card-header">
+          <div class="mockup-card-site">
+            <img class="mockup-card-favicon" src="${item.favicon}" onerror="this.src='data:image/svg+xml,%3Csvg viewBox=\'0 0 24 24\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Crect width=\'24\' height=\'24\' rx=\'4\' fill=\'%23E2E2E6\'/%3E%3C/svg%3E'" alt="">
+            <span>${item.siteName}</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            ${item.pinned ? `
+              <svg style="width:11px; height:11px; color:#FF2D55;" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/>
+              </svg>
+            ` : ''}
+          </div>
+        </div>
+        <div class="mockup-card-title">${item.pageTitle}</div>
+        <div class="mockup-card-text">${item.text}</div>
+        <div class="mockup-card-footer">
+          <div class="mockup-card-actions-left">
+            <!-- Favorite button -->
+            <button class="mockup-action-btn ${item.favorite ? 'active' : ''}" onclick="toggleFavorite('${item.id}')" title="Favorite">
+              <svg style="width:13px; height:13px;" viewBox="0 0 24 24" fill="${item.favorite ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
+                <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              </svg>
+            </button>
+            <!-- Pin button -->
+            <button class="mockup-action-btn ${item.pinned ? 'active' : ''}" onclick="togglePin('${item.id}')" title="Pin">
+              <svg style="width:13px; height:13px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z" />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Centered Copy Again Button matching screenshot -->
+          <button class="mockup-copy-btn" onclick="copyItemText('${item.id}')">
+            <svg style="width:11px; height:11px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2" />
+            </svg>
+            Copy Again
+          </button>
+          
+          <div class="mockup-card-actions-right">
+            <!-- Link button -->
+            <a href="${item.url}" target="_blank" class="mockup-action-btn" title="Open source website">
+              <svg style="width:13px; height:13px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+            <!-- Trash button -->
+            <button class="mockup-action-btn" onclick="deleteItem('${item.id}')" title="Delete">
+              <svg style="width:13px; height:13px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      `;
+
+      return card;
+    }
+
+    function toggleFavorite(id) {
+      mockupItems = mockupItems.map(item => {
+        if (item.id === id) {
+          return { ...item, favorite: !item.favorite };
+        }
+        return item;
+      });
+      renderMockup();
+    }
+
+    // Toggles Pin status and reorganizes sections
+    function togglePin(id) {
+      mockupItems = mockupItems.map(item => {
+        if (item.id === id) {
+          return { ...item, pinned: !item.pinned };
+        }
+        return item;
+      });
+      renderMockup();
+    }
+
+    function deleteItem(id) {
+      mockupItems = mockupItems.filter(item => item.id !== id);
+      renderMockup();
+    }
+
+    // Copies item text to actual computer clipboard and alerts the user
+    function copyItemText(id) {
+      const item = mockupItems.find(i => i.id === id);
+      if (!item) return;
+
+      // Copy text to real clipboard
+      navigator.clipboard.writeText(item.text).then(() => {
+        showMockupToast();
+        showRealToast();
+      }).catch(err => {
+        // Fallback if browser blocks clipboard access
+        showMockupToast();
+        showRealToast();
+      });
+    }
+
+    function showMockupToast() {
+      clearTimeout(toastTimer);
+      mockupToast.classList.add('show');
+      toastTimer = setTimeout(() => {
+        mockupToast.classList.remove('show');
+      }, 1500);
+    }
+
+    function showRealToast() {
+      clearTimeout(realToastTimer);
+      realToast.classList.add('show');
+      realToastTimer = setTimeout(() => {
+        realToast.classList.remove('show');
+      }, 2000);
+    }
+
+    // Make regular user copying in browser trigger the CopyBack toast simulation!
+    // This is the "Aha!" interactive highlight that makes the page feel premium.
+    document.addEventListener('copy', (e) => {
+      // Get selected text length
+      const text = window.getSelection()?.toString();
+      if (text && text.trim()) {
+        showRealToast();
+      }
+    });
+  </script>
+</body>
+</html>
