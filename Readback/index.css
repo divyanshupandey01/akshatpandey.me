@@ -1,0 +1,116 @@
+/* ReadBack Landing Page - Design System & Custom Styles */
+
+/* ─── Typography & Core Base ─── */
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Apple-style Easing & Transitions ─── */
+.transition-all {
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ─── Dot Grid Background Pattern ─── */
+.bg-grid {
+  background-size: 24px 24px;
+  background-image: 
+    radial-gradient(circle, #4F7DFF 1px, transparent 1px);
+}
+
+/* ─── Smooth Floating Animations ─── */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+#hero-mockup-wrapper {
+  animation: float 8s ease-in-out infinite;
+}
+
+/* ─── Floating Mini-Card Animation ─── */
+@keyframes float-mini {
+  0% { transform: translateY(8px) scale(0.98); }
+  50% { transform: translateY(-2px) scale(1.01); }
+  100% { transform: translateY(8px) scale(0.98); }
+}
+
+#hero-floating-card {
+  animation: float-mini 6s ease-in-out infinite;
+}
+
+/* ─── Scroll-Reveal Base States ─── */
+.reveal-section {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-section.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── Glassmorphism Sticky Nav ─── */
+#nav-header.scrolled {
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-color: rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.02);
+}
+
+/* ─── Lock Visual pulse ─── */
+#privacy-lock-box:hover .animate-pulse {
+  animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); filter: brightness(1); }
+  100% { transform: scale(1.08); filter: brightness(1.1) drop-shadow(0 0 15px rgba(79, 125, 255, 0.4)); }
+}
+
+/* ─── Scrollbar styling for Fake Article ─── */
+#demo-article-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+#demo-article-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#demo-article-scroll::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 99px;
+}
+
+#demo-article-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.16);
+}
+
+/* ─── Interactive Highlights ─── */
+.demo-p {
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.demo-p.highlighted {
+  background-color: rgba(79, 125, 255, 0.08);
+  border-color: rgba(79, 125, 255, 0.15);
+  transform: scale(1.01) translateX(4px);
+}
+
+/* ─── Trust Chips Hover Glow ─── */
+.flex-wrap span {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.flex-wrap span:hover {
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0 10px 20px rgba(79, 125, 255, 0.06);
+}

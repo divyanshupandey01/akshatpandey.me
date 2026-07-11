@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO Optimization -->
+  <title>ReadBack Privacy Policy – Your Reading Stays Yours</title>
+  <meta name="description" content="ReadBack values your privacy. Learn how your reading progress is stored and protected while using the ReadBack Chrome Extension.">
+  <meta name="keywords" content="privacy policy, reading extension, data protection, local storage, chrome extension privacy">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/icons/icon48.png">
+
+  <!-- Inter Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              DEFAULT: '#4F7DFF',
+              light: '#EBF0FF',
+              dark: '#1E4AD4',
+            },
+            appBg: '#FFFFFF',
+            secBg: '#F7F9FC',
+            appText: '#111827',
+            secText: '#6B7280',
+          },
+          borderRadius: {
+            'card': '24px',
+            'btn': '16px',
+          },
+          boxShadow: {
+            'premium': '0 8px 30px rgb(0 0 0 / 0.04)',
+            'premium-hover': '0 20px 40px rgb(0 0 0 / 0.08)',
+            'glow': '0 0 40px rgba(79, 125, 255, 0.15)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Stylesheet (using the same css as landing page) -->
+  <link rel="stylesheet" href="index.css">
+  <style>
+    /* Styling active nav item specifically for Privacy page */
+    .nav-privacy {
+      color: #111827 !important;
+      font-weight: 600 !important;
+    }
+    
+    /* Active state for Table of Contents links */
+    .toc-link.active {
+      color: #4F7DFF;
+      border-left-color: #4F7DFF;
+      font-weight: 600;
+      padding-left: 16px;
+    }
+  </style>
+</head>
+<body class="bg-appBg text-appText font-sans antialiased overflow-x-hidden">
+
+  <!-- Navigation -->
+  <header id="nav-header" class="fixed top-0 left-0 w-full z-50 border-b border-transparent bg-white/70 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="index.html" class="flex items-center gap-2 group">
+        <img src="assets/icons/icon32.png" alt="ReadBack" class="w-8 h-8 transition-transform duration-500 group-hover:rotate-12">
+        <span class="font-extrabold text-xl tracking-tight text-appText">Read<span class="text-brand">Back</span></span>
+      </a>
+      
+      <!-- Desktop Menu -->
+      <nav class="hidden md:flex items-center gap-8">
+        <a href="index.html" class="text-sm font-medium text-secText hover:text-appText transition-colors duration-200">Home</a>
+        <a href="index.html#features" class="text-sm font-medium text-secText hover:text-appText transition-colors duration-200">Features</a>
+        <a href="index.html#how-it-works" class="text-sm font-medium text-secText hover:text-appText transition-colors duration-200">How it Works</a>
+        <a href="privacy.html" class="text-sm font-medium nav-privacy transition-colors duration-200">Privacy</a>
+      </nav>
+
+      <!-- CTA -->
+      <div class="flex items-center gap-4">
+        <a href="https://chromewebstore.google.com/detail/readback-%E2%80%93-save-reading-p/pomfhagjojbnfmgmldkpakfggpdpnkgc" target="_blank" class="hidden sm:inline-flex items-center justify-center px-5 py-2.5 bg-brand text-white font-semibold text-sm rounded-btn shadow-premium hover:bg-brand-dark transition-all duration-300 transform active:scale-95 group">
+          Install for Chrome
+          <svg class="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </a>
+        
+        <!-- Mobile Menu Trigger -->
+        <button id="mobile-menu-btn" class="md:hidden flex flex-col justify-center items-center w-8 h-8 gap-1.5 focus:outline-none" aria-label="Toggle Mobile Menu">
+          <span class="w-6 h-0.5 bg-appText transition-all duration-300 origin-center"></span>
+          <span class="w-6 h-0.5 bg-appText transition-all duration-300 origin-center"></span>
+          <span class="w-6 h-0.5 bg-appText transition-all duration-300 origin-center"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 top-20 bg-appBg/95 backdrop-blur-xl z-40 flex flex-col px-8 py-12 gap-8 md:hidden transition-all duration-500 transform translate-x-full">
+      <a href="index.html" class="text-xl font-semibold text-appText">Home</a>
+      <a href="index.html#features" class="text-xl font-semibold text-appText">Features</a>
+      <a href="index.html#how-it-works" class="text-xl font-semibold text-appText">How it Works</a>
+      <a href="privacy.html" class="text-xl font-semibold nav-privacy">Privacy</a>
+      <div class="h-px bg-secBg my-4"></div>
+      <a href="https://chromewebstore.google.com/detail/readback-%E2%80%93-save-reading-p/pomfhagjojbnfmgmldkpakfggpdpnkgc" target="_blank" class="w-full py-4 bg-brand text-white text-center font-bold rounded-btn">
+        Install for Chrome
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative pt-44 pb-20 overflow-hidden bg-secBg/30">
+    <div class="absolute inset-0 bg-grid opacity-[0.02] pointer-events-none"></div>
+    <div class="absolute right-[10%] top-[30%] w-[300px] h-[300px] rounded-full bg-brand/5 blur-[80px] pointer-events-none"></div>
+    
+    <div class="max-w-4xl mx-auto px-6 text-center flex flex-col items-center gap-6 relative z-10">
+      <!-- Badge -->
+      <span class="px-3.5 py-1.5 bg-brand-light/70 border border-brand/15 rounded-full text-brand text-xs font-semibold uppercase tracking-wider">
+        Last Updated: July 2026
+      </span>
+      
+      <!-- Headline -->
+      <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-appText leading-tight">
+        Privacy Policy
+      </h1>
+      
+      <!-- Subtitle -->
+      <p class="text-lg text-secText max-w-xl font-medium leading-relaxed">
+        Your privacy matters. ReadBack is designed from the ground up to operate completely without collecting your personal information.
+      </p>
+    </div>
+  </section>
+
+  <!-- Content Container -->
+  <section class="py-24 bg-white relative">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+      
+      <!-- Left: Sticky Table of Contents (Desktop Only) -->
+      <aside class="hidden lg:block lg:col-span-3 sticky top-28 bg-white border border-black/5 p-6 rounded-card shadow-premium max-h-[80vh] overflow-y-auto">
+        <h3 class="text-xs font-bold text-secText uppercase tracking-widest mb-6">On This Page</h3>
+        <nav class="flex flex-col gap-4">
+          <a href="#intro" class="toc-link text-sm font-medium text-secText hover:text-appText border-l-2 border-transparent pl-3 transition-all duration-300">Introduction</a>
+          <a href="#collect" class="toc-link text-sm font-medium text-secText hover:text-appText border-l-2 border-transparent pl-3 transition-all duration-300">Information We Collect</a>
+          <a href="#reading-data" class="toc-link text-sm font-medium text-secText hover:text-appText border-l-2 border-transparent pl-3 transition-all duration-300">Reading Progress</a>
+          <a href="#permissions" class="toc-link text-sm font-medium text-secText hover:text-appText border-l-2 border-transparent pl-3 transition-all duration-300">Browser Permissions</a>
+          <a href="#data-sharing" class="toc-link text-sm font-medium text-secText hover:text-appText border-l-2 border-transparent pl-3 transition-all duration-300">Data Sharing</a>
+          <a href="#third-party" class="toc-link text-sm font-medium text-secText hover:text-appText border-l-2 border-transparent pl-3 transition-all duration-300">Third-Party Services</a>
+          <a href="#security" class="toc-link text-sm font-medium text-secText hover:text-appText border-l-2 border-transparent pl-3 transition-all duration-300">Security Architecture</a>
+          <a href="#children" class="toc-link text-sm font-medium text-secText hover:text-appText border-l-2 border-transparent pl-3 transition-all duration-300">Children's Privacy</a>
+          <a href="#changes" class="toc-link text-sm font-medium text-secText hover:text-appText border-l-2 border-transparent pl-3 transition-all duration-300">Policy Changes</a>
+          <a href="#contact" class="toc-link text-sm font-medium text-secText hover:text-appText border-l-2 border-transparent pl-3 transition-all duration-300">Contact Us</a>
+        </nav>
+      </aside>
+
+      <!-- Right: Privacy Content Cards -->
+      <div class="lg:col-span-9 flex flex-col gap-12 z-10">
+        
+        <!-- Intro Card -->
+        <div id="intro" class="reveal-section active p-8 md:p-10 bg-secBg/30 border border-black/5 rounded-card shadow-premium flex flex-col gap-4">
+          <div class="flex items-center gap-3">
+            <span class="w-8 h-8 rounded-lg bg-brand-light flex items-center justify-center text-brand text-sm">💡</span>
+            <h3 class="text-xl font-bold text-appText">Introduction</h3>
+          </div>
+          <p class="text-sm md:text-base text-secText leading-relaxed">
+            ReadBack helps users automatically bookmark and restore their reading position on text-heavy web pages. We believe that what you read is your business alone.
+          </p>
+          <p class="text-sm md:text-base text-secText leading-relaxed">
+            Privacy is one of the core principles of ReadBack. Unlike traditional tools, the extension does not require you to create an account, does not upload your browsing logs, and stores everything locally inside your device sandbox environment.
+          </p>
+        </div>
+
+        <!-- Information We Collect Card -->
+        <div id="collect" class="reveal-section active p-8 md:p-10 bg-white border border-black/5 rounded-card shadow-premium flex flex-col gap-6">
+          <div class="flex items-center gap-3 border-b border-secBg pb-4">
+            <span class="w-8 h-8 rounded-lg bg-brand-light flex items-center justify-center text-brand text-sm">👤</span>
+            <h3 class="text-xl font-bold text-appText">Information We Collect</h3>
+          </div>
+          
+          <p class="text-sm text-secText leading-relaxed">
+            ReadBack is built with a zero-telemetry architecture. You can install the extension and start reading immediately. We do not prompt you to sign up, sign in, or subscribe.
+          </p>
+
+          <div class="p-6 bg-brand-light/40 border border-brand/10 rounded-2xl">
+            <h4 class="text-sm font-extrabold text-brand uppercase tracking-wider mb-4">We Collect 0 Personal Data</h4>
+            <p class="text-xs text-secText leading-relaxed mb-4">ReadBack collects and transmits exactly **none** of the following pieces of credentials:</p>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3 text-xs font-semibold text-appText">
+              <div class="flex items-center gap-2"><span class="text-brand">✕</span> Name</div>
+              <div class="flex items-center gap-2"><span class="text-brand">✕</span> Email Address</div>
+              <div class="flex items-center gap-2"><span class="text-brand">✕</span> Password</div>
+              <div class="flex items-center gap-2"><span class="text-brand">✕</span> Phone Number</div>
+              <div class="flex items-center gap-2"><span class="text-brand">✕</span> Payment details</div>
+              <div class="flex items-center gap-2"><span class="text-brand">✕</span> Government IDs</div>
+              <div class="flex items-center gap-2"><span class="text-brand">✕</span> Contact Lists</div>
+              <div class="flex items-center gap-2"><span class="text-brand">✕</span> Photo albums</div>
+              <div class="flex items-center gap-2"><span class="text-brand">✕</span> Private Messages</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reading Data Card -->
+        <div id="reading-data" class="reveal-section active p-8 md:p-10 bg-white border border-black/5 rounded-card shadow-premium flex flex-col gap-4">
+          <div class="flex items-center gap-3 border-b border-secBg pb-4">
+            <span class="w-8 h-8 rounded-lg bg-brand-light flex items-center justify-center text-brand text-sm">📈</span>
+            <h3 class="text-xl font-bold text-appText">Reading Progress</h3>
+          </div>
+          <p class="text-sm text-secText leading-relaxed">
+            To provide its core bookmarking features, the extension records metrics associated with your current reading position.
+          </p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-2">
+            <div class="p-5 border border-black/5 bg-secBg/40 rounded-xl">
+              <h5 class="font-bold text-sm text-appText mb-1.5">What is Stored:</h5>
+              <ul class="list-disc list-inside text-xs text-secText leading-relaxed flex flex-col gap-1.5">
+                <li>Scroll coordinates (Y pixel position)</li>
+                <li>Saved page URLs and titles</li>
+                <li>Custom folders, favorites, and notes</li>
+                <li>Daily reading duration stats</li>
+                <li>Chronological session timeline history</li>
+              </ul>
+            </div>
+            <div class="p-5 border border-black/5 bg-secBg/40 rounded-xl">
+              <h5 class="font-bold text-sm text-appText mb-1.5">Where it is Stored:</h5>
+              <p class="text-xs text-secText leading-relaxed">
+                All reading parameters are written directly to your browser's local sandbox storage using Chrome extension APIs. They never leave your device.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chrome Permissions Card -->
+        <div id="permissions" class="reveal-section active p-8 md:p-10 bg-white border border-black/5 rounded-card shadow-premium flex flex-col gap-6">
+          <div class="flex items-center gap-3 border-b border-secBg pb-4">
+            <span class="w-8 h-8 rounded-lg bg-brand-light flex items-center justify-center text-brand text-sm">⚙️</span>
+            <h3 class="text-xl font-bold text-appText">Required Chrome Permissions</h3>
+          </div>
+          
+          <p class="text-sm text-secText leading-relaxed">
+            Chrome extensions request permissions to interact with browser modules. ReadBack strictly keeps its footprint minimal:
+          </p>
+
+          <div class="flex flex-col gap-4">
+            <div class="flex gap-4 p-4 border border-black/5 bg-secBg/30 rounded-xl">
+              <code class="text-xs font-bold text-brand bg-brand-light/50 px-2 py-1 rounded h-fit">storage</code>
+              <div class="flex-1">
+                <h5 class="text-sm font-bold text-appText mb-1">Local Settings & Databases</h5>
+                <p class="text-xs text-secText leading-relaxed">Used to persist your folder structures, page highlights, notes, configurations, and session timeline history locally.</p>
+              </div>
+            </div>
+
+            <div class="flex gap-4 p-4 border border-black/5 bg-secBg/30 rounded-xl">
+              <code class="text-xs font-bold text-brand bg-brand-light/50 px-2 py-1 rounded h-fit">activeTab</code>
+              <div class="flex-1">
+                <h5 class="text-sm font-bold text-appText mb-1">Current tab interaction</h5>
+                <p class="text-xs text-secText leading-relaxed">Invoked when you click the extension popup or context menu to extract page titles, normalized URLs, and visible paragraph heights.</p>
+              </div>
+            </div>
+
+            <div class="flex gap-4 p-4 border border-black/5 bg-secBg/30 rounded-xl">
+              <code class="text-xs font-bold text-brand bg-brand-light/50 px-2 py-1 rounded h-fit">alarms</code>
+              <div class="flex-1">
+                <h5 class="text-sm font-bold text-appText mb-1">Periodic background cleanups</h5>
+                <p class="text-xs text-secText leading-relaxed">Triggers a background clean loop to periodically purge reading records older than 6 months (excluding favorites) and keep databases slim.</p>
+              </div>
+            </div>
+
+            <div class="flex gap-4 p-4 border border-black/5 bg-secBg/30 rounded-xl">
+              <code class="text-xs font-bold text-brand bg-brand-light/50 px-2 py-1 rounded h-fit">contextMenus</code>
+              <div class="flex-1">
+                <h5 class="text-sm font-bold text-appText mb-1">Right-click save triggers</h5>
+                <p class="text-xs text-secText leading-relaxed">Injects context menu options ("Save Current Page", "Open ReadBack Dashboard") to facilitate rapid bookmarking without opening the popup.</p>
+              </div>
+            </div>
+
+            <div class="flex gap-4 p-4 border border-black/5 bg-secBg/30 rounded-xl">
+              <code class="text-xs font-bold text-brand bg-brand-light/50 px-2 py-1 rounded h-fit">host_permissions</code>
+              <div class="flex-1">
+                <h5 class="text-sm font-bold text-appText mb-1">Content Script Matching</h5>
+                <p class="text-xs text-secText leading-relaxed">Allows content scripts to execute on reading pages to observe scroll changes, generate stable CSS selectors, and apply paragraph highlights.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Sharing Card -->
+        <div id="data-sharing" class="reveal-section active p-8 md:p-10 bg-white border border-black/5 rounded-card shadow-premium flex flex-col gap-4">
+          <div class="flex items-center gap-3 border-b border-secBg pb-4">
+            <span class="w-8 h-8 rounded-lg bg-brand-light flex items-center justify-center text-brand text-sm">🚫</span>
+            <h3 class="text-xl font-bold text-appText">Data Sharing</h3>
+          </div>
+          <p class="text-sm text-secText leading-relaxed">
+            Because we do not transmit your data to any remote servers, it is impossible for us to sell or share it. 
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2 text-xs font-bold text-appText">
+            <div class="flex items-center gap-3 p-3 bg-red-50 border border-red-100 rounded-xl"><span class="text-red-500">✕</span> No selling or renting data</div>
+            <div class="flex items-center gap-3 p-3 bg-red-50 border border-red-100 rounded-xl"><span class="text-red-500">✕</span> No cloud synchronization hooks</div>
+            <div class="flex items-center gap-3 p-3 bg-red-50 border border-red-100 rounded-xl"><span class="text-red-500">✕</span> No advertising SDK trackers</div>
+            <div class="flex items-center gap-3 p-3 bg-red-50 border border-red-100 rounded-xl"><span class="text-red-500">✕</span> No profile logging or analytics</div>
+          </div>
+        </div>
+
+        <!-- Third Party Services Card -->
+        <div id="third-party" class="reveal-section active p-8 md:p-10 bg-white border border-black/5 rounded-card shadow-premium flex flex-col gap-4">
+          <div class="flex items-center gap-3 border-b border-secBg pb-4">
+            <span class="w-8 h-8 rounded-lg bg-brand-light flex items-center justify-center text-brand text-sm">🛜</span>
+            <h3 class="text-xl font-bold text-appText">Third-Party Services</h3>
+          </div>
+          <p class="text-sm text-secText leading-relaxed">
+            ReadBack utilizes trusted distribution services, primarily the **Google Chrome Web Store**, to host, update, and manage the extension lifecycle.
+          </p>
+          <p class="text-sm text-secText leading-relaxed">
+            These distribution platforms may collect anonymous telemetry regarding installs, updates, and browser versions. No page contents, URLs, or scroll indicators are ever sent to these services.
+          </p>
+        </div>
+
+        <!-- Security Card -->
+        <div id="security" class="reveal-section active p-8 md:p-10 bg-[#0B0F19] text-white border border-white/5 rounded-card shadow-premium flex flex-col gap-4">
+          <div class="flex items-center gap-3 border-b border-white/10 pb-4">
+            <span class="w-8 h-8 rounded-lg bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-sm">🔒</span>
+            <h3 class="text-xl font-bold text-white">Security Architecture</h3>
+          </div>
+          <p class="text-sm text-[#9CA3AF] leading-relaxed">
+            We prioritize data isolation and secure code design principles:
+          </p>
+          <ul class="list-disc list-inside text-xs text-[#9CA3AF] leading-relaxed flex flex-col gap-2">
+            <li>**Isolated Sandbox**: Local storage matches Chrome sandbox regulations, locking reading statistics strictly to the extension profile.</li>
+            <li>**No External Scripting**: We run exactly zero remote scripting tags (no Google Tag Manager, analytics wrappers, or external scripts) to prevent DOM-injection vulnerabilities.</li>
+            <li>**Zero Network Hooks**: The service worker contains no network connection dependencies. Even if your browser is offline, bookmarks function perfectly.</li>
+          </ul>
+        </div>
+
+        <!-- Children's Privacy Card -->
+        <div id="children" class="reveal-section active p-8 md:p-10 bg-white border border-black/5 rounded-card shadow-premium flex flex-col gap-4">
+          <div class="flex items-center gap-3 border-b border-secBg pb-4">
+            <span class="w-8 h-8 rounded-lg bg-brand-light flex items-center justify-center text-brand text-sm">🧸</span>
+            <h3 class="text-xl font-bold text-appText">Children's Privacy</h3>
+          </div>
+          <p class="text-sm text-secText leading-relaxed">
+            ReadBack is a general-purpose reading assistant. We do not collect or monitor personal coordinates of any user, including children under 13.
+          </p>
+        </div>
+
+        <!-- Policy Changes Card -->
+        <div id="changes" class="reveal-section active p-8 md:p-10 bg-white border border-black/5 rounded-card shadow-premium flex flex-col gap-4">
+          <div class="flex items-center gap-3 border-b border-secBg pb-4">
+            <span class="w-8 h-8 rounded-lg bg-brand-light flex items-center justify-center text-brand text-sm">🔄</span>
+            <h3 class="text-xl font-bold text-appText">Policy Changes</h3>
+          </div>
+          <p class="text-sm text-secText leading-relaxed">
+            We may update our Privacy Policy to adapt to changes in Chrome API specifications or privacy regulations. The latest version will always be published on this page, marked by the revision date at the top.
+          </p>
+        </div>
+
+        <!-- Contact Us Card -->
+        <div id="contact" class="reveal-section active p-8 md:p-10 bg-secBg/30 border border-black/5 rounded-card shadow-premium flex flex-col gap-4">
+          <div class="flex items-center gap-3 border-b border-secBg pb-4">
+            <span class="w-8 h-8 rounded-lg bg-brand-light flex items-center justify-center text-brand text-sm">✉️</span>
+            <h3 class="text-xl font-bold text-appText">Contact Us</h3>
+          </div>
+          <p class="text-sm text-secText leading-relaxed">
+            If you have questions about this privacy protocol, our code architecture, or local storage details, feel free to reach out directly:
+          </p>
+          <div class="flex flex-col gap-2 text-xs md:text-sm font-semibold text-appText mt-2">
+            <span class="flex items-center gap-2">📧 Email: <a href="mailto:contact@akshatpandey.me" class="text-brand hover:underline">contact@akshatpandey.me</a></span>
+            <span class="flex items-center gap-2">🌐 Developer Portal: <a href="https://akshatpandey.me" target="_blank" class="text-brand hover:underline">https://akshatpandey.me</a></span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Mobile Table of Contents Floating Action Menu -->
+  <div class="lg:hidden fixed bottom-6 right-6 z-40">
+    <button id="mobile-toc-btn" class="w-12 h-12 rounded-full bg-brand text-white flex items-center justify-center shadow-lg hover:bg-brand-dark transition-all duration-300" aria-label="Open Table of Contents">
+      📋
+    </button>
+    
+    <!-- Mobile TOC list overlay panel -->
+    <div id="mobile-toc-panel" class="absolute bottom-16 right-0 w-64 bg-white border border-black/10 rounded-2xl p-6 shadow-2xl flex flex-col gap-3 transition-all duration-300 transform scale-95 opacity-0 pointer-events-none origin-bottom-right">
+      <h4 class="text-xs font-bold text-secText uppercase tracking-wider mb-2 border-b border-secBg pb-2">Jump to Section</h4>
+      <a href="#intro" class="mobile-toc-link text-xs font-medium text-secText hover:text-appText">Introduction</a>
+      <a href="#collect" class="mobile-toc-link text-xs font-medium text-secText hover:text-appText">Information We Collect</a>
+      <a href="#reading-data" class="mobile-toc-link text-xs font-medium text-secText hover:text-appText">Reading Progress</a>
+      <a href="#permissions" class="mobile-toc-link text-xs font-medium text-secText hover:text-appText">Browser Permissions</a>
+      <a href="#data-sharing" class="mobile-toc-link text-xs font-medium text-secText hover:text-appText">Data Sharing</a>
+      <a href="#third-party" class="mobile-toc-link text-xs font-medium text-secText hover:text-appText">Third-Party Services</a>
+      <a href="#security" class="mobile-toc-link text-xs font-medium text-secText hover:text-appText">Security Architecture</a>
+      <a href="#children" class="mobile-toc-link text-xs font-medium text-secText hover:text-appText">Children's Privacy</a>
+      <a href="#changes" class="mobile-toc-link text-xs font-medium text-secText hover:text-appText">Policy Changes</a>
+      <a href="#contact" class="mobile-toc-link text-xs font-medium text-secText hover:text-appText">Contact Us</a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-secBg py-16">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8">
+      <div class="flex items-center gap-2">
+        <img src="assets/icons/icon32.png" alt="ReadBack" class="w-6 h-6">
+        <span class="font-extrabold tracking-tight text-appText text-lg">ReadBack</span>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-center gap-8 text-sm font-semibold text-secText">
+        <a href="https://chromewebstore.google.com/detail/readback-%E2%80%93-save-reading-p/pomfhagjojbnfmgmldkpakfggpdpnkgc" target="_blank" class="hover:text-appText transition-colors duration-200">Chrome Store</a>
+        <a href="https://github.com" target="_blank" class="hover:text-appText transition-colors duration-200">GitHub</a>
+        <a href="privacy.html" class="hover:text-appText transition-colors duration-200">Privacy Policy</a>
+      </div>
+
+      <span class="text-xs text-secText font-medium">&copy; <script>document.write(new Date().getFullYear())</script> ReadBack. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="index.js"></script>
+  <script>
+    // Specific Table of Contents Scroll Sync Logic for Privacy page
+    document.addEventListener('DOMContentLoaded', () => {
+      const sections = ['intro', 'collect', 'reading-data', 'permissions', 'data-sharing', 'third-party', 'security', 'children', 'changes', 'contact'];
+      const tocLinks = document.querySelectorAll('.toc-link');
+      
+      const getActiveSection = () => {
+        let activeSec = sections[0];
+        let minDiff = Infinity;
+        
+        sections.forEach(secId => {
+          const el = document.getElementById(secId);
+          if (el) {
+            const rect = el.getBoundingClientRect();
+            // We evaluate which section is closest to top of viewport (e.g. y = 120px)
+            const diff = Math.abs(rect.top - 120);
+            if (diff < minDiff && rect.top < window.innerHeight * 0.5) {
+              minDiff = diff;
+              activeSec = secId;
+            }
+          }
+        });
+        return activeSec;
+      };
+
+      const syncTOC = () => {
+        const activeSec = getActiveSection();
+        tocLinks.forEach(link => {
+          if (link.getAttribute('href') === `#${activeSec}`) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        });
+      };
+
+      window.addEventListener('scroll', syncTOC, { passive: true });
+      syncTOC(); // run initially
+
+      // Mobile Floating TOC Logic
+      const mobileTocBtn = document.getElementById('mobile-toc-btn');
+      const mobileTocPanel = document.getElementById('mobile-toc-panel');
+      const mobileTocLinks = document.querySelectorAll('.mobile-toc-link');
+
+      if (mobileTocBtn && mobileTocPanel) {
+        mobileTocBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const open = mobileTocPanel.classList.contains('pointer-events-none');
+          if (open) {
+            mobileTocPanel.classList.remove('pointer-events-none', 'scale-95', 'opacity-0');
+            mobileTocPanel.classList.add('scale-100', 'opacity-100');
+          } else {
+            mobileTocPanel.classList.add('pointer-events-none', 'scale-95', 'opacity-0');
+            mobileTocPanel.classList.remove('scale-100', 'opacity-100');
+          }
+        });
+
+        document.addEventListener('click', (e) => {
+          if (!mobileTocPanel.contains(e.target) && e.target !== mobileTocBtn) {
+            mobileTocPanel.classList.add('pointer-events-none', 'scale-95', 'opacity-0');
+            mobileTocPanel.classList.remove('scale-100', 'opacity-100');
+          }
+        });
+
+        mobileTocLinks.forEach(link => {
+          link.addEventListener('click', () => {
+            mobileTocPanel.classList.add('pointer-events-none', 'scale-95', 'opacity-0');
+            mobileTocPanel.classList.remove('scale-100', 'opacity-100');
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>

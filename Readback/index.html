@@ -1,1 +1,731 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO Optimization -->
+  <title>ReadBack – Save Your Reading Position Across the Web</title>
+  <meta name="description" content="ReadBack remembers exactly where you stopped reading so you can continue from the same paragraph on any article, tutorial, documentation page or research paper.">
+  <meta name="keywords" content="reading extension, continue reading, resume reading, chrome extension, save reading progress, reading tracker, bookmark alternative, documentation reader">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/icons/icon48.png">
 
+  <!-- Inter Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              DEFAULT: '#4F7DFF',
+              light: '#EBF0FF',
+              dark: '#1E4AD4',
+            },
+            appBg: '#FFFFFF',
+            secBg: '#F7F9FC',
+            appText: '#111827',
+            secText: '#6B7280',
+          },
+          borderRadius: {
+            'card': '24px',
+            'btn': '16px',
+          },
+          boxShadow: {
+            'premium': '0 8px 30px rgb(0 0 0 / 0.04)',
+            'premium-hover': '0 20px 40px rgb(0 0 0 / 0.08)',
+            'glow': '0 0 40px rgba(79, 125, 255, 0.15)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="index.css">
+</head>
+<body class="bg-appBg text-appText font-sans antialiased overflow-x-hidden">
+
+  <!-- Navigation -->
+  <header id="nav-header" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b border-transparent">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-2 group">
+        <img src="assets/icons/icon32.png" alt="ReadBack" class="w-8 h-8 transition-transform duration-500 group-hover:rotate-12">
+        <span class="font-extrabold text-xl tracking-tight text-appText">Read<span class="text-brand">Back</span></span>
+      </a>
+      
+      <!-- Desktop Menu -->
+      <nav class="hidden md:flex items-center gap-8">
+        <a href="#features" class="text-sm font-medium text-secText hover:text-appText transition-colors duration-200">Features</a>
+        <a href="#how-it-works" class="text-sm font-medium text-secText hover:text-appText transition-colors duration-200">How it Works</a>
+        <a href="#demo" class="text-sm font-medium text-secText hover:text-appText transition-colors duration-200">Interactive Demo</a>
+        <a href="#privacy" class="text-sm font-medium text-secText hover:text-appText transition-colors duration-200">Privacy First</a>
+        <a href="#faq" class="text-sm font-medium text-secText hover:text-appText transition-colors duration-200">FAQ</a>
+      </nav>
+
+      <!-- CTA -->
+      <div class="flex items-center gap-4">
+        <a href="https://chromewebstore.google.com/detail/readback-%E2%80%93-save-reading-p/pomfhagjojbnfmgmldkpakfggpdpnkgc" target="_blank" class="hidden sm:inline-flex items-center justify-center px-5 py-2.5 bg-brand text-white font-semibold text-sm rounded-btn shadow-premium hover:bg-brand-dark transition-all duration-300 transform active:scale-95 group">
+          Install for Chrome
+          <svg class="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </a>
+        
+        <!-- Mobile Menu Trigger -->
+        <button id="mobile-menu-btn" class="md:hidden flex flex-col justify-center items-center w-8 h-8 gap-1.5 focus:outline-none" aria-label="Toggle Mobile Menu">
+          <span class="w-6 h-0.5 bg-appText transition-all duration-300 origin-center"></span>
+          <span class="w-6 h-0.5 bg-appText transition-all duration-300 origin-center"></span>
+          <span class="w-6 h-0.5 bg-appText transition-all duration-300 origin-center"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 top-20 bg-appBg/95 backdrop-blur-xl z-40 flex flex-col px-8 py-12 gap-8 md:hidden transition-all duration-500 transform translate-x-full">
+      <a href="#features" class="text-xl font-semibold text-appText">Features</a>
+      <a href="#how-it-works" class="text-xl font-semibold text-appText">How it Works</a>
+      <a href="#demo" class="text-xl font-semibold text-appText">Interactive Demo</a>
+      <a href="#privacy" class="text-xl font-semibold text-appText">Privacy First</a>
+      <a href="#faq" class="text-xl font-semibold text-appText">FAQ</a>
+      <div class="h-px bg-secBg my-4"></div>
+      <a href="https://chromewebstore.google.com/detail/readback-%E2%80%93-save-reading-p/pomfhagjojbnfmgmldkpakfggpdpnkgc" target="_blank" class="w-full py-4 bg-brand text-white text-center font-bold rounded-btn">
+        Install for Chrome
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative min-h-screen pt-36 pb-20 flex items-center overflow-hidden">
+    <!-- Grid Background -->
+    <div class="absolute inset-0 bg-grid opacity-[0.03] pointer-events-none"></div>
+    <!-- Radial Glow Behind Mockup -->
+    <div class="absolute right-[5%] top-[25%] w-[500px] h-[500px] rounded-full bg-brand/10 blur-[120px] pointer-events-none"></div>
+    
+    <div class="max-w-7xl mx-auto px-6 w-full grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+      <!-- Left Content -->
+      <div class="lg:col-span-5 flex flex-col gap-8 text-center lg:text-left z-10">
+        <!-- Badge -->
+        <div class="inline-flex items-center justify-center lg:justify-start">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-brand-light/70 border border-brand/10 rounded-full text-brand text-xs font-semibold uppercase tracking-wider">
+            ⚡ Chrome Extension
+          </div>
+        </div>
+
+        <!-- Headline -->
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-appText leading-[1.1] md:leading-[1.05]">
+          Never lose your place on the web.
+        </h1>
+
+        <!-- Supporting Paragraph -->
+        <p class="text-lg text-secText font-medium leading-relaxed max-w-xl mx-auto lg:mx-0">
+          ReadBack remembers exactly where you stopped reading so you can continue from the exact paragraph on any article, tutorial, documentation page, or research paper.
+        </p>
+
+        <!-- CTAs -->
+        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+          <a href="https://chromewebstore.google.com/detail/readback-%E2%80%93-save-reading-p/pomfhagjojbnfmgmldkpakfggpdpnkgc" target="_blank" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 bg-brand text-white font-bold rounded-btn shadow-premium hover:bg-brand-dark hover:scale-[1.02] active:scale-95 transition-all duration-300 group">
+            Install ReadBack
+            <svg class="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+          </a>
+          <a href="#demo" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 bg-secBg text-appText font-bold rounded-btn hover:bg-secBg/80 hover:scale-[1.02] active:scale-95 transition-all duration-300">
+            Watch Demo
+          </a>
+        </div>
+      </div>
+
+      <!-- Right Floating 3D Parallax Mockup -->
+      <div class="lg:col-span-7 flex justify-center items-center z-10">
+        <div id="hero-mockup-wrapper" class="relative w-full max-w-[620px] transition-transform duration-500 ease-out cursor-pointer">
+          <!-- Glass Card Background Base -->
+          <div class="absolute -inset-4 bg-gradient-to-tr from-brand/10 to-transparent opacity-0 group-hover:opacity-100 rounded-[28px] blur-xl transition-opacity duration-500"></div>
+          
+          <!-- Mockup Frame -->
+          <div class="relative bg-white/[0.02] backdrop-blur-md border border-black/5 shadow-2xl rounded-card overflow-hidden">
+            <!-- Simulated Browser Header -->
+            <div class="bg-[#F1F3F5] h-10 px-4 flex items-center gap-2 border-b border-black/5">
+              <div class="w-3 h-3 rounded-full bg-[#FF5F56]"></div>
+              <div class="w-3 h-3 rounded-full bg-[#FFBD2E]"></div>
+              <div class="w-3 h-3 rounded-full bg-[#27C93F]"></div>
+              <div class="ml-4 flex-1 max-w-[320px] bg-white h-6 rounded-md text-[10px] text-secText flex items-center px-3 border border-black/5 select-none truncate">
+                readback.dev/dashboard
+              </div>
+            </div>
+            
+            <!-- Dashboard Image Mockup -->
+            <div class="relative overflow-hidden group">
+              <img src="assets/Readback6.png" alt="ReadBack Dashboard" class="w-full block hover:scale-[1.01] transition-transform duration-700 ease-out">
+              
+              <!-- Floating Mini Card Over Mockup -->
+              <div id="hero-floating-card" class="absolute bottom-6 right-6 p-4 w-52 bg-white/95 backdrop-blur-xl border border-black/[0.06] rounded-2xl shadow-xl transform translate-y-2 hover:-translate-y-1 transition-transform duration-500">
+                <div class="flex items-center gap-2.5 mb-2.5">
+                  <div class="w-6 h-6 rounded-full bg-brand-light flex items-center justify-center text-brand text-xs font-bold">✓</div>
+                  <div class="text-[11px] font-bold tracking-tight text-appText">Progress Auto-Saved</div>
+                </div>
+                <div class="text-[9px] text-secText font-medium mb-1.5 leading-snug">"Napoleon's Egyptian expedition..."</div>
+                <div class="w-full bg-secBg h-1.5 rounded-full overflow-hidden">
+                  <div class="bg-brand w-[75%] h-full rounded-full animate-pulse"></div>
+                </div>
+                <div class="flex justify-between mt-1 text-[8px] text-secText font-bold">
+                  <span>75% Read</span>
+                  <span>7m left</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust Section -->
+  <section class="py-16 border-y border-secBg bg-secBg/20">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+      <h2 class="text-xs font-bold uppercase tracking-widest text-secText mb-8">Works Seamlessly Across Your Reading Sites</h2>
+      <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-6 md:gap-8">
+        <span class="px-5 py-2.5 bg-white border border-black/5 rounded-full text-sm font-semibold text-appText shadow-premium hover:border-brand/20 transition-all duration-300 cursor-default select-none">📖 Medium</span>
+        <span class="px-5 py-2.5 bg-white border border-black/5 rounded-full text-sm font-semibold text-appText shadow-premium hover:border-brand/20 transition-all duration-300 cursor-default select-none">🌐 Wikipedia</span>
+        <span class="px-5 py-2.5 bg-white border border-black/5 rounded-full text-sm font-semibold text-appText shadow-premium hover:border-brand/20 transition-all duration-300 cursor-default select-none">💻 MDN Docs</span>
+        <span class="px-5 py-2.5 bg-white border border-black/5 rounded-full text-sm font-semibold text-appText shadow-premium hover:border-brand/20 transition-all duration-300 cursor-default select-none">🐙 GitHub Docs</span>
+        <span class="px-5 py-2.5 bg-white border border-black/5 rounded-full text-sm font-semibold text-appText shadow-premium hover:border-brand/20 transition-all duration-300 cursor-default select-none">✍️ Dev.to</span>
+        <span class="px-5 py-2.5 bg-white border border-black/5 rounded-full text-sm font-semibold text-appText shadow-premium hover:border-brand/20 transition-all duration-300 cursor-default select-none">📚 Research Papers</span>
+        <span class="px-5 py-2.5 bg-white border border-black/5 rounded-full text-sm font-semibold text-appText shadow-premium hover:border-brand/20 transition-all duration-300 cursor-default select-none">⚙️ Technical Blogs</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section id="how-it-works" class="py-28 bg-white relative">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center max-w-2xl mx-auto mb-20 flex flex-col gap-4">
+        <h2 class="text-brand text-xs font-bold uppercase tracking-widest">Simplifying Reading</h2>
+        <p class="text-3xl sm:text-4xl font-extrabold tracking-tight text-appText">Close your tab, we've got you covered.</p>
+        <p class="text-secText font-medium">Unlike traditional bookmarks, ReadBack acts invisibly so you can read at your own pace without manual bookmarks.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Step 1 -->
+        <div class="flex flex-col gap-6 p-8 bg-secBg/40 border border-black/5 rounded-card shadow-premium hover:shadow-premium-hover transition-all duration-500 hover:-translate-y-1">
+          <div class="w-12 h-12 bg-brand/10 rounded-2xl flex items-center justify-center text-brand font-bold text-lg">1</div>
+          <div class="flex flex-col gap-2">
+            <h3 class="text-xl font-bold text-appText">Read</h3>
+            <p class="text-sm text-secText leading-relaxed">Browse normally. ReadBack tracks your scroll position in real-time, detecting visible paragraphs on any long-form content site.</p>
+          </div>
+          <!-- CSS Illustration -->
+          <div class="h-32 bg-white border border-black/5 rounded-xl flex flex-col p-4 gap-2.5 justify-center overflow-hidden">
+            <div class="w-[85%] h-2.5 bg-brand/50 rounded-full animate-pulse"></div>
+            <div class="w-[95%] h-2.5 bg-secText/15 rounded-full"></div>
+            <div class="w-[90%] h-2.5 bg-secText/15 rounded-full"></div>
+            <div class="w-[60%] h-2.5 bg-secText/15 rounded-full"></div>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="flex flex-col gap-6 p-8 bg-secBg/40 border border-black/5 rounded-card shadow-premium hover:shadow-premium-hover transition-all duration-500 hover:-translate-y-1">
+          <div class="w-12 h-12 bg-brand/10 rounded-2xl flex items-center justify-center text-brand font-bold text-lg">2</div>
+          <div class="flex flex-col gap-2">
+            <h3 class="text-xl font-bold text-appText">Leave Anytime</h3>
+            <p class="text-sm text-secText leading-relaxed">Close the tab or browser window whenever you are done reading. No saving, bookmarking, or accounts required.</p>
+          </div>
+          <!-- CSS Illustration -->
+          <div class="h-32 bg-white border border-black/5 rounded-xl flex items-center justify-center relative overflow-hidden">
+            <div class="px-4 py-2 border border-black/5 bg-[#F1F3F5] rounded-lg shadow-sm flex items-center gap-3">
+              <span class="text-xs font-bold text-appText truncate max-w-[120px]"> Ashoka - Wikipedia</span>
+              <span class="w-4 h-4 rounded-full bg-black/10 flex items-center justify-center text-[10px] font-bold hover:bg-[#FF5F56] hover:text-white transition-colors duration-200 cursor-pointer">×</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="flex flex-col gap-6 p-8 bg-secBg/40 border border-black/5 rounded-card shadow-premium hover:shadow-premium-hover transition-all duration-500 hover:-translate-y-1">
+          <div class="w-12 h-12 bg-brand/10 rounded-2xl flex items-center justify-center text-brand font-bold text-lg">3</div>
+          <div class="flex flex-col gap-2">
+            <h3 class="text-xl font-bold text-appText">Continue</h3>
+            <p class="text-sm text-secText leading-relaxed">Open the page again later. ReadBack highlights the exact paragraph where you left off, complete with a clean fade animation.</p>
+          </div>
+          <!-- CSS Illustration -->
+          <div class="h-32 bg-white border border-black/5 rounded-xl flex flex-col p-4 gap-2.5 justify-center relative overflow-hidden">
+            <div class="w-full bg-brand/5 rounded border border-brand/10 p-2.5 animate-pulse flex items-center gap-2">
+              <span class="text-brand text-xs">📖</span>
+              <span class="text-[10px] text-brand font-bold">Resumed at "Layout Inspector"</span>
+            </div>
+            <div class="w-[90%] h-2.5 bg-secText/15 rounded-full"></div>
+            <div class="w-[45%] h-2.5 bg-secText/15 rounded-full"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Demo Section -->
+  <section id="demo" class="py-28 bg-secBg/30 border-y border-secBg relative">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center max-w-2xl mx-auto mb-20 flex flex-col gap-4">
+        <h2 class="text-brand text-xs font-bold uppercase tracking-widest">Experience It Live</h2>
+        <p class="text-3xl sm:text-4xl font-extrabold tracking-tight text-appText">Test ReadBack inside this simulator.</p>
+        <p class="text-secText font-medium">Scroll the fake Wikipedia article on the left, and watch the ReadBack popup and statistics dashboard on the right react automatically.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
+        <!-- Left: Scrollable Fake Article -->
+        <div class="lg:col-span-6 flex flex-col bg-white border border-black/5 rounded-card shadow-premium overflow-hidden h-[540px]">
+          <!-- Article Browser Bar -->
+          <div class="bg-[#F1F3F5] h-12 px-6 flex items-center gap-3 border-b border-black/5 flex-shrink-0 select-none">
+            <div class="flex gap-1.5">
+              <div class="w-3 h-3 rounded-full bg-[#FF5F56]"></div>
+              <div class="w-3 h-3 rounded-full bg-[#FFBD2E]"></div>
+              <div class="w-3 h-3 rounded-full bg-[#27C93F]"></div>
+            </div>
+            <div class="flex-1 max-w-[360px] bg-white h-7 rounded-md text-xs text-secText flex items-center px-4 border border-black/5 truncate">
+              https://en.wikipedia.org/wiki/Napoleon
+            </div>
+          </div>
+
+          <!-- Article Content Wrapper -->
+          <div id="demo-article-scroll" class="flex-1 overflow-y-scroll p-8 select-none relative scroll-smooth">
+            <div class="flex flex-col gap-6 max-w-xl">
+              <h1 class="text-3xl font-extrabold text-appText">Napoleon Bonaparte</h1>
+              <div class="flex items-center gap-2 border-b border-secBg pb-2 text-xs text-secText font-medium">
+                <span>Article</span>
+                <span>•</span>
+                <span>Talk</span>
+                <span class="ml-auto">Read</span>
+                <span>Edit</span>
+                <span>View history</span>
+              </div>
+              
+              <!-- Paragraph 1 -->
+              <p data-para-index="0" data-para-heading="Early Life" class="demo-p text-sm text-appText leading-relaxed">
+                Napoleon Bonaparte (born Napoleone di Buonaparte; 15 August 1769 – 5 May 1821) was a French military commander and political leader who rose to prominence during the French Revolution and led successful campaigns during the Revolutionary Wars.
+              </p>
+              
+              <!-- Paragraph 2 -->
+              <p data-para-index="1" data-para-heading="Military Education" class="demo-p text-sm text-appText leading-relaxed">
+                Born in Corsica to a relatively modest family of Italian origin, Napoleon was educated in military academies in mainland France. He joined the French artillery corps, served in the French army, and quickly rose through the ranks due to his strategic brilliance and decisive victories.
+              </p>
+
+              <!-- Heading 1 -->
+              <h2 class="text-lg font-bold text-appText mt-4">Italian Campaign (1796–1797)</h2>
+
+              <!-- Paragraph 3 -->
+              <p data-para-index="2" data-para-heading="Italian Campaign" class="demo-p text-sm text-appText leading-relaxed">
+                Napoleon assumed command of the Army of Italy in 1796. He staged a rapid invasion of Italy, defeating Austrian forces and their allies. His victory forced Austria to negotiate the Treaty of Campo Formio, bringing a successful close to the War of the First Coalition.
+              </p>
+
+              <!-- Paragraph 4 -->
+              <p data-para-index="3" data-para-heading="Egyptian Expedition" class="demo-p text-sm text-appText leading-relaxed">
+                In 1798, Napoleon led a military expedition to Egypt to disrupt British trade routes. The campaign was culturally and historically significant, leading to the discovery of the Rosetta Stone, though military operations eventually stalled after naval defeats against British Admiral Nelson.
+              </p>
+
+              <!-- Heading 2 -->
+              <h2 class="text-lg font-bold text-appText mt-4">Consulate and Reforms (1799–1804)</h2>
+
+              <!-- Paragraph 5 -->
+              <p data-para-index="4" data-para-heading="Consulate Reforms" class="demo-p text-sm text-appText leading-relaxed">
+                Returning to Paris in 1799, Napoleon engineered a coup d'état that overthrew the Directory and established the Consulate, with himself as First Consul. He introduced wide-reaching administrative and legal reforms, most notably the Napoleonic Code, which remains influential today.
+              </p>
+              
+              <!-- Paragraph 6 -->
+              <p data-para-index="5" data-para-heading="Emperor of France" class="demo-p text-sm text-appText leading-relaxed">
+                In 1804, Napoleon was crowned Emperor of the French. The coronation took place in Notre-Dame Cathedral in Paris, solidifying his absolute control and beginning the Napoleonic Empire, which would dominate continental Europe for the next decade.
+              </p>
+
+              <div class="h-24 flex items-center justify-center text-xs text-secText font-bold border-t border-secBg">
+                End of Preview Article
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Animated ReadBack Interface Simulator -->
+        <div class="lg:col-span-6 flex flex-col justify-between gap-8 h-[540px]">
+          <!-- Card 1: ReadBack Popup simulator -->
+          <div class="p-6 bg-white border border-black/5 rounded-card shadow-premium flex flex-col gap-4">
+            <div class="flex items-center justify-between border-b border-secBg pb-3">
+              <div class="flex items-center gap-2">
+                <img src="assets/icons/icon32.png" alt="ReadBack" class="w-5 h-5">
+                <span class="font-bold text-sm">ReadBack Extension</span>
+              </div>
+              <span class="text-[10px] font-bold text-brand bg-brand-light px-2.5 py-1 rounded-full">ACTIVE</span>
+            </div>
+
+            <!-- Page Title Card -->
+            <div class="bg-secBg/60 p-4 border border-black/5 rounded-2xl flex flex-col gap-2 relative">
+              <div class="flex justify-between text-[11px] font-bold text-appText">
+                <span class="truncate max-w-[200px]">Napoleon Bonaparte - Wikipedia</span>
+                <span id="demo-scroll-pct" class="text-brand">0%</span>
+              </div>
+              <div class="w-full bg-secBg h-2 rounded-full overflow-hidden">
+                <div id="demo-scroll-bar" class="bg-brand w-0 h-full rounded-full transition-all duration-300"></div>
+              </div>
+              <div class="text-[10px] text-secText font-medium mt-1 leading-snug">
+                Nearest Section: <span id="demo-heading" class="text-appText font-bold">Early Life</span>
+              </div>
+              <div id="demo-paragraph-preview" class="text-[9px] text-secText italic truncate">
+                "Napoleon Bonaparte (born Napoleone di Buonaparte;..."
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Interactive metrics -->
+          <div class="p-6 bg-white border border-black/5 rounded-card shadow-premium flex-1 flex flex-col justify-center gap-6">
+            <div>
+              <h3 class="text-sm font-bold text-appText mb-1">Simulated Session Log</h3>
+              <p class="text-xs text-secText leading-relaxed">As you scroll, the extension updates the database locally in the background. Scroll to see changes in real-time.</p>
+            </div>
+            
+            <div class="grid grid-cols-3 gap-4">
+              <div class="p-4 bg-secBg/40 border border-black/5 rounded-2xl text-center flex flex-col justify-center">
+                <span class="text-xs font-semibold text-secText uppercase tracking-wider mb-1">State</span>
+                <span id="demo-state" class="text-sm font-extrabold text-[#FF9F0A]">Not Started</span>
+              </div>
+              <div class="p-4 bg-secBg/40 border border-black/5 rounded-2xl text-center flex flex-col justify-center">
+                <span class="text-xs font-semibold text-secText uppercase tracking-wider mb-1">Reading Time</span>
+                <span id="demo-time" class="text-sm font-extrabold text-appText">12s</span>
+              </div>
+              <div class="p-4 bg-secBg/40 border border-black/5 rounded-2xl text-center flex flex-col justify-center">
+                <span class="text-xs font-semibold text-secText uppercase tracking-wider mb-1">Streak</span>
+                <span class="text-sm font-extrabold text-[#34C759]">7 Days</span>
+              </div>
+            </div>
+
+            <!-- Trigger Action Simulation Button -->
+            <button id="demo-btn-resume" class="py-3.5 bg-brand/5 border border-brand/20 text-brand text-xs font-bold rounded-xl hover:bg-brand/10 transition-colors duration-200 shadow-sm flex items-center justify-center gap-2">
+              <span>🔄</span> Re-align & Resume exact viewport
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature Showcase -->
+  <section id="features" class="py-28 bg-white overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-2xl mx-auto mb-28 flex flex-col gap-4">
+        <h2 class="text-brand text-xs font-bold uppercase tracking-widest">Extension Tour</h2>
+        <p class="text-3xl sm:text-4xl font-extrabold tracking-tight text-appText">Everything you need to read efficiently.</p>
+        <p class="text-secText font-medium">Beautiful features designed specifically to streamline your online reading journey.</p>
+      </div>
+
+      <!-- Features Stack -->
+      <div class="flex flex-col gap-36">
+        
+        <!-- Feature 1: Progress Tracker -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center reveal-section">
+          <!-- Left Info -->
+          <div class="lg:col-span-5 flex flex-col gap-6">
+            <div class="w-10 h-10 bg-brand-light text-brand rounded-xl flex items-center justify-center text-sm">📈</div>
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-appText">Visual Progress & Auto-Resuming</h3>
+            <p class="text-secText leading-relaxed">Never scroll endlessly trying to find where you stopped. ReadBack calculates your exact percentage and vertical pixel location, mapping it to the closest selector. Resuming takes less than a second.</p>
+            <ul class="flex flex-col gap-3 text-sm text-appText font-medium">
+              <li class="flex items-center gap-2.5">
+                <span class="text-brand">✓</span> Smart viewport heading alignment
+              </li>
+              <li class="flex items-center gap-2.5">
+                <span class="text-brand">✓</span> Dynamic paragraph highlight animation
+              </li>
+            </ul>
+          </div>
+          <!-- Right Image -->
+          <div class="lg:col-span-7 bg-secBg/40 p-6 rounded-card border border-black/5 shadow-premium">
+            <img src="assets/ReadBackPopUp.png" alt="ReadBack Popup Tracker" class="w-full max-w-[420px] mx-auto rounded-2xl shadow-lg border border-black/5 hover:scale-[1.02] transition-transform duration-500">
+          </div>
+        </div>
+
+        <!-- Feature 2: Timeline logs -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center reveal-section lg:row-reverse">
+          <!-- Left Image (Desktop displays left, mobile layout orders logically) -->
+          <div class="lg:col-span-7 lg:order-last bg-secBg/40 p-6 rounded-card border border-black/5 shadow-premium">
+            <img src="assets/ReadBack3.png" alt="Timeline log screenshot" class="w-full rounded-2xl shadow-lg border border-black/5 hover:scale-[1.02] transition-transform duration-500">
+          </div>
+          <!-- Right Info -->
+          <div class="lg:col-span-5 flex flex-col gap-6">
+            <div class="w-10 h-10 bg-brand-light text-brand rounded-xl flex items-center justify-center text-sm">🕐</div>
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-appText">Reading Timeline & History</h3>
+            <p class="text-secText leading-relaxed">Keep track of your online reading activities chronologically. ReadBack registers every visit, scroll update, and duration checkpoint automatically, organizing them in a clean vertical timeline list.</p>
+            <ul class="flex flex-col gap-3 text-sm text-appText font-medium">
+              <li class="flex items-center gap-2.5">
+                <span class="text-brand">✓</span> Grouped by day and site domains
+              </li>
+              <li class="flex items-center gap-2.5">
+                <span class="text-brand">✓</span> Timeline checkpoints for specific reading depths
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Feature 3: Reading Stats & Streak -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center reveal-section">
+          <!-- Left Info -->
+          <div class="lg:col-span-5 flex flex-col gap-6">
+            <div class="w-10 h-10 bg-brand-light text-brand rounded-xl flex items-center justify-center text-sm">📊</div>
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-appText">Habit Statistics & Streak Milestones</h3>
+            <p class="text-secText leading-relaxed">Build consistent reading habits. Analyze breakdown charts of active reading sessions, average durations, site classifications, and daily calendar visualizations for the last 90 days.</p>
+            <ul class="flex flex-col gap-3 text-sm text-appText font-medium">
+              <li class="flex items-center gap-2.5">
+                <span class="text-brand">✓</span> Streak achievements & milestone cards
+              </li>
+              <li class="flex items-center gap-2.5">
+                <span class="text-brand">✓</span> Local statistics calculation with zero server sync
+              </li>
+            </ul>
+          </div>
+          <!-- Right Image -->
+          <div class="lg:col-span-7 bg-secBg/40 p-6 rounded-card border border-black/5 shadow-premium">
+            <img src="assets/ReadBack2.png" alt="Streak milestones and calendar metrics" class="w-full rounded-2xl shadow-lg border border-black/5 hover:scale-[1.02] transition-transform duration-500">
+          </div>
+        </div>
+
+        <!-- Feature 4: Library folders and search -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center reveal-section lg:row-reverse">
+          <!-- Left Image -->
+          <div class="lg:col-span-7 lg:order-last bg-secBg/40 p-6 rounded-card border border-black/5 shadow-premium">
+            <img src="assets/ReadBack1.png" alt="Library overview showing folders" class="w-full rounded-2xl shadow-lg border border-black/5 hover:scale-[1.02] transition-transform duration-500">
+          </div>
+          <!-- Right Info -->
+          <div class="lg:col-span-5 flex flex-col gap-6">
+            <div class="w-10 h-10 bg-brand-light text-brand rounded-xl flex items-center justify-center text-sm">📚</div>
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-appText">Folders, Favorites, & Notes</h3>
+            <p class="text-secText leading-relaxed">Keep your bookmarks organized. Use the powerful instant library search to filter content by title or annotations. Assign pages to folders, pin priority items to the top, and leave custom notes.</p>
+            <ul class="flex flex-col gap-3 text-sm text-appText font-medium">
+              <li class="flex items-center gap-2.5">
+                <span class="text-brand">✓</span> Custom folder color coding
+              </li>
+              <li class="flex items-center gap-2.5">
+                <span class="text-brand">✓</span> Inline deletion with instantaneous Undo triggers
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Privacy Section -->
+  <section id="privacy" class="py-28 bg-[#0B0F19] text-white overflow-hidden relative">
+    <div class="absolute inset-0 bg-grid opacity-[0.01] pointer-events-none"></div>
+    <div class="absolute -left-[10%] top-[20%] w-[500px] h-[500px] rounded-full bg-brand/5 blur-[120px] pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+      <!-- Left Content -->
+      <div class="lg:col-span-7 flex flex-col gap-8">
+        <div class="inline-flex">
+          <span class="px-3.5 py-1.5 bg-brand/10 border border-brand/20 rounded-full text-brand text-xs font-bold uppercase tracking-wider">🔒 Security First</span>
+        </div>
+        <h2 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">Your reading stays yours.</h2>
+        <p class="text-lg text-[#9CA3AF] leading-relaxed font-medium">
+          ReadBack is designed with local-first architecture. We collect absolutely zero tracking telemetry, run no advertisements, and never upload your browsing coordinates to the cloud.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-4">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 bg-brand/10 rounded-xl flex items-center justify-center text-brand flex-shrink-0">🗄️</div>
+            <div>
+              <h4 class="font-bold text-white text-base mb-1">Local-First Storage</h4>
+              <p class="text-xs text-[#9CA3AF] leading-relaxed">Everything is persisted securely in your browser's local sandbox storage using Chrome Local Storage APIs.</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 bg-brand/10 rounded-xl flex items-center justify-center text-brand flex-shrink-0">👤</div>
+            <div>
+              <h4 class="font-bold text-white text-base mb-1">No Account Required</h4>
+              <p class="text-xs text-[#9CA3AF] leading-relaxed">Install and immediately start reading. No email registration, sign-ups, or login popups.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 bg-brand/10 rounded-xl flex items-center justify-center text-brand flex-shrink-0">🚫</div>
+            <div>
+              <h4 class="font-bold text-white text-base mb-1">No Tracking or Ads</h4>
+              <p class="text-xs text-[#9CA3AF] leading-relaxed">We do not sell user data, run affiliate links, or inject trackers into your visited pages.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 bg-brand/10 rounded-xl flex items-center justify-center text-brand flex-shrink-0">📥</div>
+            <div>
+              <h4 class="font-bold text-white text-base mb-1">Full Export Control</h4>
+              <p class="text-xs text-[#9CA3AF] leading-relaxed">Backup your library folder assignments and timeline history by exporting a secure JSON configuration at any time.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Lock Animation Visual -->
+      <div class="lg:col-span-5 flex justify-center items-center">
+        <div id="privacy-lock-box" class="relative w-80 h-80 bg-white/[0.03] border border-white/10 rounded-card flex items-center justify-center shadow-2xl overflow-hidden group">
+          <div class="absolute inset-0 bg-gradient-to-tr from-brand/5 to-transparent opacity-50"></div>
+          <!-- Shield icon with subtle pulse -->
+          <div class="relative z-10 flex flex-col items-center gap-4">
+            <div class="w-24 h-24 rounded-full bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-4xl animate-pulse">
+              🛡️
+            </div>
+            <span class="text-sm font-bold tracking-widest text-[#9CA3AF] uppercase">100% Encrypted Database</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Performance Metrics Section -->
+  <section class="py-24 bg-secBg">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        
+        <div class="p-8 bg-white border border-black/5 rounded-card shadow-premium hover:shadow-premium-hover hover:-translate-y-1 transition-all duration-300">
+          <span class="text-2xl mb-4 block">🍃</span>
+          <h3 class="font-bold text-lg text-appText mb-2">Ultra-Lightweight</h3>
+          <p class="text-xs text-secText leading-relaxed">Fewer than 150KB bundle footprint ensures your browser loads content scripts instantly without lags.</p>
+        </div>
+
+        <div class="p-8 bg-white border border-black/5 rounded-card shadow-premium hover:shadow-premium-hover hover:-translate-y-1 transition-all duration-300">
+          <span class="text-2xl mb-4 block">⚡</span>
+          <h3 class="font-bold text-lg text-appText mb-2">V8 Compiled Speed</h3>
+          <p class="text-xs text-secText leading-relaxed">Optimized scroll ticking loops run directly via requestAnimationFrame, yielding perfect 60fps scrolling.</p>
+        </div>
+
+        <div class="p-8 bg-white border border-black/5 rounded-card shadow-premium hover:shadow-premium-hover hover:-translate-y-1 transition-all duration-300">
+          <span class="text-2xl mb-4 block">🛜</span>
+          <h3 class="font-bold text-lg text-appText mb-2">Offline Support</h3>
+          <p class="text-xs text-secText leading-relaxed">Functions completely offline. Read and restore positions in flights, subways, or remote areas.</p>
+        </div>
+
+        <div class="p-8 bg-white border border-black/5 rounded-card shadow-premium hover:shadow-premium-hover hover:-translate-y-1 transition-all duration-300">
+          <span class="text-2xl mb-4 block">📦</span>
+          <h3 class="font-bold text-lg text-appText mb-2">Zero Memory Leak</h3>
+          <p class="text-xs text-secText leading-relaxed">Self-cleansing event listeners garbage-collect references automatically when you close windows.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="py-28 bg-white relative">
+    <div class="max-w-4xl mx-auto px-6">
+      
+      <div class="text-center mb-20 flex flex-col gap-4">
+        <h2 class="text-brand text-xs font-bold uppercase tracking-widest">Common Questions</h2>
+        <p class="text-3xl sm:text-4xl font-extrabold tracking-tight text-appText">FAQ</p>
+      </div>
+
+      <!-- FAQ Accordions -->
+      <div class="flex flex-col gap-4">
+        
+        <div class="border-b border-secBg pb-4">
+          <button class="faq-trigger w-full flex items-center justify-between py-4 text-left font-bold text-appText text-lg focus:outline-none select-none">
+            <span>Do you upload my reading data or URL history?</span>
+            <span class="faq-icon text-secText transition-transform duration-300 text-xl font-normal">+</span>
+          </button>
+          <div class="faq-content overflow-hidden max-h-0 transition-all duration-500 ease-in-out">
+            <p class="text-sm text-secText leading-relaxed pt-2">
+              No. ReadBack operates completely locally inside your browser's sandboxed local storage sandbox. No backend servers, cloud databases, or analysis platforms ever receive your browsing logs.
+            </p>
+          </div>
+        </div>
+
+        <div class="border-b border-secBg pb-4">
+          <button class="faq-trigger w-full flex items-center justify-between py-4 text-left font-bold text-appText text-lg focus:outline-none select-none">
+            <span>Does it work on every website?</span>
+            <span class="faq-icon text-secText transition-transform duration-300 text-xl font-normal">+</span>
+          </button>
+          <div class="faq-content overflow-hidden max-h-0 transition-all duration-500 ease-in-out">
+            <p class="text-sm text-secText leading-relaxed pt-2">
+              ReadBack works on almost all standard HTML-based reading pages, including articles, Medium, developer docs, Wikipedia, research platforms, and technical blogs. It does not track browser internal settings pages (`chrome://`), local files (unless allowed in extension page), or simple empty domains.
+            </p>
+          </div>
+        </div>
+
+        <div class="border-b border-secBg pb-4">
+          <button class="faq-trigger w-full flex items-center justify-between py-4 text-left font-bold text-appText text-lg focus:outline-none select-none">
+            <span>Does it require a registration or account?</span>
+            <span class="faq-icon text-secText transition-transform duration-300 text-xl font-normal">+</span>
+          </button>
+          <div class="faq-content overflow-hidden max-h-0 transition-all duration-500 ease-in-out">
+            <p class="text-sm text-secText leading-relaxed pt-2">
+              No registration or accounts are required. As soon as you install the extension, it is active and tracking your reading progress locally.
+            </p>
+          </div>
+        </div>
+
+        <div class="border-b border-secBg pb-4">
+          <button class="faq-trigger w-full flex items-center justify-between py-4 text-left font-bold text-appText text-lg focus:outline-none select-none">
+            <span>How is this different from traditional bookmarks?</span>
+            <span class="faq-icon text-secText transition-transform duration-300 text-xl font-normal">+</span>
+          </button>
+          <div class="faq-content overflow-hidden max-h-0 transition-all duration-500 ease-in-out">
+            <p class="text-sm text-secText leading-relaxed pt-2">
+              Standard bookmarks only record the main website link. When you click them, you are brought back to the very top of the page. ReadBack records the scroll coordinates and matches your exact paragraph selector so you can pick up exactly at the sentence you stopped reading.
+            </p>
+          </div>
+        </div>
+
+        <div class="border-b border-secBg pb-4">
+          <button class="faq-trigger w-full flex items-center justify-between py-4 text-left font-bold text-appText text-lg focus:outline-none select-none">
+            <span>Can I categorize pages and take notes?</span>
+            <span class="faq-icon text-secText transition-transform duration-300 text-xl font-normal">+</span>
+          </button>
+          <div class="faq-content overflow-hidden max-h-0 transition-all duration-500 ease-in-out">
+            <p class="text-sm text-secText leading-relaxed pt-2">
+              Yes. The dashboard includes complete folder organizations with custom color codes, favorites tagging, a search bar, annotations inputs, and statistics charts to track your habit trends.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA Section -->
+  <section class="py-32 bg-secBg relative border-t border-black/5 overflow-hidden">
+    <div class="absolute inset-0 bg-grid opacity-[0.02] pointer-events-none"></div>
+    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-brand/10 blur-[100px] pointer-events-none"></div>
+    
+    <div class="max-w-4xl mx-auto px-6 text-center flex flex-col items-center gap-8 relative z-10">
+      <h2 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-appText">Never lose your place again.</h2>
+      <p class="text-lg text-secText max-w-xl">Join readers who have switched from bookmarks to local-first position resumes.</p>
+      
+      <a href="https://chromewebstore.google.com/detail/readback-%E2%80%93-save-reading-p/pomfhagjojbnfmgmldkpakfggpdpnkgc" target="_blank" class="inline-flex items-center justify-center px-10 py-5 bg-brand text-white font-extrabold text-base rounded-btn shadow-premium hover:bg-brand-dark hover:scale-[1.03] active:scale-95 transition-all duration-300 group">
+        Install ReadBack for Chrome
+        <svg class="w-5 h-5 ml-2.5 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+      </a>
+      <span class="text-xs text-secText font-medium">Free • No sign-up required • 100% Private</span>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-secBg py-16">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8">
+      <div class="flex items-center gap-2">
+        <img src="assets/icons/icon32.png" alt="ReadBack" class="w-6 h-6">
+        <span class="font-extrabold tracking-tight text-appText text-lg">ReadBack</span>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-center gap-8 text-sm font-semibold text-secText">
+        <a href="https://chromewebstore.google.com/detail/readback-%E2%80%93-save-reading-p/pomfhagjojbnfmgmldkpakfggpdpnkgc" target="_blank" class="hover:text-appText transition-colors duration-200">Chrome Store</a>
+        <a href="https://github.com" target="_blank" class="hover:text-appText transition-colors duration-200">GitHub</a>
+        <a href="privacypolicy.html" class="hover:text-appText transition-colors duration-200">Privacy Policy</a>
+      </div>
+
+      <span class="text-xs text-secText font-medium">&copy; <script>document.write(new Date().getFullYear())</script> ReadBack. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="index.js"></script>
+</body>
+</html>
