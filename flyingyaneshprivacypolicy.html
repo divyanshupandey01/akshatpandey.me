@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy – Flying Gyanesh</title>
+<meta name="description" content="Privacy Policy for the Android game Flying Gyanesh (com.flyinggyanesh).">
+<meta name="robots" content="index,follow">
+<style>
+  :root{
+    --bg:#f6f8fb; --card:#ffffff; --ink:#142235; --muted:#53647a;
+    --line:#e1e7ef; --accent:#e8512f; --link:#1b5fd1; --hl:#fff3c4;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#0f1823; --card:#162231; --ink:#eaf0f7; --muted:#9db0c6; --line:#263649; --accent:#ff7a59; --link:#7fb2ff; --hl:#4a3f12; }
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .wrap{max-width:760px;margin:0 auto;padding:24px 16px 56px}
+  header{padding:8px 0 20px}
+  header .kicker{margin:0;color:var(--accent);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:13px}
+  h1{margin:4px 0 2px;font-size:clamp(28px,6vw,38px);line-height:1.15}
+  header .app{margin:0;font-size:20px;font-weight:600}
+  header .date{margin:6px 0 0;color:var(--muted);font-size:15px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 20px 8px;margin:0 0 16px}
+  nav.card{padding-bottom:16px}
+  nav h2{margin:0 0 8px;font-size:17px}
+  nav ol{margin:0;padding-left:20px;columns:2;column-gap:28px}
+  nav li{margin:2px 0;break-inside:avoid}
+  @media (max-width:560px){ nav ol{columns:1} }
+  section{scroll-margin-top:12px}
+  h2{font-size:20px;line-height:1.3;margin:0 0 8px}
+  h3{font-size:16px;margin:16px 0 4px}
+  p{margin:0 0 12px}
+  ul{margin:0 0 12px;padding-left:22px}
+  li{margin:4px 0}
+  a{color:var(--link);text-underline-offset:2px;word-break:break-word}
+  .placeholder{background:var(--hl);padding:1px 6px;border-radius:4px;font-weight:700;white-space:nowrap}
+  table{width:100%;border-collapse:collapse;margin:4px 0 14px;font-size:15px}
+  th,td{text-align:left;vertical-align:top;padding:8px 10px;border-bottom:1px solid var(--line)}
+  th{color:var(--muted);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.04em}
+  .table-scroll{overflow-x:auto}
+  footer{color:var(--muted);font-size:14px;text-align:center;margin-top:24px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <p class="kicker">Privacy Policy</p>
+    <h1>Privacy Policy</h1>
+    <p class="app">Flying Gyanesh</p>
+    <p class="date">Effective Date: 6 October 2026</p>
+  </header>
+
+  <nav class="card" aria-label="Contents">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#intro">Introduction</a></li>
+      <li><a href="#collect">Information we collect</a></li>
+      <li><a href="#use">How we use information</a></li>
+      <li><a href="#firebase">Firebase</a></li>
+      <li><a href="#admob">Google AdMob (ads)</a></li>
+      <li><a href="#notifications">Local notifications</a></li>
+      <li><a href="#local">Data stored on your device</a></li>
+      <li><a href="#public">What other players can see</a></li>
+      <li><a href="#third">Third-party services</a></li>
+      <li><a href="#children">Children's privacy</a></li>
+      <li><a href="#retention">Data retention and deletion</a></li>
+      <li><a href="#security">Security</a></li>
+      <li><a href="#rights">Your privacy rights</a></li>
+      <li><a href="#transfers">International processing</a></li>
+      <li><a href="#changes">Changes to this policy</a></li>
+      <li><a href="#contact">Contact us</a></li>
+    </ol>
+  </nav>
+
+  <section id="intro" class="card">
+    <h2>1. Introduction</h2>
+    <p>This Privacy Policy explains how <strong>Flying Gyanesh</strong> (the Android app with package name <code>com.flyinggyanesh</code>, referred to as the "app", "game", "we" or "us") handles information when you play the game.</p>
+    <p>Flying Gyanesh is a casual arcade game. To provide features such as saved progress, hearts, revives, daily challenges and leaderboards, the app uses Google Firebase. To fund the game, it shows ads through Google AdMob (the Google Mobile Ads SDK). By using the app, you acknowledge the practices described in this policy.</p>
+  </section>
+
+  <section id="collect" class="card">
+    <h2>2. Information we collect</h2>
+
+    <h3>Information you provide</h3>
+    <ul>
+      <li><strong>Nickname.</strong> You choose a nickname the first time you play. It is required to play and is shown on leaderboards.</li>
+      <li><strong>Profile image (optional).</strong> You may choose an image from your device to use as your leaderboard avatar. If you do not, the app shows your initials instead. The app uses only the image you select. It is resized and compressed by the app, converted to a compressed Base64 representation, and stored in Cloud Firestore as part of your player profile (the app does not use Firebase Storage). It is shown on leaderboards.</li>
+    </ul>
+
+    <h3>Information created while you play</h3>
+    <ul>
+      <li>An anonymous account identifier created through Firebase Authentication (see below).</li>
+      <li>Game data stored in Cloud Firestore: your nickname, avatar, best score, daily score and daily challenge data, hearts and heart timers, revive information and cooldown timers, progression, achievements and streak information, and leaderboard-related scores.</li>
+      <li>Leaderboard information: your nickname, avatar, and scores as described in Section 8.</li>
+    </ul>
+
+    <h3>Information processed by third-party services</h3>
+    <p>Firebase and AdMob are provided by Google. When they operate inside the app, they may automatically process technical and device information, such as IP address, device and app identifiers, advertising identifiers, device model and operating system, app version, and ad interaction information. This information is processed by those providers under their own policies (see Section 9). We do not personally receive or store all of this information; much of it is handled by Google.</p>
+
+    <h3>Information we do not collect</h3>
+    <p>The app does not collect your email address, password, Google account, phone number or real name. Anonymous authentication gives you an anonymous identifier instead of an account tied to your identity.</p>
+  </section>
+
+  <section id="use" class="card">
+    <h2>3. How we use information</h2>
+    <ul>
+      <li>To create and maintain your player profile and let you continue playing with your saved progress.</li>
+      <li>To run game features such as hearts, revives, daily challenges and badges.</li>
+      <li>To display leaderboards, including your nickname, avatar and score.</li>
+      <li>To show interstitial and rewarded ads, and to grant in-game rewards (such as revives or other eligible rewards) after a rewarded ad is completed.</li>
+      <li>To send local reminders on your device if you allow notifications.</li>
+      <li>To keep the game working, prevent misuse, and respond to privacy requests.</li>
+    </ul>
+  </section>
+
+  <section id="firebase" class="card">
+    <h2>4. Firebase</h2>
+    <p>The app uses the following Firebase services, provided by Google, to provide game functionality, synchronization and leaderboards:</p>
+    <ul>
+      <li><strong>Firebase Authentication (anonymous authentication).</strong> The app signs you in automatically without asking for an email address or password. This creates an anonymous user identifier that is used to associate your game data with your player account. If you uninstall the app, clear its data or change device, you may lose access to that anonymous account and the progress linked to it.</li>
+      <li><strong>Cloud Firestore.</strong> Stores player and game data such as your nickname, avatar, scores, hearts, revives, progression and leaderboard information. Your optional avatar is stored in Cloud Firestore as part of your player profile (as a compressed Base64 representation). The app does not use Firebase Storage.</li>
+    </ul>
+    <p>Information stored in Firebase for the game is used only for the purposes in this policy. Firebase, as a Google service, may also process certain technical information to operate and secure its services. See the Firebase privacy information linked in Section 9.</p>
+  </section>
+
+  <section id="admob" class="card">
+    <h2>5. Google AdMob (ads)</h2>
+    <p>The app shows two kinds of ads through Google AdMob, using the Google Mobile Ads SDK:</p>
+    <ul>
+      <li><strong>Interstitial ads</strong>, full-screen ads that may appear at natural breaks in the game.</li>
+      <li><strong>Rewarded ads</strong>, which you can choose to watch to receive an in-game benefit, such as revives or other eligible rewards.</li>
+    </ul>
+    <p>Google and its advertising partners may collect or process information such as the advertising ID, device and app information, IP address, and information about how you interact with ads, as applicable to Google's advertising services, in order to deliver, measure and secure ads and, depending on your device settings and choices, to personalize them. This processing is carried out by Google and is governed by Google's policies, not by this policy. We do not personally receive or store all of this advertising information.</p>
+    <p>You can manage advertising settings on your Android device, for example by resetting your advertising ID or opting out of ads personalization in your device's Google settings. Learn more in <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener">How Google uses data for advertising</a> and <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener">How Google uses information from sites or apps that use its services</a>.</p>
+  </section>
+
+  <section id="notifications" class="card">
+    <h2>6. Local notifications</h2>
+    <p>If you allow notifications, the app may show:</p>
+    <ul>
+      <li><strong>Heart and refill notifications</strong>, for example when a heart or your hearts become available again.</li>
+      <li><strong>Revive availability notifications</strong>, where applicable, for example when your revives become available again.</li>
+      <li><strong>Play-reminder notifications</strong> that encourage you to return to the game.</li>
+    </ul>
+    <p>These notifications are scheduled locally on your Android device by the app. They are not Firebase push notifications and are not sent from a server, and the app does not need to send your data anywhere to display them. You can turn notifications off at any time in your Android device's notification settings for the app.</p>
+  </section>
+
+  <section id="local" class="card">
+    <h2>7. Data stored on your device</h2>
+    <p>The app stores some information locally on your device so that it works properly, including:</p>
+    <ul>
+      <li>Sound, music and vibration preferences.</li>
+      <li>Tutorial and completion state.</li>
+      <li>Local game and timer state, such as the times used to work out when hearts and revives become available.</li>
+      <li>Notification scheduling information needed to schedule or cancel local reminders.</li>
+      <li>Other local preferences the app needs to work.</li>
+    </ul>
+    <p>Not all game data is stored only on your device: player and leaderboard data (Section 2) is also stored in Cloud Firestore (Section 4). Clearing the app's storage or uninstalling the app removes the data stored locally on your device.</p>
+  </section>
+
+  <section id="public" class="card">
+    <h2>8. What other players can see</h2>
+    <p>Leaderboards are shared between players. Your <strong>nickname</strong>, <strong>avatar</strong> (or initials) and <strong>scores</strong> may be visible to other players of the game. Please do not use your real name, personal details or a photo that you do not want others to see. You can change your nickname in the app's Settings and your leaderboard photo in the Faces section.</p>
+  </section>
+
+  <section id="third" class="card">
+    <h2>9. Third-party services</h2>
+    <p>The app relies on the following third-party services. They are operated by Google, not by us, and they have their own privacy policies:</p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Service</th><th>Provider</th><th>Used for</th><th>More information</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Firebase Authentication (anonymous authentication)</td>
+            <td>Google</td>
+            <td>Anonymous sign-in and the anonymous user identifier</td>
+            <td><a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase privacy</a></td>
+          </tr>
+          <tr>
+            <td>Cloud Firestore</td>
+            <td>Google</td>
+            <td>Saving player and game data (including nickname and avatar) and leaderboards</td>
+            <td><a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase privacy</a></td>
+          </tr>
+          <tr>
+            <td>Google AdMob / Google Mobile Ads SDK</td>
+            <td>Google</td>
+            <td>Interstitial and rewarded ads</td>
+            <td><a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener">Google advertising</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>For Google's general privacy practices, see the <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a>. If we add other services that handle personal information in the future, we will update this policy.</p>
+  </section>
+
+  <section id="children" class="card">
+    <h2>10. Children's privacy</h2>
+    <p>Flying Gyanesh is a general-audience casual game and is not specifically designed for children. Its current Google Play target audience is users aged 18 and over only. The app does not currently include an age screen, and it does not have a child-directed advertising setup. We do not knowingly collect personal information from children.</p>
+    <p>The information the app handles for any player is limited to what is described in this policy: a nickname, an optional avatar, and game data associated with an anonymous identifier. Where the law in your country requires parental involvement or consent for younger users' use of online services, a parent or guardian should be involved.</p>
+    <p>Advertising in the app is provided through Google AdMob (interstitial and rewarded ads) and is subject to Google's applicable policies and controls; we do not independently control Google's advertising data practices (see Section 5). If you are a parent or guardian and believe a child has provided personal information through the app, such as a nickname or a profile image, please contact us (Section 16) and we will work with you to review and, where appropriate, delete that information.</p>
+  </section>
+
+  <section id="retention" class="card">
+    <h2>11. Data retention and deletion</h2>
+    <h3>How long we keep data</h3>
+    <p>We keep your player data (such as nickname, avatar, scores and progression) for as long as it is needed to provide the game and leaderboards, or until you ask us to delete it. We may also retain limited information where needed to meet legal obligations or protect the game from abuse.</p>
+
+    <h3>How to request deletion</h3>
+    <p>To request deletion of your account and game data, email us at <a href="mailto:contactextention@gmail.com">contactextention@gmail.com</a> with the subject line "Delete my data". Please include:</p>
+    <ul>
+      <li>Your in-game nickname.</li>
+      <li>The approximate dates you played, and any other detail that helps us find your anonymous account.</li>
+    </ul>
+    <p>Because the app uses anonymous accounts, we may need extra information to confirm which player record is yours. After we verify the request, we will delete the data we store for that account within a reasonable period. This will remove your player profile, avatar, scores and leaderboard entries from our Firebase database.</p>
+
+    <h3>What deletion does not cover</h3>
+    <ul>
+      <li>Information independently processed by Google through Firebase or AdMob. Deleting your game data from our Firestore database does not necessarily delete that information, which is governed by Google's own policies and systems (see Section 9).</li>
+      <li>Data stored only on your device. You can remove it by clearing the app's storage or uninstalling the app.</li>
+    </ul>
+    <p>The "Reset progress" option in the app's Settings resets your progress on your device. It is not a request to delete data stored on our servers.</p>
+  </section>
+
+  <section id="security" class="card">
+    <h2>12. Security</h2>
+    <p>We use reasonable technical measures to protect the information we handle, including relying on the security features of Google's Firebase platform. However, no method of electronic storage or transmission is completely secure, so we cannot guarantee absolute security. Please do not put sensitive personal information in your nickname or profile image.</p>
+  </section>
+
+  <section id="rights" class="card">
+    <h2>13. Your privacy rights</h2>
+    <p>Depending on where you live, you may have rights over your personal information, such as the right to access it, correct it, delete it, restrict or object to certain processing, or withdraw consent you have given. These rights vary by location and do not apply in the same way everywhere. You may also have the right to complain to your local data protection authority.</p>
+    <p>You can change your nickname and profile image inside the app. To exercise other rights, or to ask a question about your information, contact us at <a href="mailto:contactextention@gmail.com">contactextention@gmail.com</a>. We will consider each request in line with the laws that apply to you.</p>
+  </section>
+
+  <section id="transfers" class="card">
+    <h2>14. International processing</h2>
+    <p>Firebase and AdMob are global services. Information processed by them may be stored or handled in countries other than the one where you live, under the protections and terms provided by those services.</p>
+  </section>
+
+  <section id="changes" class="card">
+    <h2>15. Changes to this policy</h2>
+    <p>We may update this Privacy Policy from time to time, for example when we add features or change the services we use. When we do, we will post the updated policy on this page and change the effective date at the top. Please review this page periodically. If a change is significant, we will take reasonable steps to let players know, for example inside the app.</p>
+  </section>
+
+  <section id="contact" class="card">
+    <h2>16. Contact us</h2>
+    <p>If you have questions about this Privacy Policy or want to make a privacy or deletion request, contact us at:</p>
+    <p><a href="mailto:contactextention@gmail.com">contactextention@gmail.com</a></p>
+    <p>App: Flying Gyanesh (<code>com.flyinggyanesh</code>)</p>
+  </section>
+
+  <footer>
+    &copy; 2026 Flying Gyanesh. Effective Date: 6 October 2026.
+  </footer>
+
+</div>
+</body>
+</html>
