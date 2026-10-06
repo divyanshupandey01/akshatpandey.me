@@ -6,49 +6,89 @@
 <title>Privacy Policy – Flying Gyanesh</title>
 <meta name="description" content="Privacy Policy for the Android game Flying Gyanesh (com.flyinggyanesh).">
 <meta name="robots" content="index,follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap">
+<meta name="theme-color" content="#7fd0f0">
 <style>
-  :root{
-    --bg:#f6f8fb; --card:#ffffff; --ink:#142235; --muted:#53647a;
-    --line:#e1e7ef; --accent:#e8512f; --link:#1b5fd1; --hl:#fff3c4;
-  }
-  @media (prefers-color-scheme: dark){
-    :root{ --bg:#0f1823; --card:#162231; --ink:#eaf0f7; --muted:#9db0c6; --line:#263649; --accent:#ff7a59; --link:#7fb2ff; --hl:#4a3f12; }
-  }
+  :root{--ink:#10243a;--panel:#fff6e3;--muted:#5a6b82;--accent:#e8512f;--gold:#ffd54a;--good:#2fa66a;--link:#1b5fd1;--ground:#c9a35a}
   *{box-sizing:border-box}
-  html{-webkit-text-size-adjust:100%}
-  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
-  .wrap{max-width:760px;margin:0 auto;padding:24px 16px 56px}
-  header{padding:8px 0 20px}
-  header .kicker{margin:0;color:var(--accent);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:13px}
-  h1{margin:4px 0 2px;font-size:clamp(28px,6vw,38px);line-height:1.15}
-  header .app{margin:0;font-size:20px;font-weight:600}
-  header .date{margin:6px 0 0;color:var(--muted);font-size:15px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 20px 8px;margin:0 0 16px}
-  nav.card{padding-bottom:16px}
-  nav h2{margin:0 0 8px;font-size:17px}
-  nav ol{margin:0;padding-left:20px;columns:2;column-gap:28px}
-  nav li{margin:2px 0;break-inside:avoid}
-  @media (max-width:560px){ nav ol{columns:1} }
-  section{scroll-margin-top:12px}
-  h2{font-size:20px;line-height:1.3;margin:0 0 8px}
-  h3{font-size:16px;margin:16px 0 4px}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{margin:0;min-height:100vh;display:flex;flex-direction:column;color:var(--ink);font:16px/1.65 Fredoka,"Trebuchet MS","Segoe UI",system-ui,sans-serif;background:linear-gradient(#7fd0f0 0,#bfe8f9 45%,#e6f7fe 100%) fixed}
+  .sky{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+  .cloud{position:absolute;left:0;width:120px;height:36px;background:#fff;border-radius:40px;opacity:.92;animation:drift linear infinite}
+  .cloud::before,.cloud::after{content:"";position:absolute;background:#fff;border-radius:50%}
+  .cloud::before{width:56px;height:56px;left:18px;top:-26px}
+  .cloud::after{width:42px;height:42px;left:62px;top:-18px}
+  .c1{top:8%;animation-duration:95s;animation-delay:-20s}
+  .c2{top:24%;transform-origin:left;animation-duration:120s;animation-delay:-70s;scale:.7}
+  .c3{top:46%;animation-duration:105s;animation-delay:-45s;scale:1.2}
+  .c4{top:66%;animation-duration:130s;animation-delay:-100s;scale:.8}
+  .c5{top:82%;animation-duration:110s;animation-delay:-5s}
+  @keyframes drift{from{translate:-180px 0}to{translate:calc(100vw + 180px) 0}}
+  .wrap{position:relative;z-index:1;flex:1;width:100%;max-width:780px;margin:0 auto;padding:22px 16px 24px}
+  header{text-align:center;padding:6px 0 22px}
+  .bird{width:132px;height:84px;display:block;margin:0 auto 6px;animation:bob 2.4s ease-in-out infinite}
+  .wing{transform-box:fill-box;transform-origin:50% 50%;animation:flap 1.2s ease-in-out infinite}
+  .wing.r{animation-name:flapr}
+  @keyframes bob{50%{transform:translateY(-7px)}}
+  @keyframes flap{50%{transform:rotate(-16deg)}}
+  @keyframes flapr{50%{transform:rotate(16deg)}}
+  @media (prefers-reduced-motion:reduce){.bird,.wing,.cloud{animation:none}.cloud{translate:var(--x,40px) 0}}
+  h1{margin:4px 0 8px;font-size:clamp(40px,12vw,64px);line-height:1;color:#fff;text-transform:uppercase;text-shadow:-3px -3px 0 var(--ink),3px -3px 0 var(--ink),-3px 3px 0 var(--ink),3px 3px 0 var(--ink),0 -3px 0 var(--ink),0 5px 0 var(--ink),3px 0 0 var(--ink),-3px 0 0 var(--ink)}
+  .app{display:inline-block;margin:0 0 10px;font-size:clamp(22px,6vw,28px);font-weight:700;color:var(--gold);text-shadow:-2px -2px 0 var(--ink),2px -2px 0 var(--ink),-2px 2px 0 var(--ink),2px 2px 0 var(--ink),0 3px 0 var(--ink)}
+  .date{display:table;margin:0 auto;padding:3px 16px;background:var(--panel);border:3px solid var(--ink);border-radius:999px;box-shadow:0 3px 0 var(--ink);font-weight:600;font-size:15px}
+  .card{background:var(--panel);border:4px solid var(--ink);border-radius:18px;box-shadow:0 5px 0 var(--ink);padding:20px 20px 10px;margin:0 0 20px;scroll-margin-top:14px}
+  h2{display:flex;align-items:center;margin:0 0 12px;font-size:22px;line-height:1.2}
+  .num{flex:none;display:inline-grid;place-items:center;min-width:36px;height:36px;margin-right:10px;border-radius:50%;background:var(--gold);border:3px solid var(--ink);font-size:16px;font-weight:700}
+  h3{margin:16px 0 4px;font-size:17px;color:var(--accent)}
   p{margin:0 0 12px}
-  ul{margin:0 0 12px;padding-left:22px}
-  li{margin:4px 0}
+  ul{list-style:none;margin:0 0 12px;padding:0}
+  li{position:relative;margin:6px 0;padding-left:26px}
+  li::before{content:"";position:absolute;left:3px;top:.6em;width:11px;height:11px;border-radius:50%;background:var(--gold);border:2.5px solid var(--ink)}
+  nav ol{list-style:none;display:flex;flex-wrap:wrap;gap:9px;margin:0 0 6px;padding:0}
+  nav li{margin:0;padding:0}nav li::before{display:none}
+  nav a{display:block;padding:5px 13px;background:#fff;border:3px solid var(--ink);border-radius:999px;box-shadow:0 3px 0 var(--ink);color:var(--ink);font-size:14px;font-weight:600;text-decoration:none}
+  nav a:active{transform:translateY(3px);box-shadow:none}
   a{color:var(--link);text-underline-offset:2px;word-break:break-word}
-  .placeholder{background:var(--hl);padding:1px 6px;border-radius:4px;font-weight:700;white-space:nowrap}
-  table{width:100%;border-collapse:collapse;margin:4px 0 14px;font-size:15px}
-  th,td{text-align:left;vertical-align:top;padding:8px 10px;border-bottom:1px solid var(--line)}
-  th{color:var(--muted);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.04em}
-  .table-scroll{overflow-x:auto}
-  footer{color:var(--muted);font-size:14px;text-align:center;margin-top:24px}
+  code{background:#fff;border:2px solid var(--ink);border-radius:6px;padding:0 6px;font-size:14px}
+  .mailbtn{display:inline-block;margin:2px 0 8px;padding:8px 18px;background:var(--good);color:#fff;border:3px solid var(--ink);border-radius:12px;box-shadow:0 4px 0 var(--ink);font-weight:700;text-decoration:none}
+  .mailbtn:active{transform:translateY(4px);box-shadow:none}
+  .table-scroll{overflow-x:auto;margin:4px 0 14px}
+  table{width:100%;min-width:520px;border-collapse:separate;border-spacing:0;background:#fff;border:3px solid var(--ink);border-radius:12px;overflow:hidden;font-size:15px}
+  th,td{text-align:left;vertical-align:top;padding:9px 11px;border-bottom:2px solid #eadfc4}
+  th{background:var(--gold);color:var(--ink);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;border-bottom:3px solid var(--ink)}
+  tr:last-child td{border-bottom:0}
+  footer.ground{position:relative;z-index:1;margin-top:20px;padding:34px 16px 44px;background:var(--ground);border-top:8px solid #8a6a2c;text-align:center;font-size:14px;font-weight:500}
+  footer.ground::before{content:"";position:absolute;left:0;right:0;top:18px;height:8px;background:repeating-linear-gradient(90deg,#b38d44 0 24px,transparent 24px 48px)}
+  footer.ground p{margin:0 0 12px}
+  .top{display:inline-block;padding:6px 18px;background:var(--panel);color:var(--ink);border:3px solid var(--ink);border-radius:12px;box-shadow:0 3px 0 var(--ink);font-weight:700;text-decoration:none}
+  .top:active{transform:translateY(3px);box-shadow:none}
+  @media (max-width:600px){
+    .table-scroll{overflow:visible}
+    table{min-width:0;border:0;background:transparent;display:block}
+    thead{display:none}
+    tbody,tr,td{display:block}
+    tr{background:#fff;border:3px solid var(--ink);border-radius:12px;margin:0 0 12px;padding:4px 0;box-shadow:0 3px 0 var(--ink)}
+    td{border:0!important;padding:5px 12px}
+    td::before{content:attr(data-label);display:block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--accent)}
+  }
 </style>
 </head>
 <body>
+<div class="sky" aria-hidden="true"><i class="cloud c1"></i><i class="cloud c2"></i><i class="cloud c3"></i><i class="cloud c4"></i><i class="cloud c5"></i></div>
 <div class="wrap">
 
-  <header>
-    <p class="kicker">Privacy Policy</p>
+  <header id="top">
+    <svg class="bird" viewBox="0 0 132 84" role="img" aria-label="Flying Gyanesh mascot">
+      <g fill="#fff" stroke="#10243a" stroke-width="4" stroke-linejoin="round">
+        <g transform="rotate(-24 26 38)"><ellipse class="wing" cx="26" cy="38" rx="22" ry="12"/></g>
+        <g transform="rotate(24 106 38)"><ellipse class="wing r" cx="106" cy="38" rx="22" ry="12"/></g>
+      </g>
+      <circle cx="66" cy="46" r="32" fill="#fff6e3" stroke="#10243a" stroke-width="5"/>
+      <circle cx="55" cy="42" r="4.5" fill="#10243a"/><circle cx="77" cy="42" r="4.5" fill="#10243a"/>
+      <path d="M59 55 L73 55 L66 64 Z" fill="#ffd54a" stroke="#10243a" stroke-width="3" stroke-linejoin="round"/>
+    </svg>
     <h1>Privacy Policy</h1>
     <p class="app">Flying Gyanesh</p>
     <p class="date">Effective Date: 6 October 2026</p>
@@ -77,13 +117,13 @@
   </nav>
 
   <section id="intro" class="card">
-    <h2>1. Introduction</h2>
+    <h2><span class="num">1</span>Introduction</h2>
     <p>This Privacy Policy explains how <strong>Flying Gyanesh</strong> (the Android app with package name <code>com.flyinggyanesh</code>, referred to as the "app", "game", "we" or "us") handles information when you play the game.</p>
     <p>Flying Gyanesh is a casual arcade game. To provide features such as saved progress, hearts, revives, daily challenges and leaderboards, the app uses Google Firebase. To fund the game, it shows ads through Google AdMob (the Google Mobile Ads SDK). By using the app, you acknowledge the practices described in this policy.</p>
   </section>
 
   <section id="collect" class="card">
-    <h2>2. Information we collect</h2>
+    <h2><span class="num">2</span>Information we collect</h2>
 
     <h3>Information you provide</h3>
     <ul>
@@ -106,7 +146,7 @@
   </section>
 
   <section id="use" class="card">
-    <h2>3. How we use information</h2>
+    <h2><span class="num">3</span>How we use information</h2>
     <ul>
       <li>To create and maintain your player profile and let you continue playing with your saved progress.</li>
       <li>To run game features such as hearts, revives, daily challenges and badges.</li>
@@ -118,7 +158,7 @@
   </section>
 
   <section id="firebase" class="card">
-    <h2>4. Firebase</h2>
+    <h2><span class="num">4</span>Firebase</h2>
     <p>The app uses the following Firebase services, provided by Google, to provide game functionality, synchronization and leaderboards:</p>
     <ul>
       <li><strong>Firebase Authentication (anonymous authentication).</strong> The app signs you in automatically without asking for an email address or password. This creates an anonymous user identifier that is used to associate your game data with your player account. If you uninstall the app, clear its data or change device, you may lose access to that anonymous account and the progress linked to it.</li>
@@ -128,7 +168,7 @@
   </section>
 
   <section id="admob" class="card">
-    <h2>5. Google AdMob (ads)</h2>
+    <h2><span class="num">5</span>Google AdMob (ads)</h2>
     <p>The app shows two kinds of ads through Google AdMob, using the Google Mobile Ads SDK:</p>
     <ul>
       <li><strong>Interstitial ads</strong>, full-screen ads that may appear at natural breaks in the game.</li>
@@ -139,7 +179,7 @@
   </section>
 
   <section id="notifications" class="card">
-    <h2>6. Local notifications</h2>
+    <h2><span class="num">6</span>Local notifications</h2>
     <p>If you allow notifications, the app may show:</p>
     <ul>
       <li><strong>Heart and refill notifications</strong>, for example when a heart or your hearts become available again.</li>
@@ -150,7 +190,7 @@
   </section>
 
   <section id="local" class="card">
-    <h2>7. Data stored on your device</h2>
+    <h2><span class="num">7</span>Data stored on your device</h2>
     <p>The app stores some information locally on your device so that it works properly, including:</p>
     <ul>
       <li>Sound, music and vibration preferences.</li>
@@ -163,34 +203,34 @@
   </section>
 
   <section id="public" class="card">
-    <h2>8. What other players can see</h2>
+    <h2><span class="num">8</span>What other players can see</h2>
     <p>Leaderboards are shared between players. Your <strong>nickname</strong>, <strong>avatar</strong> (or initials) and <strong>scores</strong> may be visible to other players of the game. Please do not use your real name, personal details or a photo that you do not want others to see. You can change your nickname in the app's Settings and your leaderboard photo in the Faces section.</p>
   </section>
 
   <section id="third" class="card">
-    <h2>9. Third-party services</h2>
+    <h2><span class="num">9</span>Third-party services</h2>
     <p>The app relies on the following third-party services. They are operated by Google, not by us, and they have their own privacy policies:</p>
     <div class="table-scroll">
       <table>
         <thead><tr><th>Service</th><th>Provider</th><th>Used for</th><th>More information</th></tr></thead>
         <tbody>
           <tr>
-            <td>Firebase Authentication (anonymous authentication)</td>
-            <td>Google</td>
-            <td>Anonymous sign-in and the anonymous user identifier</td>
-            <td><a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase privacy</a></td>
+            <td data-label="Service">Firebase Authentication (anonymous authentication)</td>
+            <td data-label="Provider">Google</td>
+            <td data-label="Used for">Anonymous sign-in and the anonymous user identifier</td>
+            <td data-label="More information"><a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase privacy</a></td>
           </tr>
           <tr>
-            <td>Cloud Firestore</td>
-            <td>Google</td>
-            <td>Saving player and game data (including nickname and avatar) and leaderboards</td>
-            <td><a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase privacy</a></td>
+            <td data-label="Service">Cloud Firestore</td>
+            <td data-label="Provider">Google</td>
+            <td data-label="Used for">Saving player and game data (including nickname and avatar) and leaderboards</td>
+            <td data-label="More information"><a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase privacy</a></td>
           </tr>
           <tr>
-            <td>Google AdMob / Google Mobile Ads SDK</td>
-            <td>Google</td>
-            <td>Interstitial and rewarded ads</td>
-            <td><a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener">Google advertising</a></td>
+            <td data-label="Service">Google AdMob / Google Mobile Ads SDK</td>
+            <td data-label="Provider">Google</td>
+            <td data-label="Used for">Interstitial and rewarded ads</td>
+            <td data-label="More information"><a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener">Google advertising</a></td>
           </tr>
         </tbody>
       </table>
@@ -199,14 +239,14 @@
   </section>
 
   <section id="children" class="card">
-    <h2>10. Children's privacy</h2>
+    <h2><span class="num">10</span>Children's privacy</h2>
     <p>Flying Gyanesh is a general-audience casual game and is not specifically designed for children. Its current Google Play target audience is users aged 18 and over only. The app does not currently include an age screen, and it does not have a child-directed advertising setup. We do not knowingly collect personal information from children.</p>
     <p>The information the app handles for any player is limited to what is described in this policy: a nickname, an optional avatar, and game data associated with an anonymous identifier. Where the law in your country requires parental involvement or consent for younger users' use of online services, a parent or guardian should be involved.</p>
     <p>Advertising in the app is provided through Google AdMob (interstitial and rewarded ads) and is subject to Google's applicable policies and controls; we do not independently control Google's advertising data practices (see Section 5). If you are a parent or guardian and believe a child has provided personal information through the app, such as a nickname or a profile image, please contact us (Section 16) and we will work with you to review and, where appropriate, delete that information.</p>
   </section>
 
   <section id="retention" class="card">
-    <h2>11. Data retention and deletion</h2>
+    <h2><span class="num">11</span>Data retention and deletion</h2>
     <h3>How long we keep data</h3>
     <p>We keep your player data (such as nickname, avatar, scores and progression) for as long as it is needed to provide the game and leaderboards, or until you ask us to delete it. We may also retain limited information where needed to meet legal obligations or protect the game from abuse.</p>
 
@@ -227,37 +267,37 @@
   </section>
 
   <section id="security" class="card">
-    <h2>12. Security</h2>
+    <h2><span class="num">12</span>Security</h2>
     <p>We use reasonable technical measures to protect the information we handle, including relying on the security features of Google's Firebase platform. However, no method of electronic storage or transmission is completely secure, so we cannot guarantee absolute security. Please do not put sensitive personal information in your nickname or profile image.</p>
   </section>
 
   <section id="rights" class="card">
-    <h2>13. Your privacy rights</h2>
+    <h2><span class="num">13</span>Your privacy rights</h2>
     <p>Depending on where you live, you may have rights over your personal information, such as the right to access it, correct it, delete it, restrict or object to certain processing, or withdraw consent you have given. These rights vary by location and do not apply in the same way everywhere. You may also have the right to complain to your local data protection authority.</p>
     <p>You can change your nickname and profile image inside the app. To exercise other rights, or to ask a question about your information, contact us at <a href="mailto:contactextention@gmail.com">contactextention@gmail.com</a>. We will consider each request in line with the laws that apply to you.</p>
   </section>
 
   <section id="transfers" class="card">
-    <h2>14. International processing</h2>
+    <h2><span class="num">14</span>International processing</h2>
     <p>Firebase and AdMob are global services. Information processed by them may be stored or handled in countries other than the one where you live, under the protections and terms provided by those services.</p>
   </section>
 
   <section id="changes" class="card">
-    <h2>15. Changes to this policy</h2>
+    <h2><span class="num">15</span>Changes to this policy</h2>
     <p>We may update this Privacy Policy from time to time, for example when we add features or change the services we use. When we do, we will post the updated policy on this page and change the effective date at the top. Please review this page periodically. If a change is significant, we will take reasonable steps to let players know, for example inside the app.</p>
   </section>
 
   <section id="contact" class="card">
-    <h2>16. Contact us</h2>
+    <h2><span class="num">16</span>Contact us</h2>
     <p>If you have questions about this Privacy Policy or want to make a privacy or deletion request, contact us at:</p>
-    <p><a href="mailto:contactextention@gmail.com">contactextention@gmail.com</a></p>
+    <p><a class="mailbtn" href="mailto:contactextention@gmail.com">contactextention@gmail.com</a></p>
     <p>App: Flying Gyanesh (<code>com.flyinggyanesh</code>)</p>
   </section>
 
-  <footer>
-    &copy; 2026 Flying Gyanesh. Effective Date: 6 October 2026.
-  </footer>
-
 </div>
+<footer class="ground">
+  <p>&copy; 2026 Flying Gyanesh. Effective Date: 6 October 2026.</p>
+  <a class="top" href="#top">Back to top</a>
+</footer>
 </body>
 </html>
